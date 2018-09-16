@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<script src="../static/layui.js" charset="utf-8"></script>
+		<!-- 第三方CDN加载CSS -->
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
+		<!--全站jquery-->
+		<script src="https://hm.baidu.com/hm.js?adc13511ee911fdcc6161702f0fa7806"></script>
+		<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+		
+		<link rel="stylesheet" href="../static/mCss/my.css" />
+		<link rel="stylesheet" href="../static/mCss/My2.css" />
+		<link rel="stylesheet" href="../static/mCss/My3.css" />
+		<link rel="stylesheet" href="../static/css/layui.css" />
+		<script src="../static/layui.all.js"></script>
+		
+		<!--音乐播放器-->
+		<script src="../static/js/codydemo.js"></script>
+		
+		<!--自己的js-->
+		<script type="text/javascript" src="../static/js/pageFunc.js" ></script>
+	</head>
+
+	<body id="body">
+		<div class="container app app-aside-fixed app-header-fixed">
+			<!--
+      	作者：deweynull@163.com
+      	时间：2018-09-11
+      	描述：header
+      -->
+			<header id="header" class="app-header navbar" role="menu">
+				<div class="navbar-header bg-info dker">
+
+					<!-- brand -->
+					<a href="" class="navbar-brand text-lt">
+						<i class="glyphicon glyphicon-home"></i>
+						<span class="hidden-folded m-l-xs">Dewey's Blog</span>
+					</a>
+					<!-- / brand -->
+				</div>
+
+				<div class="collapse pos-rlt navbar-collapse box-shadow bg-info dker">
+					<!-- buttons -->
+					<div class="nav navbar-nav hidden-xs">
+						<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
+							<i class="glyphicon glyphicon-th-list"></i>
+							<i class="fontello fontello-indent icon-fw text-active"></i>
+						</a>
+						<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
+							<i class="glyphicon glyphicon-user"></i>
+						</a>
+					</div>
+					<!-- / buttons -->
+
+					<!-- search form -->
+					<form id="searchform" class="navbar-form navbar-form-sm navbar-left shift" method="post" role="search">
+						<div class="form-group">
+							<div class="input-group rounded bg-light">
+								<input id="search_input" type="search" name="s" class="transparent rounded form-control input-sm no-border padder" required="" placeholder="输入关键词搜索…">
+								<span id="search_submit" class="transparent input-group-btn">
+                  <button type="submit" class="transparent btn btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+              </span>
+							</div>
+						</div>
+					</form>
+					<a href="" style="display: none" id="searchUrl"></a>
+					<!-- / search form -->
+					<ul class="nav navbar-nav navbar-right" id="musicbar">
+						<li class="music-box hidden-xs hidden-sm">
+							<div id="skPlayer" >
+								<script>
+                					var player = new skPlayer({"autoplay":false,"listshow":false,"mode":"listloop","music":{"type":"cloud","source":"157041905","media":"neteasy"}});
+    							</script>
+							</div>
+						</li>
+						<li class="dropdown ">
+							<a class="skPlayer-list-switch dropdown-toggle" href="javascript:musicSwitchOn()">
+								<i class="glyphicon glyphicon-headphones"></i>
+								<span class="visible-xs-inline"></span></a>
+						</li>
+						<!--闲言碎语-->
+						<li class="dropdown" >
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle" >
+								<i class="glyphicon glyphicon-bell"></i>
+								
+								<span class="badge badge-sm up bg-danger pull-right-xs"></span>
+							</a>
+							
+						</li>
+						<!--/闲言碎语-->
+						<!--登录管理-->
+						<li class="dropdown" id="easyLogin">
+							<a onclick="return false" data-toggle="dropdown" class="dropdown-toggle clear">
+								<span class="text">登录</span>
+								<b class="caret"></b>
+								<!--下三角符号-->
+							</a>
+							<!-- dropdown(已经登录) -->
+							<div class="dropdown-menu w-lg wrapper bg-white animated shake" aria-labelledby="navbar-login-dropdown">
+								<form id="Login_form" action="" method="post">
+									<div class="form-group">
+										<label for="navbar-login-user">用户名</label>
+										<input type="text" name="name" id="navbar-login-user" class="form-control" placeholder="用户名或电子邮箱"></div>
+									<div class="form-group">
+										<label for="navbar-login-password">密码</label>
+										<input type="password" name="password" id="navbar-login-password" class="form-control" placeholder="密码"></div>
+								</form>
+							</div>
+						</li>
+						<!--/登录管理-->
+					</ul>
+				</div>
+			</header>
+
+			<!--
+    	作者：deweynull@163.com
+    	时间：2018-09-11
+    	描述：aside
+    -->
+			<aside id="aside" class="app-aside hidden-xs bg-light dker b-r">
+				<div class="aside-wrap">
+					<div class="navi-wrap">
+						<div class="clearfix hidden-xs text-center hide show" id="aside-user">
+							<div class="dropdown wrapper">
+								<div ui-nav="">
+									<span class="thumb-lg w-auto-folded avatar m-t-sm">
+                  					<img src="../static/img/-643b0d1dc704d923.jpg" class="img-full">
+                					</span>
+									
+								</div>
+								<a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
+									<span class="clear">
+										<span class="block m-t-sm">
+                    						<strong class="font-bold text-lt">Dewey's</strong>
+                    						<b class="caret"></b>
+                  						</span>
+										<span class="text-muted text-xs block">傻逼于大神的爸爸。</span>
+									</span>
+								</a>
+								
+							</div>
+							<div class="line dk hidden-folded"></div>
+						</div>
+					</div>
+				</div>
+			</aside>
+
+			<!--
+    	作者：deweynull@163.com
+    	时间：2018-09-11
+    	描述：content
+    -->
+			<div id="content" class="app-content">
+
+			</div>
+
+			<!--
+    	作者：deweynull@163.com
+    	时间：2018-09-11
+    	描述：footer
+    -->
+			<footer id="footer" class="app-footer" role="footer"></footer>
+		</div>
+	</body>
+
+<script>
+
+	function musicSwitchOn() {
+	    var ob = $("#skPlayer");
+		if(ob.hasClass("skPlayer-list-on")){
+		    ob.removeClass("skPlayer-list-on");
+		}else{
+            ob.addClass("skPlayer-list-on");
+		}
+
+    }
+</script>
+</html>
