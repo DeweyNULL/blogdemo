@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @auther : Dewey
  * @date : 2018/9/14 10 42
  * @description :  blog文章的操作
  */
+
 
 @Controller
 public class BlogEssayController {
@@ -45,14 +47,14 @@ public class BlogEssayController {
 
         int size = 8;
         Sort sort = new Sort(Sort.Direction.DESC,"id");
-        Page<BlogEssay> blogEssays = blogEssayServiceImpl.getEssayByPage(size,pageNum,sort);
-        if(blogEssays.getSize()>0){
+        List<BlogEssay> blogEssays = blogEssayServiceImpl.getEssayByPage(size,pageNum,sort);
+        if(blogEssays.size()>0){
             jsonResultSet.setStatusCode("0");
-            jsonResultSet.setResuitData(blogEssays);
+            jsonResultSet.setResultData(blogEssays);
         }else {
             jsonResultSet.setStatusCode("1");
             String resultMsg = "找不到数据";
-            jsonResultSet.setResuitData(request);
+            jsonResultSet.setResultData(request);
         }
         return ResponseEntity.ok(jsonResultSet);
     }
@@ -74,7 +76,7 @@ public class BlogEssayController {
         }
         pageCount.setPageNum(pageNum);
         jsonResultSet.setStatusCode("0");
-        jsonResultSet.setResuitData(pageCount);
+        jsonResultSet.setResultData(pageCount);
         return ResponseEntity.ok(jsonResultSet);
     }
 

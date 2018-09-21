@@ -1,141 +1,133 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<script src="../static/layui.js" charset="utf-8"></script>
-		<!-- 第三方CDN加载CSS -->
-		<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<script src="../static/layui.js" charset="utf-8"></script>
+	<!-- 第三方CDN加载CSS -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
-		<!--全站jquery-->
-		<script src="https://hm.baidu.com/hm.js?adc13511ee911fdcc6161702f0fa7806"></script>
-		<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-		
-		<link rel="stylesheet" href="../static/mCss/my.css" />
-		<link rel="stylesheet" href="../static/mCss/My2.css" />
-		<link rel="stylesheet" href="../static/mCss/My3.css" />
-		<link rel="stylesheet" href="../static/css/layui.css" />
-		<script src="../static/layui.all.js"></script>
-		
-		<!--音乐播放器-->
-		<script src="../static/js/codydemo.js"></script>
-		
-		<!--自己的js-->
-		<script type="text/javascript" src="../static/js/pageFunc.js" ></script>
-	</head>
+	<!--全站jquery-->
+	<script src="https://hm.baidu.com/hm.js?adc13511ee911fdcc6161702f0fa7806"></script>
+	<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 
-	<body id="body">
-		<div class="container app app-aside-fixed app-header-fixed">
-			<!--
-      	作者：deweynull@163.com
-      	时间：2018-09-11
-      	描述：header
-      -->
-			<header id="header" class="app-header navbar" role="menu">
-				<div class="navbar-header bg-info dker">
+	<link rel="stylesheet" href="../static/mCss/my.css" />
+	<link rel="stylesheet" href="../static/mCss/My2.css" />
+	<link rel="stylesheet" href="../static/mCss/My3.css" />
+	<link rel="stylesheet" href="../static/css/layui.css" />
+	<script src="../static/layui.all.js"></script>
 
-					<!-- brand -->
-					<a href="" class="navbar-brand text-lt">
-						<i class="glyphicon glyphicon-home"></i>
-						<span class="hidden-folded m-l-xs">Dewey's Blog</span>
-					</a>
-					<!-- / brand -->
-				</div>
+	<!--音乐播放器-->
+	<script src="../static/js/codydemo.js"></script>
 
-				<div class="collapse pos-rlt navbar-collapse box-shadow bg-info dker">
-					<!-- buttons -->
-					<div class="nav navbar-nav hidden-xs">
-						<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
-							<i class="glyphicon glyphicon-th-list"></i>
-							<i class="fontello fontello-indent icon-fw text-active"></i>
-						</a>
-						<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
-							<i class="glyphicon glyphicon-user"></i>
-						</a>
-					</div>
-					<!-- / buttons -->
+	<!--自己的js-->
+	<script type="text/javascript" src="../static/myfuncjs/editFunc.js" ></script>
+</head>
 
-					<!-- search form -->
-					<form id="searchform" class="navbar-form navbar-form-sm navbar-left shift" method="post" role="search">
-						<div class="form-group">
-							<div class="input-group rounded bg-light">
-								<input id="search_input" type="search" name="s" class="transparent rounded form-control input-sm no-border padder" required="" placeholder="输入关键词搜索…">
-								<span id="search_submit" class="transparent input-group-btn">
+<body id="body">
+<div class="container app app-aside-fixed app-header-fixed">
+	<!--描述：header -->
+	<header id="header" class="app-header navbar" role="menu">
+		<div class="navbar-header bg-info dker">
+
+			<!-- brand -->
+			<a href="" class="navbar-brand text-lt">
+				<i class="glyphicon glyphicon-home"></i>
+				<span class="hidden-folded m-l-xs">Dewey's Blog</span>
+			</a>
+			<!-- / brand -->
+		</div>
+
+		<div class="collapse pos-rlt navbar-collapse box-shadow bg-info dker">
+			<!-- buttons -->
+			<div class="nav navbar-nav hidden-xs">
+				<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
+					<i class="glyphicon glyphicon-th-list"></i>
+					<i class="fontello fontello-indent icon-fw text-active"></i>
+				</a>
+				<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
+					<i class="glyphicon glyphicon-user"></i>
+				</a>
+			</div>
+			<!-- / buttons -->
+
+			<!-- search form -->
+			<form id="searchform" class="navbar-form navbar-form-sm navbar-left shift" method="post" role="search">
+				<div class="form-group">
+					<div class="input-group rounded bg-light">
+						<input id="search_input" type="search" name="s" class="transparent rounded form-control input-sm no-border padder" required="" placeholder="输入关键词搜索…">
+						<span id="search_submit" class="transparent input-group-btn">
                   <button type="submit" class="transparent btn btn-sm"><i class="glyphicon glyphicon-search"></i></button>
               </span>
-							</div>
-						</div>
-					</form>
-					<a href="" style="display: none" id="searchUrl"></a>
-					<!-- / search form -->
-					<ul class="nav navbar-nav navbar-right" id="musicbar">
-						<li class="music-box hidden-xs hidden-sm">
-							<div id="skPlayer" >
-								<script>
-                					var player = new skPlayer({"autoplay":false,"listshow":false,"mode":"listloop","music":{"type":"cloud","source":"157041905","media":"neteasy"}});
-    							</script>
-							</div>
-						</li>
-						<li class="dropdown ">
-							<a class="skPlayer-list-switch dropdown-toggle" href="javascript:musicSwitchOn()">
-								<i class="glyphicon glyphicon-headphones"></i>
-								<span class="visible-xs-inline"></span></a>
-						</li>
-						<!--闲言碎语-->
-						<li class="dropdown" >
-							<a href="#" data-toggle="dropdown" class="dropdown-toggle" >
-								<i class="glyphicon glyphicon-bell"></i>
-								
-								<span class="badge badge-sm up bg-danger pull-right-xs"></span>
-							</a>
-							
-						</li>
-						<!--/闲言碎语-->
-						<!--登录管理-->
-						<li class="dropdown" id="easyLogin">
-							<a onclick="return false" data-toggle="dropdown" class="dropdown-toggle clear">
-								<span class="text">登录</span>
-								<b class="caret"></b>
-								<!--下三角符号-->
-							</a>
-							<!-- dropdown(已经登录) -->
-							<div class="dropdown-menu w-lg wrapper bg-white animated shake" aria-labelledby="navbar-login-dropdown">
-								<form id="Login_form" action="" method="post">
-									<div class="form-group">
-										<label for="navbar-login-user">用户名</label>
-										<input type="text" name="name" id="navbar-login-user" class="form-control" placeholder="用户名或电子邮箱"></div>
-									<div class="form-group">
-										<label for="navbar-login-password">密码</label>
-										<input type="password" name="password" id="navbar-login-password" class="form-control" placeholder="密码"></div>
-								</form>
-							</div>
-						</li>
-						<!--/登录管理-->
-					</ul>
+					</div>
 				</div>
-			</header>
+			</form>
+			<a href="" style="display: none" id="searchUrl"></a>
+			<!-- / search form -->
+			<ul class="nav navbar-nav navbar-right" id="musicbar">
+				<li class="music-box hidden-xs hidden-sm">
+					<div id="skPlayer" >
+						<script>
+                            var player = new skPlayer({"autoplay":false,"listshow":false,"mode":"listloop","music":{"type":"cloud","source":"157041905","media":"neteasy"}});
+						</script>
+					</div>
+				</li>
+				<li class="dropdown ">
+					<a class="skPlayer-list-switch dropdown-toggle" href="javascript:musicSwitchOn()">
+						<i class="glyphicon glyphicon-headphones"></i>
+						<span class="visible-xs-inline"></span></a>
+				</li>
+				<!--闲言碎语-->
+				<li class="dropdown" >
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle" >
+						<i class="glyphicon glyphicon-bell"></i>
 
-			<!--
-    	作者：deweynull@163.com
-    	时间：2018-09-11
-    	描述：aside
-    -->
-			<aside id="aside" class="app-aside hidden-xs bg-light dker b-r">
-				<div class="aside-wrap">
-					<div class="navi-wrap">
-						<div class="clearfix hidden-xs text-center hide show" id="aside-user">
-							<div class="dropdown wrapper">
-								<div ui-nav="">
+						<span class="badge badge-sm up bg-danger pull-right-xs"></span>
+					</a>
+
+				</li>
+				<!--/闲言碎语-->
+				<!--登录管理-->
+				<li class="dropdown" id="easyLogin">
+					<a onclick="return false" data-toggle="dropdown" class="dropdown-toggle clear">
+						<span class="text">登录</span>
+						<b class="caret"></b>
+						<!--下三角符号-->
+					</a>
+					<!-- dropdown(已经登录) -->
+					<div class="dropdown-menu w-lg wrapper bg-white animated shake" aria-labelledby="navbar-login-dropdown">
+						<form id="Login_form" action="" method="post">
+							<div class="form-group">
+								<label for="navbar-login-user">用户名</label>
+								<input type="text" name="name" id="navbar-login-user" class="form-control" placeholder="用户名或电子邮箱"></div>
+							<div class="form-group">
+								<label for="navbar-login-password">密码</label>
+								<input type="password" name="password" id="navbar-login-password" class="form-control" placeholder="密码"></div>
+						</form>
+					</div>
+				</li>
+				<!--/登录管理-->
+			</ul>
+		</div>
+	</header>
+
+	<!--描述：aside 右侧边栏 -->
+	<aside id="aside" class="app-aside hidden-xs bg-light dker b-r">
+		<div class="aside-wrap">
+			<div class="navi-wrap">
+				<div class="clearfix hidden-xs text-center hide show" id="aside-user">
+					<div class="dropdown wrapper">
+						<div ui-nav="">
 									<span class="thumb-lg w-auto-folded avatar m-t-sm">
                   					<img src="../static/img/-643b0d1dc704d923.jpg" class="img-full">
                 					</span>
-									
-								</div>
-								<a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
+
+						</div>
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
 									<span class="clear">
 										<span class="block m-t-sm">
                     						<strong class="font-bold text-lt">Dewey's</strong>
@@ -143,42 +135,205 @@
                   						</span>
 										<span class="text-muted text-xs block">傻逼于大神的爸爸。</span>
 									</span>
-								</a>
-								
-							</div>
-							<div class="line dk hidden-folded"></div>
-						</div>
+						</a>
+
 					</div>
+					<div class="line dk hidden-folded"></div>
 				</div>
-			</aside>
 
-			<!--
-    	作者：deweynull@163.com
-    	时间：2018-09-11
-    	描述：content
-    -->
-			<div id="content" class="app-content">
+				<nav ui-nav="" class="navi clearfix">
+					<ul class="nav">
+						<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+							<span>导航</span>
+						</li>
 
+						<li>
+							<a href="" class="auto">
+								<i class="glyphicon glyphicon-home text-md"></i>
+								<span>首页</span>
+							</a>
+						</li>
+
+						<li class="line dk"></li>
+
+						<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+							<span>组成</span>
+						</li>
+
+						<li id="typelist" > <!--class="active"-->
+							<a class="auto">
+										<span class="pull-right text-muted">
+								                    <i class="glyphicon glyphicon-menu-right text"></i>
+								                    <i class="glyphicon glyphicon-menu-down text-active"></i>
+								                  </span>
+								<i class="glyphicon glyphicon-th"></i>
+								<span>分类</span>
+							</a>
+							<ul class="nav nav-sub dk">
+								<li class="nav-sub-header">
+									<a data-no-instant="">
+										<span>分类</span>
+									</a>
+								</li>
+								<!--循环输出分类-->
+								<li>
+									<a href="https://www.moerats.com/category/zjjc/"><b class="badge pull-right">282</b><span>主机教程</span></a>
+								</li>
+								<li>
+									<a href="https://www.moerats.com/category/jzzs/"><b class="badge pull-right">176</b><span>建站知识</span></a>
+								</li>
+								<li>
+									<a href="https://www.moerats.com/category/wlzy/"><b class="badge pull-right">95</b><span>网络资源</span></a>
+								</li>
+								<li>
+									<a href="https://www.moerats.com/category/suibi/"><b class="badge pull-right">10</b><span>生活随笔</span></a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
 			</div>
-
-			<!--
-    	作者：deweynull@163.com
-    	时间：2018-09-11
-    	描述：footer
-    -->
-			<footer id="footer" class="app-footer" role="footer"></footer>
 		</div>
-	</body>
+	</aside>
+
+	<!--描述：content 主内容-->
+	<div id="content" class="app-content">
+		<main class="app-content-body animated ng-enter">
+			<div class="hbox hbox-auto-xs hbox-auto-sm">
+				<div class="col center-part">
+					<header class="bg-light lter b-b wrapper-md">
+						<h1 class="m-n font-thin h3 text-black l-h"></h1>
+						<small class="text-muted letterspacing indexWords">Hello world……</small>
+					</header>
+					<div class="wrapper-md" id="post-panel">
+						<!--首页输出文章-->
+						<div class="blog-post" id="EssayArea">
+							<!--<div class="panel">-->
+								<!--<div class="index-post-img">-->
+									<!--<a href="https://www.moerats.com/archives/252/">-->
+										<!--<div class="item-thumb lazy" style="background-image: url(https://www.moerats.com/usr/themes/handsome/usr/img/sj/3.jpg)"></div>-->
+									<!--</a>-->
+								<!--</div>-->
+								<!--<div class="post-meta wrapper-lg">-->
+									<!--<h2 class="m-t-none index-post-title"><a href="https://www.moerats.com/archives/252/"><span class="label text-base bg-danger pull-left m-t-xs m-r-xs" style="margin-top:  4px;">置顶</span>搬瓦工：512M内存/10G硬盘/1000G流量/1G带宽/洛杉矶QN/CN2机房/年付$18</a></h2>-->
+									<!--<p class="summary">说明：我们很多人喜欢爬Q，有的也想搭建网站玩玩，而且还不想备案，所以这里就需要用到国外的VPS了，这里只推荐个在国内很有名的国外主机商搬瓦工，建站很稳，速度也还不错，支持支付宝付款，很方便。简介Bandwagonhost就是大家熟知的...</p>-->
+									<!--<div class="line line-lg b-b b-light"></div>-->
+									<!--<div class="text-muted post-item-foot-icon">-->
+										<!--<i class="glyphicon glyphicon-user text-muted"></i><span class="m-r-sm">&nbsp;<a href="https://www.moerats.com/author/1/">Rat's&nbsp;</a></span>-->
+
+										<!--<i class="layui-icon layui-icon-log text-muted"></i><span class="m-r-sm">&nbsp;2017 年 08 月 12 日</span>-->
+										<!--<a href="https://www.moerats.com/archives/252/#comments" class="m-l-sm"><i class="glyphicon glyphicon-comment text-muted"></i>&nbsp;40 条评论</a>-->
+									<!--</div>-->
+									<!--&lt;!&ndash;text-muted&ndash;&gt;-->
+								<!--</div>-->
+								<!--&lt;!&ndash;post-meta wrapper-lg&ndash;&gt;-->
+							<!--</div>-->
+
+						</div>
+						<!--
+                            描述：分页
+                        -->
+						<div id="pageBar"></div>
+						<!--<nav class="text-center m-t-lg m-b-lg" role="navigation">-->
+							<!--<ol class="page-navigator">-->
+								<!--<li >-->
+									<!--<a href="">1</a>-->
+								<!--</li>-->
+								<!--<li><a href="">2</a>-->
+
+								<!--</li>-->
+								<!--<li><a href="">3</a>-->
+
+								<!--</li>-->
+								<!--<li><a href="">4</a>-->
+
+								<!--</li><li><span>...</span></li>-->
+								<!--<li><a href="">12</a>-->
+
+								<!--</li>-->
+								<!--<li class="next"><a href="">-->
+									<!--<i class="glyphicon glyphicon-chevron-right"></i></a>-->
+								<!--</li>-->
+							<!--</ol>-->
+						<!--</nav>-->
+					</div>
+
+				</div>
+
+				<!-- 首页右侧栏目 -->
+				<aside class="asideBar col w-md bg-white-only b-l bg-auto no-border-xs" role="complementary">
+					<div id="sidebar">
+						<section id="tabs-4" class="widget widget_tabs clear">
+							<div class="nav-tabs-alt no-js-hide">
+								<ul class="nav nav-tabs nav-justified" role="tablist">
+									<li class="active" role="presentation">
+										<a href="#widget-tabs-4-hots" role="tab" aria-controls="widget-tabs-4-hots" aria-expanded="true" data-toggle="tab"> <i class="glyphicon glyphicon-fire text-md text-muted wrapper-sm" aria-hidden="true"></i> <span class="sr-only">热门文章</span> </a>
+									</li>
+									<li role="presentation" class="">
+										<a href="#widget-tabs-4-comments" role="tab" aria-controls="widget-tabs-4-comments" aria-expanded="false" data-toggle="tab"> <i class="glyphicon glyphicon-comment text-md text-muted wrapper-sm" aria-hidden="true"></i> <span class="sr-only">最新评论</span> </a>
+									</li>
+									<li role="presentation" class="">
+										<a href="#widget-tabs-4-random" role="tab" aria-controls="widget-tabs-4-random" aria-expanded="false" data-toggle="tab"> <i class="glyphicon glyphicon-transfer text-md text-muted wrapper-sm" aria-hidden="true"></i> <span class="sr-only">随机文章</span> </a>
+									</li>
+								</ul>
+							</div>
+
+							<div class="tab-content">
+								<!--热门文章-->
+								<div id="widget-tabs-4-hots" class="tab-pane  fade in wrapper-md active" role="tabpanel">
+									<h3 class="widget-title m-t-none text-md">热门文章</h3>
+									<ul class="list-group no-bg no-borders pull-in m-b-none">
+										<li class="list-group-item">
+											<a href="https://www.moerats.com/archives/636/" class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="https://www.moerats.com/usr/themes/handsome/usr/img/sj2/2.jpg" class="img-circle"></a>
+											<div class="clear">
+												<h4 class="h5 l-h"> <a href="https://www.moerats.com/archives/636/" title="博客将不定期赠送DigitalOcean $50优惠码"> 博客将不定期赠送DigitalOcean $50优惠码 </a></h4>
+												<small class="text-muted post-head-icon">
+												                    <span class="meta-views"> <i class="glyphicon glyphicon-comment" aria-hidden="true"></i> <span class="sr-only">评论数：</span> <span class="meta-value">747</span>
+												                    </span>
+													<span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">45037</span>
+												                    </span>
+												</small>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</section>
+
+						<!-- 博客信息-->
+						<section id="categories-2" class="widget widget_categories wrapper-md clear">
+							<h3 class="widget-title m-t-none text-md">博客信息</h3>
+							<ul class="list-group">
+								<li class="list-group-item"> <i class="glyphicon glyphicon-file text-muted"></i> <span class="badge
+								           pull-right">563</span>文章数目</li>
+								<li class="list-group-item"> <i class="glyphicon glyphicon-comment text-muted"></i> <span class="badge
+								           pull-right">4563</span>评论数目</li>
+								<li class="list-group-item"> <i class="glyphicon glyphicon-equalizer text-muted"></i> <span class="badge
+								           pull-right">1年163天</span>运行天数</li>
+								<li class="list-group-item"> <i class="glyphicon glyphicon-refresh text-muted"></i> <span class="badge
+								           pull-right">14 小时前</span>最后更新</li>
+							</ul>
+						</section>
+					</div>
+				</aside>
+			</div>
+		</main>
+	</div>
+
+	<!-- 描述：footer -->
+	<footer id="footer" class="app-footer" role="footer"></footer>
+</div>
+</body>
 
 <script>
 
-	function musicSwitchOn() {
-	    var ob = $("#skPlayer");
-		if(ob.hasClass("skPlayer-list-on")){
-		    ob.removeClass("skPlayer-list-on");
-		}else{
+    function musicSwitchOn() {
+        var ob = $("#skPlayer");
+        if(ob.hasClass("skPlayer-list-on")){
+            ob.removeClass("skPlayer-list-on");
+        }else{
             ob.addClass("skPlayer-list-on");
-		}
+        }
 
     }
 </script>

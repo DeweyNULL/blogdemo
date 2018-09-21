@@ -10,7 +10,7 @@ public class JsonResultSet {
 
     private String statusCode;
 
-    private Object resuitData ;
+    private Object resultData ;
 
     public String getStatusCode() {
         return statusCode;
@@ -20,11 +20,11 @@ public class JsonResultSet {
         this.statusCode = statusCode;
     }
 
-    public Object getResuitData() {
-        return resuitData;
+    public Object getResultData() {
+        return resultData;
     }
 
-    public void setResuitData(Object resuitData) {
-        this.resuitData = resuitData;
+    public void setResultData(Object resultData) {
+        this.resultData = resultData;
     }
 }

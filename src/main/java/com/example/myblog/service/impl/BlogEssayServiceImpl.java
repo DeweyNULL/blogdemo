@@ -3,12 +3,15 @@ package com.example.myblog.service.impl;
 import com.example.myblog.entity.BlogEssay;
 import com.example.myblog.repository.BlogEssayRepository;
 import com.example.myblog.service.BlogEssayService;
+import com.example.myblog.tools.Pic2base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @auther : Dewey
@@ -24,12 +27,22 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     BlogEssayRepository blogEssayRepository;
 
     @Override
-    public Page<BlogEssay> getEssayByPage(int size , int page, Sort sort) {
+    public List<BlogEssay> getEssayByPage(int size , int page, Sort sort) {
 
         Pageable pageable  = PageRequest.of(page,size,sort);
 
-        Page<BlogEssay> blogEssays = blogEssayRepository.findAll(pageable);
+        List<BlogEssay> blogEssays = blogEssayRepository.findAll(pageable).getContent();
 
+
+        //这里获取的是数据库中的图片路径
+        int essaysSize = blogEssays.size();
+        for (int i = 0 ; i<essaysSize;i++){
+
+            String picpath = blogEssays.get(i).getPic();
+            if(picpath!=null){
+                blogEssays.get(i).setPic(Pic2base64.getPicBase64(picpath));
+            }
+        }
         return blogEssays;
     }
 

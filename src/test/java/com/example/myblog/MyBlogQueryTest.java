@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,16 +44,47 @@ public class MyBlogQueryTest {
         for (BlogEssay pageblog: pageList) {
             System.out.println(pageblog.toString());
         }
+
+        for (int i = 0 ; i < pageList.getSize();i++){
+
+        }
     }
 
+    @Test
+    public void saveTest(){
+        BlogEssay blogEssay = new BlogEssay();
+        blogEssay.setSummary("Hello world First Test");
+        blogEssay.setAuther_name("Dewey");
+        blogEssay.setPic("C:\\work\\GoogleDownload\\img\\TIM20180829130315.png");
+        blogEssay.setEssay_title("第一篇测试文章");
+        blogEssay.setEssay_content("Hello world First Test");
+        blogEssay.setViews_num(1);
+        blogEssay.setEssay_num(1);
+        blogEssay.setComment_num(0);
+        blogEssay.setTime(new Date());
+
+        blogEssayRepository.save(blogEssay);
+
+    }
     @Test
     public void batchSaveTest(){
         List<BlogEssay> blogEssays = new ArrayList<>();
 
         for (Integer i = 0 ; i<50;i++){
             BlogEssay blogEssay = new BlogEssay();
-            blogEssay.setEssay_title(new String(i.toString()));
+            blogEssay.setSummary("Hello world First Test");
+            blogEssay.setAuther_name("Dewey");
+            blogEssay.setPic("C:\\work\\GoogleDownload\\img\\TIM20180829130315.png");
+            blogEssay.setEssay_title("第"+i+"篇测试文章");
+            blogEssay.setEssay_content("Hello world "+i+" Test");
+            blogEssay.setViews_num(1);
+            blogEssay.setEssay_num(1);
+            blogEssay.setComment_num(0);
+            blogEssay.setTime(new Date());
             blogEssays.add(blogEssay);
+        }
+        for (BlogEssay temp: blogEssays) {
+            System.out.println(temp.toString());
         }
         blogEssayRepository.saveAll(blogEssays);
     }
