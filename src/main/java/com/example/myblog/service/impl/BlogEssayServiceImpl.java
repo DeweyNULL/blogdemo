@@ -54,5 +54,10 @@ public class BlogEssayServiceImpl implements BlogEssayService {
         return blogEssayRepository.count();
     }
 
+    @Override
+    public BlogEssay getEssayById(Long id) {
+        return blogEssayRepository.findById(id).get();
+    }
+
 
 }

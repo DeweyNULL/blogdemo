@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +33,7 @@ public class BlogEssayController {
     /*
         保存文章的操作 这个先放着 后面再做
      */
-    @RequestMapping(value = "save" , method = RequestMethod.POST)
+    @RequestMapping(value = "/save" , method = RequestMethod.POST)
     public ResponseEntity<JsonResultSet> saveEssay(){
         JsonResultSet jsonResultSet = new JsonResultSet();
         return ResponseEntity.ok(jsonResultSet);
@@ -41,7 +42,7 @@ public class BlogEssayController {
     /*
         根据页数获取文章 这里暂且只考虑用户只有我一个人 不然这里需要做人员校验
      */
-    @RequestMapping(value = "query/page/{pageNum}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/query/page/{pageNum}" , method = RequestMethod.GET)
     public ResponseEntity<JsonResultSet> queryByPage(@PathVariable(value = "pageNum")int pageNum , HttpServletRequest request){
         JsonResultSet  jsonResultSet = new JsonResultSet();
 
@@ -62,7 +63,7 @@ public class BlogEssayController {
     /*
         获取文章总数 返回文章数和页面数
      */
-    @RequestMapping(value = "getPageNum")
+    @RequestMapping(value = "/getPageNum")
     public ResponseEntity<JsonResultSet> queryPageNum(){
         JsonResultSet jsonResultSet = new JsonResultSet();
         long essayNum = blogEssayServiceImpl.getPageNum();
@@ -80,5 +81,17 @@ public class BlogEssayController {
         return ResponseEntity.ok(jsonResultSet);
     }
 
-
+    @GetMapping(value = "/getBlog/{id}")
+    public ResponseEntity<JsonResultSet> getBlog(@PathVariable(value = "id")Long id){
+        System.out.println("in to method :"+id);
+        JsonResultSet jsonResultSet = new JsonResultSet();
+        BlogEssay blogEssay = blogEssayServiceImpl.getEssayById(id);
+        if(blogEssay!=null){
+            jsonResultSet.setStatusCode("0");
+            jsonResultSet.setResultData(blogEssay);
+        }else {
+            jsonResultSet.setStatusCode("1");
+        }
+        return ResponseEntity.ok(jsonResultSet);
+    }
 }

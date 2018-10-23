@@ -1,4 +1,4 @@
-
+var basePath = "/";
 var pageAmout;
 
 $(function () {
@@ -10,7 +10,7 @@ $(function () {
 //初始化文章区域
 function getEssay(pageNum) {
     $.ajax({
-        url:"query/page/"+pageNum,
+        url:basePath+"query/page/"+pageNum,
         success:function (result) {
             if(result.statusCode=="0"){
 
@@ -23,7 +23,8 @@ function getEssay(pageNum) {
                         result.resultData[i].summary,
                         result.resultData[i].auther_name,
                         result.resultData[i].time,
-                        result.resultData[i].comment_num
+                        result.resultData[i].comment_num,
+                        result.resultData[i].id
                     )
                 }
 
@@ -36,7 +37,7 @@ function getEssay(pageNum) {
 
 function getPageCount(getCount) {
     $.ajax({
-        url:"getPageNum",
+        url:basePath+"getPageNum",
         success:function (responseData) {
             if (responseData.statusCode=="0" && getCount ==undefined ){
                 //console.log(JSON.stringify(responseData));
@@ -53,14 +54,14 @@ function getPageCount(getCount) {
 
 
 //返回需要的参数
-//首页图片picUrl 文章属性(是否置顶) 文章标题title 文章summary 作者author 时间time 评论数commentNum
-function printOutEssay(picUrl,properties,title,summary,author , time , commentNum) {
+//首页图片picUrl 文章属性(是否置顶) 文章标题title 文章summary 作者author 时间time 评论数commentNum 文章编号：id
+function printOutEssay(picUrl,properties,title,summary,author , time , commentNum , id) {
 
     if(properties==null) {
         var httpstr =
             '<div class="panel">' +
             '<div class="index-post-img">' +
-            '<a href="">' +  //跳转到的文章页面
+            '<a href="javascript:void(0);" onclick="readEssay('+id+')" >' +  //跳转到的文章页面
             '<div class="item-thumb lazy" style="background-image: url(data:image/png;base64,' +
             picUrl +
             ')"></div>' +
@@ -132,6 +133,81 @@ function getPageEssay(pageNum) {
     $('#EssayArea').html("");
     getEssay(pageNum-1);
 
-    changePage(pageNum)
+    //changePage(pageNum);
 }
+
+function back2home() {
+    var blogControl = $('#blogControl');
+    var httpStr = '<header class="bg-light lter b-b wrapper-md">\n' +
+        '<h1 class="m-n font-thin h3 text-black l-h"></h1>\n' +
+        '<small class="text-muted letterspacing indexWords">Hello world……</small>\n' +
+        '</header>\n' +
+        '<div class="wrapper-md" id="post-panel">\n' +
+        '<!--首页输出文章-->\n' +
+        '<div class="blog-post" id="EssayArea">\n' +
+        '<!--  文章输出地方-->\n' +
+        '</div>\n' +
+        '<!-- 描述：分页-->\n' +
+        '<div id="pageBar"></div>\n' +
+        '</div>';
+    blogControl.html("");
+    blogControl.append(httpStr);
+    getEssay(0);
+    getPageCount();
+}
+//输出blog内容
+function readEssay(id) {
+    //console.log("in blog");
+    $.ajax({
+        url:basePath+"getBlog/"+id,
+        success:function (result) {
+           // console.log(result.statusCode);
+            //console.log(result.resultData);
+            if(result.statusCode=="0"){ // 输出文章
+                printOurBlog(result.resultData);
+            }
+        }
+    })
+    //console.log(id);
+}
+
+//文章页面打印
+function printOurBlog(blog) {
+    var blogControl = $('#blogControl');
+    if(blog.essay_type==null) blog.essay_type = "未分类";
+    var httpString =
+        ' <style>\n' +
+        '        .mdx-si-head .cover{\n' +
+        '            object-fit: cover;\n' +
+        '            width: 100%;\n' +
+        '            height: 100%\n' +
+        '        }\n' +
+        '</style>'+
+        '<header id="small_widgets" class="bg-light lter b-b wrapper-md">\n' +
+        '             <h1 class="entry-title m-n font-thin h3 text-black l-h">'+ blog.essay_title+'</h1>' +
+        '                  <ul class="entry-meta text-muted list-inline m-b-none small\n' +
+        '             post-head-icon">\n' +
+        '             <!--作者-->\n' +
+        '             <li class="meta-author"><i class="glyphicon glyphicon-user text-muted" aria-hidden="true"></i><span class="sr-only">博主：</span> <a class="meta-value" > '+blog.auther_name+'</a></li>\n' +
+        '             <!--发布时间-->\n' +
+        '             <li class="meta-date"><i class="layui-icon layui-icon-log text-muted" aria-hidden="true"></i>&nbsp;<span class="sr-only">发布时间：</span><time class="meta-value">'+blog.time.split("T")[0]+'</time></li>\n' +
+        '             <!--浏览数-->\n' +
+        '             <li class="meta-views"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>&nbsp;<span class="meta-value">'+blog.views_num+'&nbsp;次浏览</span></li>\n' +
+        '             <!--评论数-->\n' +
+        '             <li class="meta-comments"><i class="glyphicon glyphicon-comment text-muted" aria-hidden="true"></i>&nbsp;<a class="meta-value" href="#comments">'+blog.comment_num+'&nbsp;</a></li>\n' +
+        '             <!--分类-->\n' +
+        '             <li class="meta-categories"><i class="\tglyphicon glyphicon-tags" aria-hidden="true"></i> <span class="sr-only">分类：</span> <span class="meta-value"><a >'+blog.essay_type+'</a></span></li>\n' +
+        '         </ul>\n' +
+        '      </header>'+
+        '</div >';
+
+    blogControl.html("");
+    blogControl.append(httpString);
+   // window.location.replace("http://localhost:9099/home/blog/"+blog.id);
+    var stateObject = {id: "http://localhost:9099/home/blog/"+blog.id};
+    var title = "标题 "+"http://localhost:9099/home/blog/"+blog.id;
+    var newUrl = "http://localhost:9099/home/blog/"+blog.id;
+    history.pushState(stateObject,title,newUrl);
+}
+
 

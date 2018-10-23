@@ -120,7 +120,7 @@ var _createClass = function() {
 			for(var e in d) b.hasOwnProperty(e) || (b[e] = d[e]);
 			if(this.option = b, !(this.option.music && this.option.music.type && this.option.music.source)) return console.error("请正确配置对象！"), Object.create(null);
 			this.root = this.option.element, this.type = this.option.music.type, this.music = this.option.music.source, this.media = this.option.music.media, this.isMobile = /mobile/i.test(window.navigator.userAgent), this.isReady = !1, this.toggle = this.toggle.bind(this), this.toggleList = this.toggleList.bind(this), this.toggleMute = this.toggleMute.bind(this), this.switchMode = this.switchMode.bind(this), "file" === this.type ? (this.root.innerHTML = this.template(), this.init(), this.bind(), this.isReady = !0) : "cloud" === this.type && (this.root.innerHTML = '<p class="skPlayer-tip-loading"><span></span> <span></span> <span></span> <span></span><span></span></p>', Util.ajax({
-				url: "getMusicList/collect/"+this.music,
+				url: "/getMusicList/collect/"+this.music,
 				beforeSend: function() {},
 				success: function(a) {
 					c.music = JSON.parse(a), c.root.innerHTML = c.template(), c.init(), c.bind()
@@ -169,7 +169,7 @@ var _createClass = function() {
 					musiclist: this.root.querySelector(".skPlayer-list"),
 					musicitem: this.root.querySelectorAll(".skPlayer-list li")
 				}, this.audio = this.root.querySelector(".skPlayer-source"), this.option.listshow && (this.root.className = "skPlayer-list-on"), "singleloop" === this.option.mode && (this.audio.loop = !0), this.dom.musicitem[0].className = "skPlayer-curMusic", "cloud" === this.type && Util.ajax({
-					url: "getMusicList/song/" + this.music[0].song_id,
+					url: "/getMusicList/song/" + this.music[0].song_id,
 					beforeSend: function() {},
 					success: function(b) {
 						var c = JSON.parse(b).url;

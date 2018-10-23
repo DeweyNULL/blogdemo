@@ -18,5 +18,5 @@ public interface BlogEssayService {
 
     public long getPageNum();
 
-
+    public BlogEssay getEssayById(Long id);
 }

@@ -148,7 +148,7 @@
 						</li>
 
 						<li>
-							<a href="" class="auto">
+							<a href="javascript:void(0);" class="auto" onclick="back2home()">
 								<i class="glyphicon glyphicon-home text-md"></i>
 								<span>首页</span>
 							</a>
@@ -198,9 +198,13 @@
 
 	<!--描述：content 主内容-->
 	<div id="content" class="app-content">
+		<div id="loading" class="butterbar active hide">
+			<span class="bar"></span>
+		</div>
+
 		<main class="app-content-body animated ng-enter">
-			<div class="hbox hbox-auto-xs hbox-auto-sm">
-				<div class="col center-part">
+			<div class="hbox hbox-auto-xs hbox-auto-sm" >
+				<div class="col center-part" id="blogControl">
 					<header class="bg-light lter b-b wrapper-md">
 						<h1 class="m-n font-thin h3 text-black l-h"></h1>
 						<small class="text-muted letterspacing indexWords">Hello world……</small>
@@ -208,54 +212,10 @@
 					<div class="wrapper-md" id="post-panel">
 						<!--首页输出文章-->
 						<div class="blog-post" id="EssayArea">
-							<!--<div class="panel">-->
-								<!--<div class="index-post-img">-->
-									<!--<a href="https://www.moerats.com/archives/252/">-->
-										<!--<div class="item-thumb lazy" style="background-image: url(https://www.moerats.com/usr/themes/handsome/usr/img/sj/3.jpg)"></div>-->
-									<!--</a>-->
-								<!--</div>-->
-								<!--<div class="post-meta wrapper-lg">-->
-									<!--<h2 class="m-t-none index-post-title"><a href="https://www.moerats.com/archives/252/"><span class="label text-base bg-danger pull-left m-t-xs m-r-xs" style="margin-top:  4px;">置顶</span>搬瓦工：512M内存/10G硬盘/1000G流量/1G带宽/洛杉矶QN/CN2机房/年付$18</a></h2>-->
-									<!--<p class="summary">说明：我们很多人喜欢爬Q，有的也想搭建网站玩玩，而且还不想备案，所以这里就需要用到国外的VPS了，这里只推荐个在国内很有名的国外主机商搬瓦工，建站很稳，速度也还不错，支持支付宝付款，很方便。简介Bandwagonhost就是大家熟知的...</p>-->
-									<!--<div class="line line-lg b-b b-light"></div>-->
-									<!--<div class="text-muted post-item-foot-icon">-->
-										<!--<i class="glyphicon glyphicon-user text-muted"></i><span class="m-r-sm">&nbsp;<a href="https://www.moerats.com/author/1/">Rat's&nbsp;</a></span>-->
-
-										<!--<i class="layui-icon layui-icon-log text-muted"></i><span class="m-r-sm">&nbsp;2017 年 08 月 12 日</span>-->
-										<!--<a href="https://www.moerats.com/archives/252/#comments" class="m-l-sm"><i class="glyphicon glyphicon-comment text-muted"></i>&nbsp;40 条评论</a>-->
-									<!--</div>-->
-									<!--&lt;!&ndash;text-muted&ndash;&gt;-->
-								<!--</div>-->
-								<!--&lt;!&ndash;post-meta wrapper-lg&ndash;&gt;-->
-							<!--</div>-->
-
+							<!--  文章输出地方-->
 						</div>
-						<!--
-                            描述：分页
-                        -->
+						<!-- 描述：分页-->
 						<div id="pageBar"></div>
-						<!--<nav class="text-center m-t-lg m-b-lg" role="navigation">-->
-							<!--<ol class="page-navigator">-->
-								<!--<li >-->
-									<!--<a href="">1</a>-->
-								<!--</li>-->
-								<!--<li><a href="">2</a>-->
-
-								<!--</li>-->
-								<!--<li><a href="">3</a>-->
-
-								<!--</li>-->
-								<!--<li><a href="">4</a>-->
-
-								<!--</li><li><span>...</span></li>-->
-								<!--<li><a href="">12</a>-->
-
-								<!--</li>-->
-								<!--<li class="next"><a href="">-->
-									<!--<i class="glyphicon glyphicon-chevron-right"></i></a>-->
-								<!--</li>-->
-							<!--</ol>-->
-						<!--</nav>-->
 					</div>
 
 				</div>

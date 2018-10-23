@@ -17,7 +17,8 @@ public class BlogMusicController {
     @RequestMapping(value = "/getMusicList/{type}/{id}" ,method = RequestMethod.GET)
     public String test(@PathVariable(value = "id") String id , @PathVariable(value = "type") String type){
         String APIUrl="https://www.moerats.com/usr/themes/handsome/libs/Get.php?type="+type+"&media=netease &id="+id;
-        System.out.println(APIUrl);
+      // System.out.println(APIUrl);
+      //  String APIUrl="http://localhost:8090/getMusic/"+type+"/"+id;
         String Result;
         try {
             URL url = new URL(APIUrl);
