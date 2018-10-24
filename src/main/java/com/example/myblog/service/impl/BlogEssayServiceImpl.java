@@ -9,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,5 +61,14 @@ public class BlogEssayServiceImpl implements BlogEssayService {
         return blogEssayRepository.findById(id).get();
     }
 
+    @Transactional
+    @Modifying
+    public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
+        blogEssayRepository.save(blogEssay);
+    };
 
+    public List<BlogEssay> getHotBlogEssay(){
+
+        return blogEssayRepository.findFirst3ByOrderByViewsNumDesc();
+    }
 }

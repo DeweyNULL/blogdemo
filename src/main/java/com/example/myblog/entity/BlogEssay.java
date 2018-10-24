@@ -40,7 +40,9 @@ public class BlogEssay {
 
     private String essay_type;
 
-    private int views_num;
+
+    @Column(name ="views_num")
+    private int viewsNum;
 
     private String essay_properties;
 
@@ -119,13 +121,14 @@ public class BlogEssay {
         this.essay_type = essay_type;
     }
 
-    public int getViews_num() {
-        return views_num;
+    public int getViewsNum() {
+        return viewsNum;
     }
 
-    public void setViews_num(int views_num) {
-        this.views_num = views_num;
+    public void setViewsNum(int viewsNum) {
+        this.viewsNum = viewsNum;
     }
+
 
     public String getEssay_properties() {
         return essay_properties;
@@ -155,7 +158,7 @@ public class BlogEssay {
                 ", comment_num=" + comment_num +
                 ", essay_num=" + essay_num +
                 ", essay_type='" + essay_type + '\'' +
-                ", views_num=" + views_num +
+                ", views_num=" + viewsNum +
                 ", essay_properties='" + essay_properties + '\'' +
                 ", essay_content='" + essay_content + '\'' +
                 '}';

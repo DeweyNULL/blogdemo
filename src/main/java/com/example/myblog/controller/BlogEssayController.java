@@ -3,6 +3,7 @@ package com.example.myblog.controller;
 import com.example.myblog.entity.BlogEssay;
 import com.example.myblog.entity.JsonResultSet;
 import com.example.myblog.service.BlogEssayService;
+import com.example.myblog.tools.Pic2base64;
 import com.example.myblog.webentity.responseEntity.PageCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,10 +85,15 @@ public class BlogEssayController {
 
     @GetMapping(value = "/getBlog/{id}")
     public ResponseEntity<JsonResultSet> getBlog(@PathVariable(value = "id")Long id){
-        System.out.println("in to method :"+id);
+       // System.out.println("in to method :"+id);
         JsonResultSet jsonResultSet = new JsonResultSet();
         BlogEssay blogEssay = blogEssayServiceImpl.getEssayById(id);
         if(blogEssay!=null){
+            //System.out.println(blogEssay.getViews_num());
+            blogEssay.setViewsNum(blogEssay.getViewsNum()+1);
+            blogEssayServiceImpl.saveOrUpdateBlogStatus(blogEssay);
+            String picPath = blogEssay.getPic();
+            blogEssay.setPic(Pic2base64.getPicBase64(picPath));
             jsonResultSet.setStatusCode("0");
             jsonResultSet.setResultData(blogEssay);
         }else {
@@ -94,4 +101,26 @@ public class BlogEssayController {
         }
         return ResponseEntity.ok(jsonResultSet);
     }
+
+    @GetMapping(value = "/getHotBlog")
+    ResponseEntity<JsonResultSet> getHotestBlog(){
+        JsonResultSet jsonResultSet = new JsonResultSet();
+        List<BlogEssay> blogEssays = new ArrayList<>();
+
+        blogEssays = blogEssayServiceImpl.getHotBlogEssay();
+        if (blogEssays!=null&&blogEssays.size()>0){
+            int size = blogEssays.size();
+            for (int i = 0; i < size; i++) {
+                String picPath = blogEssays.get(i).getPic();
+                blogEssays.get(i).setPic(Pic2base64.getPicBase64(picPath));
+            }
+            jsonResultSet.setStatusCode("0");
+            jsonResultSet.setResultData(blogEssays);
+        }else {
+            jsonResultSet.setStatusCode("1");
+        }
+        return ResponseEntity.ok(jsonResultSet);
+    }
+
+
 }

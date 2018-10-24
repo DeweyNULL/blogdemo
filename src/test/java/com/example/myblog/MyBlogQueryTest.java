@@ -58,7 +58,7 @@ public class MyBlogQueryTest {
         blogEssay.setPic("C:\\work\\GoogleDownload\\img\\TIM20180829130315.png");
         blogEssay.setEssay_title("第一篇测试文章");
         blogEssay.setEssay_content("Hello world First Test");
-        blogEssay.setViews_num(1);
+        blogEssay.setViewsNum(1);
         blogEssay.setEssay_num(1);
         blogEssay.setComment_num(0);
         blogEssay.setTime(new Date());
@@ -77,7 +77,7 @@ public class MyBlogQueryTest {
             blogEssay.setPic("C:\\work\\GoogleDownload\\img\\TIM20180829130315.png");
             blogEssay.setEssay_title("第"+i+"篇测试文章");
             blogEssay.setEssay_content("Hello world "+i+" Test");
-            blogEssay.setViews_num(1);
+            blogEssay.setViewsNum(1);
             blogEssay.setEssay_num(1);
             blogEssay.setComment_num(0);
             blogEssay.setTime(new Date());

@@ -2,8 +2,7 @@ var basePath = "/";
 var pageAmout;
 
 $(function () {
-    getEssay(0);
-    getPageCount();
+    back2home();
 })
 
 
@@ -154,6 +153,11 @@ function back2home() {
     blogControl.append(httpStr);
     getEssay(0);
     getPageCount();
+    setRightColunm();
+    var stateObject = {id: "http://localhost:9099/home"};
+    var title = "标题 "+"http://localhost:9099/home";
+    var newUrl = "http://localhost:9099/home";
+    history.pushState(stateObject,title,newUrl)
 }
 //输出blog内容
 function readEssay(id) {
@@ -199,7 +203,21 @@ function printOurBlog(blog) {
         '             <li class="meta-categories"><i class="\tglyphicon glyphicon-tags" aria-hidden="true"></i> <span class="sr-only">分类：</span> <span class="meta-value"><a >'+blog.essay_type+'</a></span></li>\n' +
         '         </ul>\n' +
         '      </header>'+
-        '</div >';
+        '<div class="wrapper-md" id="post-panel">'+
+        '<ol class="breadcrumb bg-white b-a" itemscope=""><li>\n' +
+        '            <a href="javascript:void(0);" onclick="back2home()" itemprop="breadcrumb" title="" data-toggle="tooltip" data-original-title="返回首页"><i class="glyphicon glyphicon-home " aria-hidden="true"></i>&nbsp;首页</a>\n' +
+        '        </li><li class="active">正文&nbsp;&nbsp;</li></ol>\n' +
+        '        <div id="postpage" class="blog-post" style="font-size: 14px;">\n' +
+        '            <article class="panel">\n' +
+        '                <!--文章页面的头图-->\n' +
+        '                <div class="entry-thumbnail" aria-hidden="true"><div class="item-thumb lazy" style="background-image: url(data:image/png;base64,'+blog.pic+')"></div></div> '+
+        '<div id="post-content" class="wrapper-lg">\n' +
+        '                    <div class="entry-content l-h-2x">\n' +
+        blog.essay_content+
+        '</div></div>'
+        ' </article>\n' +
+        '        </div>'+
+        '</div>' ;
 
     blogControl.html("");
     blogControl.append(httpString);
@@ -211,3 +229,34 @@ function printOurBlog(blog) {
 }
 
 
+function setRightColunm() {
+
+    $.ajax({
+        url:basePath+"getHotBlog",
+        success:function (data) {
+            if (data.statusCode=='0'){
+                var httpOutPrint = "";
+                for (var i = 0 ; i < data.length;i++){
+                    var httpstr = '<li class="list-group-item">\n' +
+                        '<a href="javascript::void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="../static/img/-643b0d1dc704d923.jpg" class="img-circle"></a>\n' +
+                        '<div class="clear">\n' +
+                        '<h4 class="h5 l-h"> <a href="https://www.moerats.com/archives/636/" title="'+data.resultData[i].essay_title+'"> '+data.resultData[i].essay_title+' </a></h4>\n' +
+                        '<small class="text-muted post-head-icon">\n' +
+                        '                    <span class="meta-views"> <i class="glyphicon glyphicon-comment" aria-hidden="true"></i> <span class="sr-only">评论数：</span> <span class="meta-value">'+data.resultData[i].comment_num+'</span>\n' +
+                        '                    </span>\n' +
+                        ' <span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">'+data.resultData[i].views_num+'</span>\n' +
+                        '                    </span>\n' +
+                        '</small>\n' +
+                        '</div>\n' +
+                        '</li>';
+                    httpOutPrint+=httpstr;
+                }
+                $("#mostViewsBlog").append(httpOutPrint);
+            }
+        }
+        
+    });
+    
+
+
+}

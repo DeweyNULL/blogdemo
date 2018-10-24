@@ -19,4 +19,8 @@ public interface BlogEssayService {
     public long getPageNum();
 
     public BlogEssay getEssayById(Long id);
+
+    public void saveOrUpdateBlogStatus(BlogEssay blogEssay);
+
+    public List<BlogEssay> getHotBlogEssay();
 }
