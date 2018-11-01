@@ -5,6 +5,8 @@ import com.example.myblog.entity.JsonResultSet;
 import com.example.myblog.service.BlogEssayService;
 import com.example.myblog.tools.Pic2base64;
 import com.example.myblog.webentity.responseEntity.PageCount;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -29,6 +31,8 @@ import java.util.List;
 
 @Controller
 public class BlogEssayController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     BlogEssayService blogEssayServiceImpl;
@@ -104,11 +108,13 @@ public class BlogEssayController {
 
     @GetMapping(value = "/getHotBlog")
     ResponseEntity<JsonResultSet> getHotestBlog(){
+        logger.info("into getHotestBlog");
         JsonResultSet jsonResultSet = new JsonResultSet();
         List<BlogEssay> blogEssays = new ArrayList<>();
 
         blogEssays = blogEssayServiceImpl.getHotBlogEssay();
         if (blogEssays!=null&&blogEssays.size()>0){
+            logger.info(Integer.valueOf(blogEssays.size()).toString());
             int size = blogEssays.size();
             for (int i = 0; i < size; i++) {
                 String picPath = blogEssays.get(i).getPic();

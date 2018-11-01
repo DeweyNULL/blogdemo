@@ -19,8 +19,9 @@
 	<link rel="stylesheet" href="../static/mCss/My2.css" />
 	<link rel="stylesheet" href="../static/mCss/My3.css" />
 	<link rel="stylesheet" href="../static/css/layui.css" />
-	<script src="../static/layui.all.js"></script>
 
+	<script src="../static/layui.all.js"></script>
+	<script src="../static/js/bootstrap-paginator.min.js"></script>
 	<!--音乐播放器-->
 	<script src="../static/js/codydemo.js"></script>
 
@@ -177,16 +178,16 @@
 								</li>
 								<!--循环输出分类-->
 								<li>
-									<a href="https://www.moerats.com/category/zjjc/"><b class="badge pull-right">282</b><span>主机教程</span></a>
+									<a href="javascript:void(0);"><b class="badge pull-right">282</b><span>主机教程</span></a>
 								</li>
 								<li>
-									<a href="https://www.moerats.com/category/jzzs/"><b class="badge pull-right">176</b><span>建站知识</span></a>
+									<a href="javascript:void(0);"><b class="badge pull-right">176</b><span>建站知识</span></a>
 								</li>
 								<li>
-									<a href="https://www.moerats.com/category/wlzy/"><b class="badge pull-right">95</b><span>网络资源</span></a>
+									<a href="javascript:void(0);"><b class="badge pull-right">95</b><span>网络资源</span></a>
 								</li>
 								<li>
-									<a href="https://www.moerats.com/category/suibi/"><b class="badge pull-right">10</b><span>生活随笔</span></a>
+									<a href="javascript:void(0);"><b class="badge pull-right">10</b><span>生活随笔</span></a>
 								</li>
 							</ul>
 						</li>
@@ -215,7 +216,9 @@
 							<!--  文章输出地方-->
 						</div>
 						<!-- 描述：分页-->
-						<div id="pageBar"></div>
+
+						<ul id="mybar"></ul>
+
 					</div>
 
 				</div>
@@ -246,6 +249,7 @@
 
 									</ul>
 								</div>
+
 							</div>
 
 
@@ -274,6 +278,7 @@
 	<!-- 描述：footer -->
 	<footer id="footer" class="app-footer" role="footer"></footer>
 </div>
+<ul id="bar"></ul>
 </body>
 
 <script>

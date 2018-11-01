@@ -3,12 +3,16 @@ package com.example.myblog.tools;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @auther : Dewey
  * @date : 2018/9/17 15 51
  * @description :
  */
 public class Pic2base64 {
+
 
     public static synchronized String getPicBase64(String picfilepath){
 
@@ -22,7 +26,9 @@ public class Pic2base64 {
             in.read(data);
             in.close();
         }catch (Exception e){
+            //e.printStackTrace();
             e.printStackTrace();
+            return null;
         }
 
         return new String(Base64.encodeBase64(data));

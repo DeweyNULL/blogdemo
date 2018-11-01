@@ -108,6 +108,7 @@
     </dependencies>
 
     <build>
+        <finalName>myBlog</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

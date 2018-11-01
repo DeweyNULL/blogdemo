@@ -3,6 +3,8 @@ var pageAmout;
 
 $(function () {
     back2home();
+
+
 })
 
 
@@ -26,6 +28,7 @@ function getEssay(pageNum) {
                         result.resultData[i].id
                     )
                 }
+
 
             }else {
 
@@ -91,36 +94,37 @@ function printOutEssay(picUrl,properties,title,summary,author , time , commentNu
 }
 
 function printOurPage(pageNumber) {
+    var mybar = $("#pageBar");
 
-    if(pageNumber<=1){
-        return;
-    }
-    var loopPage="";
-    var j = 0;
-    for (var i = 1; i<=pageNumber ; i++,j++ ){
+   // $("#pageBar").append(httpStr);
 
-        if(j<4){
-
-            loopPage=loopPage+'<li id="page'+i+'"><a href="javascript:void(0)" onclick="getPageEssay('+ i +')">'+i+'</a></li>';
-        }else {
-            loopPage=loopPage+'</li><li><span>...</span></li>';
-            break;
+    //
+    var options = {
+        bootstrapMajorVersion: 3, //版本
+        currentPage: 1, //当前页数
+        numberOfPages:5,
+        totalPages: pageNumber, //总页数
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }
+        },//点击事件，用于通过Ajax来刷新整个list列表
+        onPageClicked: function (event, originalEvent, type, page) {
+            //console.log("into click" + page);
+            getPageEssay(page);
         }
-    }
+    };
+    mybar.bootstrapPaginator(options);
 
-    if (pageNumber>4){
-        loopPage=loopPage+'<li id="page'+pageNumber+'"><a href="javascript:void(0)" onclick="getPageEssay('+ pageNumber +')">'+pageNumber+'</a></li>';
-    }
-
-    loopPage=loopPage+'<li class="next"><a href=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>';
-
-
-    var httpStr = '<nav class="text-center m-t-lg m-b-lg" role="navigation" id = "pagebar">'+
-        '<ol class="page-navigator">'+
-        loopPage+
-        '</ol></nav>';
-
-    $("#pageBar").append(httpStr);
 }
 
 function getPageEssay(pageNum) {
@@ -146,8 +150,8 @@ function back2home() {
         '<div class="blog-post" id="EssayArea">\n' +
         '<!--  文章输出地方-->\n' +
         '</div>\n' +
-        '<!-- 描述：分页-->\n' +
-        '<div id="pageBar"></div>\n' +
+        '<!-- 描述：分页-->\n' +'<div class="text-center">'+
+        '<ul id="pageBar"></ul>\n' +'</div>'
         '</div>';
     blogControl.html("");
     blogControl.append(httpStr);
@@ -157,7 +161,8 @@ function back2home() {
     var stateObject = {id: "http://localhost:9099/home"};
     var title = "标题 "+"http://localhost:9099/home";
     var newUrl = "http://localhost:9099/home";
-    history.pushState(stateObject,title,newUrl)
+    history.pushState(stateObject,title,newUrl);
+
 }
 //输出blog内容
 function readEssay(id) {
@@ -173,6 +178,7 @@ function readEssay(id) {
         }
     })
     //console.log(id);
+    setRightColunm();
 }
 
 //文章页面打印
@@ -196,7 +202,7 @@ function printOurBlog(blog) {
         '             <!--发布时间-->\n' +
         '             <li class="meta-date"><i class="layui-icon layui-icon-log text-muted" aria-hidden="true"></i>&nbsp;<span class="sr-only">发布时间：</span><time class="meta-value">'+blog.time.split("T")[0]+'</time></li>\n' +
         '             <!--浏览数-->\n' +
-        '             <li class="meta-views"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>&nbsp;<span class="meta-value">'+blog.views_num+'&nbsp;次浏览</span></li>\n' +
+        '             <li class="meta-views"><i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i>&nbsp;<span class="meta-value">'+blog.viewsNum+'&nbsp;次浏览</span></li>\n' +
         '             <!--评论数-->\n' +
         '             <li class="meta-comments"><i class="glyphicon glyphicon-comment text-muted" aria-hidden="true"></i>&nbsp;<a class="meta-value" href="#comments">'+blog.comment_num+'&nbsp;</a></li>\n' +
         '             <!--分类-->\n' +
@@ -230,21 +236,21 @@ function printOurBlog(blog) {
 
 
 function setRightColunm() {
-
+    $("#mostViewsBlog").html("");
     $.ajax({
         url:basePath+"getHotBlog",
         success:function (data) {
             if (data.statusCode=='0'){
                 var httpOutPrint = "";
-                for (var i = 0 ; i < data.length;i++){
+                for (var i = 0 ; i < data.resultData.length;i++){
                     var httpstr = '<li class="list-group-item">\n' +
-                        '<a href="javascript::void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="../static/img/-643b0d1dc704d923.jpg" class="img-circle"></a>\n' +
+                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="../static/img/-643b0d1dc704d923.jpg" class="img-circle"></a>\n' +
                         '<div class="clear">\n' +
-                        '<h4 class="h5 l-h"> <a href="https://www.moerats.com/archives/636/" title="'+data.resultData[i].essay_title+'"> '+data.resultData[i].essay_title+' </a></h4>\n' +
+                        '<h4 class="h5 l-h"> <a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')" title="'+data.resultData[i].essay_title+'"> '+data.resultData[i].essay_title+' </a></h4>\n' +
                         '<small class="text-muted post-head-icon">\n' +
                         '                    <span class="meta-views"> <i class="glyphicon glyphicon-comment" aria-hidden="true"></i> <span class="sr-only">评论数：</span> <span class="meta-value">'+data.resultData[i].comment_num+'</span>\n' +
                         '                    </span>\n' +
-                        ' <span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">'+data.resultData[i].views_num+'</span>\n' +
+                        ' <span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">'+data.resultData[i].viewsNum+'</span>\n' +
                         '                    </span>\n' +
                         '</small>\n' +
                         '</div>\n' +
