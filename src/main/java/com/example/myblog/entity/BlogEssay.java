@@ -20,7 +20,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class BlogEssay {
 
     @Id @GeneratedValue(strategy = IDENTITY)
-
     private Long id;
 
     private String auther_name;

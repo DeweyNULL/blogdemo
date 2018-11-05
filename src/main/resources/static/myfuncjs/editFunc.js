@@ -5,6 +5,7 @@ $(function () {
     back2home();
 
 
+
 })
 
 
@@ -151,7 +152,8 @@ function back2home() {
         '<!--  文章输出地方-->\n' +
         '</div>\n' +
         '<!-- 描述：分页-->\n' +'<div class="text-center">'+
-        '<ul id="pageBar"></ul>\n' +'</div>'
+        '<ul id="pageBar"></ul>\n' +'</div>'+
+        '<div id="comment"></div>'+
         '</div>';
     blogControl.html("");
     blogControl.append(httpStr);
@@ -220,13 +222,21 @@ function printOurBlog(blog) {
         '<div id="post-content" class="wrapper-lg">\n' +
         '                    <div class="entry-content l-h-2x">\n' +
         blog.essay_content+
-        '</div></div>'
+        '</div></div>'+
         ' </article>\n' +
         '        </div>'+
+        '<nav class="m-t-lg m-b-lg">\n' +
+        '        <ul class="pager">\n' +
+        '        <li class="next"> <a href="https://www.moerats.com/archives/251/" title="" data-toggle="tooltip" data-original-title="BT种子/磁力链接下载工具：Aria2一键安装管理脚本"> 下一篇 </a></li>   <li class="previous"> <a href="https://www.moerats.com/archives/253/" title="" data-toggle="tooltip" data-original-title="一款支持多账户的Web管理面板：CyberPanel安装教程"> 上一篇 </a></li>\n' +
+        '        </ul>\n' +
+        '       </nav>'+
         '</div>' ;
+
+
 
     blogControl.html("");
     blogControl.append(httpString);
+    printOutCommentAreaHttp();
    // window.location.replace("http://localhost:9099/home/blog/"+blog.id);
     var stateObject = {id: "http://localhost:9099/home/blog/"+blog.id};
     var title = "标题 "+"http://localhost:9099/home/blog/"+blog.id;
@@ -265,4 +275,60 @@ function setRightColunm() {
     
 
 
+}
+
+// 评论区：
+function printOutCommentAreaHttp(){
+    var postpanel = $("#post-panel");
+    var commentHttp='<div id="comments" class="">'+
+        '<div id="respond-post-252" class="respond comment-respond">\n' +
+        '\n' +
+        '                <h4 id="reply-title" class="comment-reply-title m-t-lg m-b">发表评论 \n' +
+        '                </h4>\n' +
+        '                <form id="comment_form"  action="" class="comment-form" role="form">\n' +
+        '                    <div class="comment-form-comment form-group">\n' +
+        '                        <label for="comment">评论                            <span class="required text-danger">*</span></label>\n' +
+        '                        <textarea id="comment" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="说点什么吧……" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'submit\').click();return false};"></textarea>\n' +
+        '                    </div>\n' +
+        '                    <!--判断是否登录-->\n' +
+        '                                                                <div id="author_info" class="row row-sm">\n' +
+        '                                                        <div class="comment-form-author form-group col-sm-6 col-md-4">\n' +
+        '                                <label for="author">名称                                    <span class="required text-danger">*</span></label>\n' +
+        '                                <div>\n' +
+        '                                                                        <img class="author-avatar" src="https://cdn.v2ex.com/gravatar/d41d8cd98f00b204e9800998ecf8427e?s=65&amp;r=G&amp;d=" nogallery="">\n' +
+        '                                <input id="author" class="form-control" name="author" type="text" value="" maxlength="245" placeholder="姓名或昵称">\n' +
+        '                                </div>\n' +
+        '                            </div>\n' +
+        '\n' +
+        '                            <div class="comment-form-email form-group col-sm-6 col-md-4">\n' +
+        '                                <label for="email">邮箱                                    <span class="required text-danger">*</span>\n' +
+        '                                </label>\n' +
+        '                                <input type="text" name="mail" id="mail" class="form-control" placeholder="邮箱 (必填,将保密)" value="">\n' +
+        '                            </div>\n' +
+        '\n' +
+        '                            <div class="comment-form-url form-group col-sm-12 col-md-4">\n' +
+        '                                <label for="url">地址</label>\n' +
+        '                                <input id="url" class="form-control" name="url" type="url" value="" maxlength="200" placeholder="网站或博客"></div>\n' +
+        '                        </div>\n' +
+        '                                                <!--提交按钮-->\n' +
+        '                        <div class="form-group">\n' +
+        '                            <button type="button" name="commentSubmit" id="commentSubmit" class=" btn btn-success padder-lg" onclick="commentSubmit()">\n' +
+        '                                <span class="text">发表评论</span>\n' +
+        '                                <span class="text-active">提交中...</span>\n' +
+        '                            </button>\n' +
+        '                            <i class="animate-spin fontello fontello-spinner hide" id="spin"></i>\n' +
+        '                            <input type="hidden" name="comment_post_ID" id="comment_post_ID">\n' +
+        '                            <input type="hidden" name="comment_parent" id="comment_parent">\n' +
+        '                        </div>\n' +
+        '                </form>\n' +
+        '            </div>'+
+        '</div>';
+
+    postpanel.append(commentHttp);
+}
+
+function commentSubmit() {
+    console.log("into comment");
+    var form = $("#comment_form").serialize();
+    console.log(form);
 }

@@ -8,6 +8,7 @@ import com.example.myblog.webentity.responseEntity.PageCount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpRequest;
@@ -36,6 +37,9 @@ public class BlogEssayController {
 
     @Autowired
     BlogEssayService blogEssayServiceImpl;
+
+    @Value("${picfile.path}")
+    String filePathDir;
     /*
         保存文章的操作 这个先放着 后面再做
      */
@@ -96,7 +100,7 @@ public class BlogEssayController {
             //System.out.println(blogEssay.getViews_num());
             blogEssay.setViewsNum(blogEssay.getViewsNum()+1);
             blogEssayServiceImpl.saveOrUpdateBlogStatus(blogEssay);
-            String picPath = blogEssay.getPic();
+            String picPath =filePathDir + blogEssay.getPic();
             blogEssay.setPic(Pic2base64.getPicBase64(picPath));
             jsonResultSet.setStatusCode("0");
             jsonResultSet.setResultData(blogEssay);
@@ -117,7 +121,7 @@ public class BlogEssayController {
             logger.info(Integer.valueOf(blogEssays.size()).toString());
             int size = blogEssays.size();
             for (int i = 0; i < size; i++) {
-                String picPath = blogEssays.get(i).getPic();
+                String picPath = filePathDir + blogEssays.get(i).getPic();
                 blogEssays.get(i).setPic(Pic2base64.getPicBase64(picPath));
             }
             jsonResultSet.setStatusCode("0");
