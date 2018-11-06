@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8">
@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!--<script src="../static/js/importjs.js"></script>  -->
-	<script src="../static/layui.js" charset="utf-8"></script>
+	<script src="/static/layui.js" charset="utf-8"></script>
 	<!-- 第三方CDN加载CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -18,18 +18,19 @@
 	<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="../static/mCss/my.css" />
-	<link rel="stylesheet" href="../static/mCss/My2.css" />
-	<link rel="stylesheet" href="../static/mCss/My3.css" />
-	<link rel="stylesheet" href="../static/css/layui.css" />
+	<link rel="stylesheet" href="/static/mCss/my.css" />
+	<link rel="stylesheet" href="/static/mCss/My2.css" />
+	<link rel="stylesheet" href="/static/mCss/My3.css" />
+	<link rel="stylesheet" href="/static/css/layui.css" />
 
-	<script src="../static/layui.all.js"></script>
-	<script src="../static/js/bootstrap-paginator.min.js"></script>
+	<script src="/static/layui.all.js"></script>
+	<script src="/static/js/bootstrap-paginator.min.js"></script>
 	<!--音乐播放器-->
-	<script src="../static/js/codydemo.js"></script>
-
+	<script src="/static/js/codydemo.js"></script>
+	<!--表单json化插件-->
+	<script src="/static/js/jquery.serializejson.js"></script>
 	<!--自己的js-->
-	<script type="text/javascript" src="../static/myfuncjs/editFunc.js" ></script>
+	<script type="text/javascript" src="/static/myfuncjs/editFunc.js" ></script>
 </head>
 
 <body id="body">
@@ -127,7 +128,7 @@
 					<div class="dropdown wrapper">
 						<div ui-nav="">
 									<span class="thumb-lg w-auto-folded avatar m-t-sm">
-                  					<img src="../static/img/-643b0d1dc704d923.jpg" class="img-full">
+                  					<img src="/static/img/-643b0d1dc704d923.jpg" class="img-full">
                 					</span>
 
 						</div>
@@ -255,6 +256,29 @@
 									</ul>
 								</div>
 
+								<div id="widget-tabs-4-comments" class="tab-pane  fade in wrapper-md " role="tabpanel">
+									<h3 class="widget-title m-t-none text-md">热门文章</h3>
+									<ul class="list-group no-bg no-borders pull-in m-b-none" id="latestComment">
+										<li class="list-group-item">
+
+											<a href="https://www.moerats.com/archives/782/#comment-7679" class="pull-left thumb-sm avatar m-r">
+												<img nogallery="" src="https://cdn.v2ex.com/gravatar/3d39099b287a8ce078022c596b8ebcea?s=65&amp;r=G&amp;d=" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">              </a>
+											<a href="https://www.moerats.com/archives/782/#comment-7679" class="text-muted">
+												<!--<i class="iconfont icon-comments-o text-muted pull-right m-t-sm text-sm" title="" aria-hidden="true" data-toggle="tooltip" data-placement="auto left"></i>
+                                                <span class="sr-only"></span>-->
+											</a>
+											<div class="clear">
+												<div class="text-ellipsis">
+													<a href="https://www.moerats.com/archives/782/#comment-7679" title="ThinkVN"> ThinkVN </a>
+												</div>
+												<small class="text-muted">
+                      <span>
+                          my video 24Mb, and i wait 1 day...                      </span>
+												</small>
+											</div>
+										</li>
+									</ul>
+								</div>
 							</div>
 
 
@@ -265,13 +289,13 @@
 							<h3 class="widget-title m-t-none text-md">博客信息</h3>
 							<ul class="list-group" id="blogInfo">
 								<li class="list-group-item"> <i class="glyphicon glyphicon-file text-muted"></i> <span class="badge
-								           pull-right">563</span>文章数目</li>
+								           pull-right">52</span>文章数目</li>
 								<li class="list-group-item"> <i class="glyphicon glyphicon-comment text-muted"></i> <span class="badge
-								           pull-right">4563</span>评论数目</li>
+								           pull-right">0</span>评论数目</li>
 								<li class="list-group-item"> <i class="glyphicon glyphicon-equalizer text-muted"></i> <span class="badge
-								           pull-right">1年163天</span>运行天数</li>
+								           pull-right">0天</span>运行天数</li>
 								<li class="list-group-item"> <i class="glyphicon glyphicon-refresh text-muted"></i> <span class="badge
-								           pull-right">14 小时前</span>最后更新</li>
+								           pull-right">0</span>最后更新</li>
 							</ul>
 						</section>
 					</div>
@@ -284,7 +308,8 @@
 	<!-- 描述：footer -->
 	<footer id="footer" class="app-footer" role="footer"></footer>
 </div>
-<ul id="bar"></ul>
+<!-- 一些数值 -->
+	<input type="hidden" id = "hasPageId" th:value="${blogId}">
 </body>
 
 <script>

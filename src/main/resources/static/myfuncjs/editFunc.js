@@ -2,12 +2,26 @@ var basePath = "/";
 var pageAmout;
 
 $(function () {
-    back2home();
+
+    var blogId =$("#hasPageId").val();
+    if(isNull(blogId)|| blogId == "${blogId}"){
+        back2home();
+    }
+    else {
+        readEssay(blogId);
+
+    }
 
 
 
 })
-
+//判断为空
+function isNull(data){
+    if(data==undefined || data == null || data == ""){
+        return true;
+    }
+    return false;
+}
 
 //初始化文章区域
 function getEssay(pageNum) {
@@ -227,7 +241,7 @@ function printOurBlog(blog) {
         '        </div>'+
         '<nav class="m-t-lg m-b-lg">\n' +
         '        <ul class="pager">\n' +
-        '        <li class="next"> <a href="https://www.moerats.com/archives/251/" title="" data-toggle="tooltip" data-original-title="BT种子/磁力链接下载工具：Aria2一键安装管理脚本"> 下一篇 </a></li>   <li class="previous"> <a href="https://www.moerats.com/archives/253/" title="" data-toggle="tooltip" data-original-title="一款支持多账户的Web管理面板：CyberPanel安装教程"> 上一篇 </a></li>\n' +
+        '        <li class="next"> <a href="javascript:void(0)" title="" data-toggle="tooltip" data-original-title="上一篇"> 下一篇 </a></li>   <li class="previous"> <a href="javascript:void(0)" title="" data-toggle="tooltip" data-original-title="下一篇"> 上一篇 </a></li>\n' +
         '        </ul>\n' +
         '       </nav>'+
         '</div>' ;
@@ -254,7 +268,7 @@ function setRightColunm() {
                 var httpOutPrint = "";
                 for (var i = 0 ; i < data.resultData.length;i++){
                     var httpstr = '<li class="list-group-item">\n' +
-                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="../static/img/-643b0d1dc704d923.jpg" class="img-circle"></a>\n' +
+                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="/static/img/-643b0d1dc704d923.jpg" class="img-circle"></a>\n' +
                         '<div class="clear">\n' +
                         '<h4 class="h5 l-h"> <a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')" title="'+data.resultData[i].essay_title+'"> '+data.resultData[i].essay_title+' </a></h4>\n' +
                         '<small class="text-muted post-head-icon">\n' +
@@ -312,7 +326,7 @@ function printOutCommentAreaHttp(){
         '                        </div>\n' +
         '                                                <!--提交按钮-->\n' +
         '                        <div class="form-group">\n' +
-        '                            <button type="button" name="commentSubmit" id="commentSubmit" class=" btn btn-success padder-lg" onclick="commentSubmit()">\n' +
+        '                            <button type="button" name="commentSubmit" id="commentSubmit" class=" btn btn-success padder-lg" onclick="commentSubmitEvent()">\n' +
         '                                <span class="text">发表评论</span>\n' +
         '                                <span class="text-active">提交中...</span>\n' +
         '                            </button>\n' +
@@ -327,8 +341,34 @@ function printOutCommentAreaHttp(){
     postpanel.append(commentHttp);
 }
 
-function commentSubmit() {
-    console.log("into comment");
-    var form = $("#comment_form").serialize();
+function commentSubmitEvent() {
+    //console.log("into comment");
+    //將表單序列化成json
+    var form = $("#comment_form").serializeJSON();
+    var url = window.location.href.split("/");
     console.log(form);
+    var data = {
+        "essayId": url[url.length-1],
+        "commentId":form.comment_post_ID,
+        "commentRec":form.comment_parent,
+        "commentContent":form.text,
+        "userName":form.author,
+        "userEmail":form.mail,
+        "userWeb":form.url
+    };
+    console.log(data);
+    $.ajax({
+        type:"post",
+        url:window.location.href+"/saveComment",
+        data:JSON.stringify(data),
+        dataType:'json',
+        contentType: "application/json",
+        success:function(resp){
+            document.getElementById("comment_form").reset()
+        },
+        error:function () {
+            console.log("未知錯誤");
+        }
+    })
+    //console.log(form);
 }

@@ -11,4 +11,6 @@ public class HelloWorldController {
         return "home";
     }
 
+    @RequestMapping("/edit")
+    public String jump2edit(){return "editPage";}
 }

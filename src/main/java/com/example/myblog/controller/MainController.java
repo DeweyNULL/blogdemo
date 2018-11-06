@@ -1,6 +1,8 @@
 package com.example.myblog.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,4 +19,10 @@ public class MainController {
         return "laydemo";
     }
 
+    @RequestMapping("/home/blog/{id}")
+    public String jump2BlogPage(@PathVariable Long id,Model model){
+        String blogId = id.toString();
+        model.addAttribute("blogId",blogId);
+        return "laydemo";
+    }
 }
