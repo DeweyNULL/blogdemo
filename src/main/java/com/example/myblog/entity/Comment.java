@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @auther : Dewey
@@ -38,6 +39,8 @@ public class Comment implements Serializable {
     @Column(name="user_web")
     private String userWeb;
 
+    @Column(name="time")
+    private Date time;
 
     public Long getEssayId() {
         return essayId;
@@ -95,6 +98,15 @@ public class Comment implements Serializable {
         this.userWeb = userWeb;
     }
 
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -105,6 +117,7 @@ public class Comment implements Serializable {
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userWeb='" + userWeb + '\'' +
+                ", time=" + time +
                 '}';
     }
 }

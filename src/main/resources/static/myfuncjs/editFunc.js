@@ -250,7 +250,7 @@ function printOurBlog(blog) {
 
     blogControl.html("");
     blogControl.append(httpString);
-    printOutCommentAreaHttp();
+    printOutCommentAreaHttp(blog.id);
    // window.location.replace("http://localhost:9099/home/blog/"+blog.id);
     var stateObject = {id: "http://localhost:9099/home/blog/"+blog.id};
     var title = "标题 "+"http://localhost:9099/home/blog/"+blog.id;
@@ -292,10 +292,10 @@ function setRightColunm() {
 }
 
 // 评论区：
-function printOutCommentAreaHttp(){
+function printOutCommentAreaHttp(Id){
     var postpanel = $("#post-panel");
     var commentHttp='<div id="comments" class="">'+
-        '<div id="respond-post-252" class="respond comment-respond">\n' +
+        '<div id="respond-post" class="respond comment-respond">\n' +
         '\n' +
         '                <h4 id="reply-title" class="comment-reply-title m-t-lg m-b">发表评论 \n' +
         '                </h4>\n' +
@@ -337,8 +337,16 @@ function printOutCommentAreaHttp(){
         '                </form>\n' +
         '            </div>'+
         '</div>';
-
     postpanel.append(commentHttp);
+    $.ajax({
+        url:"/blogComment/"+Id,
+        success:function (respData) {
+            //console.log(respData);
+            if(respData.statusCode=="0"){
+                printOutCommentContent(respData.resultData);
+            }
+        }
+    });
 }
 
 function commentSubmitEvent() {
@@ -371,4 +379,49 @@ function commentSubmitEvent() {
         }
     })
     //console.log(form);
+}
+
+
+//写出具体评论区
+function printOutCommentContent(data) {
+    var httpPreStr = '<h4 class="comments-title m-t-lg m-b">'+ data.commentNum+'</h4>';
+    var httpMidStr = '<ol class="comment-list">';
+    for(var i=0 ; i<data.commentVOList.length;i++ ){
+        var superCommentHttp = '<li  class="comment-body comment-parent comment-odd">'+
+            '<div id="" class="comment-body">\n' +
+            '\n' +
+            '    <a class="pull-left thumb-sm">\n' +
+            '        <img nogallery="" src="" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">                </a>\n' +
+            '    <div class="m-b m-l-xxl">\n' +
+            '        <div class="comment-meta">\n' +
+            '            <span class="comment-author vcard">\n' +
+            '              <b class="fn"><a href="https://www.lolikong.pw" target="_blank" rel="external nofollow">'+
+            data.commentVOList[i].superComment.userName+
+                '</a></b>              </span>\n' +
+            '            <div class="comment-metadata">\n' +
+            '                <time class="format_time text-muted text-xs block m-t-xs" pubdate="pubdate" datetime="'+
+            timeHandle(data.commentVOList[i].superComment.time)+'">'+timeHandle(data.commentVOList[i].superComment.time)+'</time>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <!--回复内容-->\n' +
+            '        <div class="comment-content m-t-sm">\n' +
+            '            <span class="comment-author-at"><b></b></span><span class="comment-content-true">\n' +
+            '                            <p>'+
+            data.commentVOList[i].superComment.commentContent+
+            '</p>                        </span>\n' +
+            '        </div>\n' +
+            '        <!--回复按钮-->\n' +
+            '        <div class="comment-reply m-t-sm">\n' +
+            '            <a href="javascript:void(0)" rel="nofollow" onclick="">回复</a>                    </div>\n' +
+            '    </div>\n' +
+            '\n' +
+            '</div>';
+
+    }
+}
+
+function timeHandle(timeStr) {
+    var timeYMS = timeStr.split("T")[0];
+    var timeHMS = timeStr.split("T")[1].split(".000")[0];
+    return timeYMS+"--"+timeHMS;
 }

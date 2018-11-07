@@ -32,7 +32,7 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     @Value("${picfile.path}")
     String filePathDir;
 
-    @Override
+    @Override //分页获取文章
     public List<BlogEssay> getEssayByPage(int size , int page, Sort sort) {
 
         Pageable pageable  = PageRequest.of(page,size,sort);
@@ -52,21 +52,18 @@ public class BlogEssayServiceImpl implements BlogEssayService {
         return blogEssays;
     }
 
-    @Override
+    @Override //获取总页数
     public long getPageNum() {
-
-
-
         return blogEssayRepository.count();
     }
 
-    @Override
+    @Override  //根据文章ID获取文章
     public BlogEssay getEssayById(Long id) {
         return blogEssayRepository.findById(id).get();
     }
 
     @Transactional
-    @Modifying
+    @Modifying  //修改或者保存文章
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
         blogEssayRepository.save(blogEssay);
     };
