@@ -301,8 +301,9 @@ function printOutCommentAreaHttp(Id){
         '                </h4>\n' +
         '                <form id="comment_form"  action="" class="comment-form" role="form">\n' +
         '                    <div class="comment-form-comment form-group">\n' +
+        '                        <textarea id="repContent" class="textarea form-control OwO-textarea" name="text" rows="5" ></textarea>\n' +
         '                        <label for="comment">评论                            <span class="required text-danger">*</span></label>\n' +
-        '                        <textarea id="comment" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="说点什么吧……" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'submit\').click();return false};"></textarea>\n' +
+        '                        <textarea id="comment" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="说点什么吧……" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'commentSubmit\').click();return false};"></textarea>\n' +
         '                    </div>\n' +
         '                    <!--判断是否登录-->\n' +
         '                                                                <div id="author_info" class="row row-sm">\n' +
@@ -333,6 +334,7 @@ function printOutCommentAreaHttp(Id){
         '                            <i class="animate-spin fontello fontello-spinner hide" id="spin"></i>\n' +
         '                            <input type="hidden" name="comment_post_ID" id="comment_post_ID">\n' +
         '                            <input type="hidden" name="comment_parent" id="comment_parent">\n' +
+        '                            <input type="hidden" name="comment_replyTo" id="comment_replyTo">\n' +
         '                        </div>\n' +
         '                </form>\n' +
         '            </div>'+
@@ -354,7 +356,7 @@ function commentSubmitEvent() {
     //將表單序列化成json
     var form = $("#comment_form").serializeJSON();
     var url = window.location.href.split("/");
-    console.log(form);
+    //console.log(form);
     var data = {
         "essayId": url[url.length-1],
         "commentId":form.comment_post_ID,
@@ -364,10 +366,10 @@ function commentSubmitEvent() {
         "userEmail":form.mail,
         "userWeb":form.url
     };
-    console.log(data);
+    //console.log(data);
     $.ajax({
         type:"post",
-        url:window.location.href+"/saveComment",
+        url:window.location.href+"/saveComment/"+form.comment_replyTo,
         data:JSON.stringify(data),
         dataType:'json',
         contentType: "application/json",
@@ -384,7 +386,7 @@ function commentSubmitEvent() {
 
 //写出具体评论区
 function printOutCommentContent(data) {
-    var httpPreStr = '<h4 class="comments-title m-t-lg m-b">'+ data.commentNum+'</h4>';
+    var httpPreStr = '<h4 class="comments-title m-t-lg m-b">共有'+ data.commentNum+'条评论</h4>';
     var httpMidStr = '<ol class="comment-list">';
     for(var i=0 ; i<data.commentVOList.length;i++ ){
         var superCommentHttp = '<li  class="comment-body comment-parent comment-odd">'+
@@ -412,14 +414,70 @@ function printOutCommentContent(data) {
             '        </div>\n' +
             '        <!--回复按钮-->\n' +
             '        <div class="comment-reply m-t-sm">\n' +
-            '            <a href="javascript:void(0)" rel="nofollow" onclick="">回复</a>                    </div>\n' +
+            '            <a href="javascript:void(0)" rel="nofollow" onclick="reply('+i+','+(data.commentVOList[i].childrenComment.length+1)+',\''+data.commentVOList[i].superComment.userName+'//'+data.commentVOList[i].superComment.commentRec+'\')">回复</a>                    </div>\n' +
             '    </div>\n' +
             '\n' +
             '</div>';
+        for(var j =0 ; j <data.commentVOList[i].childrenComment.length;j++){
+           if(j==0){
+               superCommentHttp+='<div class="comment-children list-unstyled m-l-xxl">\n' +
+                   '    <ol class="comment-list">';
+           }
+           superCommentHttp+=
+               '<li id="" class="comment-body comment-child comment-level-odd comment-odd comment-by-author">\n' +
+               '            <div id="" class="comment-body">\n' +
+               '\n' +
+               '                <a class="pull-left thumb-sm">\n' +
+               '                    <img nogallery="" src="" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">                </a>\n' +
+               '                <div class="m-b m-l-xxl">\n' +
+               '                    <div class="comment-meta">\n' +
+               '            <span class="comment-author vcard">\n' +
+               '              <b class="fn">'+
+               data.commentVOList[i].childrenComment[j].userName+
+               '</b>             </span>\n' +
+               '                        <div class="comment-metadata">\n' +
+               '                            <time class="format_time text-muted text-xs block m-t-xs" pubdate="pubdate" datetime="">'+
+               timeHandle(data.commentVOList[i].childrenComment[j].time)+
+               '</time>\n' +
+               '                        </div>\n' +
+               '                    </div>\n' +
+               '                    <!--回复内容-->\n' +
+               '                    <div class="comment-content m-t-sm">\n' +
+               '                        <span class="comment-author-at"></span><span class="comment-content-true">\n' +
+               '                            <p>'+
+               data.commentVOList[i].childrenComment[j].commentContent
+               +'</p>                        </span>\n' +
+               '                    </div>\n' +
+               '                    <!--回复按钮-->\n' +
+               '                    <div class="comment-reply m-t-sm">\n' +
+               '                        <a href="javascript:void(0)" rel="nofollow" onclick="reply('+i+','+(data.commentVOList[i].childrenComment.length+1)+',\''+data.commentVOList[i].childrenComment[j].userName+'//'+data.commentVOList[i].childrenComment[j].commentRec+'\')">回复</a>                    </div>\n' +
+               '                </div>\n' +
+               '\n' +
+               '            </div>\n' +
+               '        </li>';
+           if(j==data.commentVOList[i].childrenComment.length-1){
+               superCommentHttp+='    </ol> <!-- 嵌套评论所有内容-->\n' +
+                   '</div>';
+           }
 
+        }
+        httpMidStr+=superCommentHttp;
     }
+    httpPreStr=httpPreStr+httpMidStr+'</ol><nav class="text-center m-t-lg m-b-lg" role="navigation"></nav>';
+    $("#post-panel").append(httpPreStr);
+
 }
 
+function reply(commentId,commentRep,replyto) {
+    var comment = $("#comment");
+    comment.focus();
+    comment.val("@"+replyto.split("//")[0]+":");
+    $("#comment_post_ID").val(commentId);
+    $("#comment_parent").val(commentRep);
+    $("#comment_replyTo").val(replyto.split("//")[1]);
+    //$("#repContent").val();
+    //document.getElementById("repContent").style.display="block";
+}
 function timeHandle(timeStr) {
     var timeYMS = timeStr.split("T")[0];
     var timeHMS = timeStr.split("T")[1].split(".000")[0];

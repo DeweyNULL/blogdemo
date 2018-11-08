@@ -30,10 +30,10 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @RequestMapping("/home/blog/{id}/saveComment")
-    public ResponseEntity<JsonResultSet> commentSave(@PathVariable Long id, @RequestBody Comment comment , HttpServletRequest request){
+    @RequestMapping("/home/blog/{id}/saveComment/{commentReplyTo}")
+    public ResponseEntity<JsonResultSet> commentSave(@PathVariable Long id, @PathVariable Long commentReplyTo,@RequestBody Comment comment , HttpServletRequest request){
         JsonResultSet jsonResultSet = new JsonResultSet();
-
+        logger.info(commentReplyTo.toString());
         logger.info(id.toString());
         logger.info(comment.toString());
         if(!id.equals(comment.getEssayId())){  //如果这里不相等说明有抓包修改
