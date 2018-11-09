@@ -33,7 +33,7 @@ public class BlogMusicController {
                 //  System.out.println(line);
             }
             Result = json;
-            System.out.println(json);
+           // System.out.println(json);
             // 到这里需要一个json字符串转json对象的包 先暂停
             in.close();
         } catch (Exception e) {

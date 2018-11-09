@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CommentRepository extends JpaRepository<Comment, IdComment> {
 
-    public List<Comment> findByEssayIdOrderByCommentIdDescCommentRecAsc(Long essayId);
+    public List<Comment> findByEssayIdOrderByCommentIdDescCommentRecDesc(Long essayId);
 
     public List<Comment> findFirst5ByOrderByTime();
 

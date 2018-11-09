@@ -30,6 +30,7 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
+    //存评论
     @RequestMapping("/home/blog/{id}/saveComment/{commentReplyTo}")
     public ResponseEntity<JsonResultSet> commentSave(@PathVariable Long id, @PathVariable Long commentReplyTo,@RequestBody Comment comment , HttpServletRequest request){
         JsonResultSet jsonResultSet = new JsonResultSet();
@@ -41,10 +42,16 @@ public class CommentController {
             jsonResultSet.setResultData("对不上文章编号");
             return ResponseEntity.ok(jsonResultSet);
         }
+        commentService.commentSave(comment);
+        //暂留消息队列提示用法
+        jsonResultSet.setStatusCode("0");
+        jsonResultSet.setResultData(commentService.getAllCommentByBlogId(id));
 
         return ResponseEntity.ok(jsonResultSet);
     }
 
+
+    //获取所有评论
     @RequestMapping(value = "/blogComment/{id}" ,method = RequestMethod.GET)
     public ResponseEntity<JsonResultSet> commentGet(@PathVariable Long id){
         JsonResultSet jsonResultSet = new JsonResultSet();

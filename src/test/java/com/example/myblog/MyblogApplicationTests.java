@@ -33,7 +33,7 @@ public class MyblogApplicationTests {
     @Test
     public void commentServiceTest(){
         Comment comment = new Comment();
-        comment.setEssayId(Long.valueOf(2));
+        comment.setEssayId(Long.valueOf(1));
         comment.setTime(new Date());
         comment.setCommentRec(Long.valueOf(0));
         comment.setCommentContent("hello world");
@@ -64,6 +64,11 @@ public class MyblogApplicationTests {
     @Test
     public void testSort(){
 
-        System.out.println(commentRepository.findByEssayIdOrderByCommentIdDescCommentRecAsc(Long.valueOf(1)).toString());
+        System.out.println(commentRepository.findByEssayIdOrderByCommentIdDescCommentRecDesc(Long.valueOf(1)).toString());
+    }
+
+    @Test
+    public void serviceTest(){
+        commentService.getAllCommentByBlogId(1L);
     }
 }

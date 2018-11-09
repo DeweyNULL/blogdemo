@@ -301,7 +301,7 @@ function printOutCommentAreaHttp(Id){
         '                </h4>\n' +
         '                <form id="comment_form"  action="" class="comment-form" role="form">\n' +
         '                    <div class="comment-form-comment form-group">\n' +
-        '                        <textarea id="repContent" class="textarea form-control OwO-textarea" name="text" rows="5" ></textarea>\n' +
+        //'                        <textarea id="repContent" class="textarea form-control OwO-textarea" name="text" rows="5" ></textarea>\n' +
         '                        <label for="comment">评论                            <span class="required text-danger">*</span></label>\n' +
         '                        <textarea id="comment" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="说点什么吧……" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'commentSubmit\').click();return false};"></textarea>\n' +
         '                    </div>\n' +
@@ -311,19 +311,19 @@ function printOutCommentAreaHttp(Id){
         '                                <label for="author">名称                                    <span class="required text-danger">*</span></label>\n' +
         '                                <div>\n' +
         '                                                                        <img class="author-avatar" src="https://cdn.v2ex.com/gravatar/d41d8cd98f00b204e9800998ecf8427e?s=65&amp;r=G&amp;d=" nogallery="">\n' +
-        '                                <input id="author" class="form-control" name="author" type="text" value="" maxlength="245" placeholder="姓名或昵称">\n' +
+        '                                <input id="author" maxlength="20" class="form-control" name="author" type="text" value="" maxlength="245" placeholder="姓名或昵称">\n' +
         '                                </div>\n' +
         '                            </div>\n' +
         '\n' +
         '                            <div class="comment-form-email form-group col-sm-6 col-md-4">\n' +
         '                                <label for="email">邮箱                                    <span class="required text-danger">*</span>\n' +
         '                                </label>\n' +
-        '                                <input type="text" name="mail" id="mail" class="form-control" placeholder="邮箱 (必填,将保密)" value="">\n' +
+        '                                <input type="email" maxlength="50" name="mail" id="mail" class="form-control" placeholder="邮箱 (必填,将保密)" value="">\n' +
         '                            </div>\n' +
         '\n' +
         '                            <div class="comment-form-url form-group col-sm-12 col-md-4">\n' +
         '                                <label for="url">地址</label>\n' +
-        '                                <input id="url" class="form-control" name="url" type="url" value="" maxlength="200" placeholder="网站或博客"></div>\n' +
+        '                                <input id="url" maxlength="100" class="form-control" name="url" type="url" value="" maxlength="200" placeholder="网站或博客"></div>\n' +
         '                        </div>\n' +
         '                                                <!--提交按钮-->\n' +
         '                        <div class="form-group">\n' +
@@ -338,13 +338,14 @@ function printOutCommentAreaHttp(Id){
         '                        </div>\n' +
         '                </form>\n' +
         '            </div>'+
-        '</div>';
+        '</div><div id = "commentTextArea"></div>';
     postpanel.append(commentHttp);
     $.ajax({
         url:"/blogComment/"+Id,
         success:function (respData) {
             //console.log(respData);
-            if(respData.statusCode=="0"){
+            if(respData.statusCode=="0" && !isNull(respData.resultData)){
+
                 printOutCommentContent(respData.resultData);
             }
         }
@@ -352,9 +353,30 @@ function printOutCommentAreaHttp(Id){
 }
 
 function commentSubmitEvent() {
-    //console.log("into comment");
+
+
+
     //將表單序列化成json
     var form = $("#comment_form").serializeJSON();
+
+    //一些必填表单的校验
+    if(isNull(form.text)){
+        errorTipsAbove("请输入评论内容",$("#comment"));
+        return;
+    }
+    if(isNull(form.author)){
+        errorTipsBlow("请输入用于发表评论的用户名",$("#author"));
+        return;
+    }
+    if(isNull(form.mail)){
+        errorTipsBlow("请输入邮箱",$("#mail"));
+        return;
+    }else if(!$("#mail").val().match(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/)){
+        errorTipsBlow("邮箱格式错误",$("#mail"));
+        return;
+    }
+
+
     var url = window.location.href.split("/");
     //console.log(form);
     var data = {
@@ -367,14 +389,27 @@ function commentSubmitEvent() {
         "userWeb":form.url
     };
     //console.log(data);
+    var comment_replyTo;
+    if(isNull(form.comment_replyTo)){
+        comment_replyTo = -1;
+    }else {
+        comment_replyTo = form.comment_replyTo;
+    }
     $.ajax({
         type:"post",
-        url:window.location.href+"/saveComment/"+form.comment_replyTo,
+        url:window.location.href+"/saveComment/"+comment_replyTo,
         data:JSON.stringify(data),
         dataType:'json',
         contentType: "application/json",
         success:function(resp){
-            document.getElementById("comment_form").reset()
+            $("#comment_form").find("input").each(function(){
+                $(this).val("");
+            });
+            $("#comment").val("");
+            if(resp.statusCode=="0" && !isNull(resp.resultData)){
+                $("#commentTextArea").html("");
+                printOutCommentContent(resp.resultData);
+            }
         },
         error:function () {
             console.log("未知錯誤");
@@ -386,6 +421,7 @@ function commentSubmitEvent() {
 
 //写出具体评论区
 function printOutCommentContent(data) {
+    console.log(data);
     var httpPreStr = '<h4 class="comments-title m-t-lg m-b">共有'+ data.commentNum+'条评论</h4>';
     var httpMidStr = '<ol class="comment-list">';
     for(var i=0 ; i<data.commentVOList.length;i++ ){
@@ -414,7 +450,7 @@ function printOutCommentContent(data) {
             '        </div>\n' +
             '        <!--回复按钮-->\n' +
             '        <div class="comment-reply m-t-sm">\n' +
-            '            <a href="javascript:void(0)" rel="nofollow" onclick="reply('+i+','+(data.commentVOList[i].childrenComment.length+1)+',\''+data.commentVOList[i].superComment.userName+'//'+data.commentVOList[i].superComment.commentRec+'\')">回复</a>                    </div>\n' +
+            '            <a href="javascript:void(0)" rel="nofollow" onclick="reply('+data.commentVOList[i].superComment.commentId+','+(data.commentVOList[i].childrenComment.length+1)+',\''+data.commentVOList[i].superComment.userName+'//'+data.commentVOList[i].superComment.commentRec+'\')">回复</a>                    </div>\n' +
             '    </div>\n' +
             '\n' +
             '</div>';
@@ -450,7 +486,7 @@ function printOutCommentContent(data) {
                '                    </div>\n' +
                '                    <!--回复按钮-->\n' +
                '                    <div class="comment-reply m-t-sm">\n' +
-               '                        <a href="javascript:void(0)" rel="nofollow" onclick="reply('+i+','+(data.commentVOList[i].childrenComment.length+1)+',\''+data.commentVOList[i].childrenComment[j].userName+'//'+data.commentVOList[i].childrenComment[j].commentRec+'\')">回复</a>                    </div>\n' +
+               '                        <a href="javascript:void(0)" rel="nofollow" onclick="reply('+data.commentVOList[i].childrenComment[j].commentId+','+(data.commentVOList[i].childrenComment.length+1)+',\''+data.commentVOList[i].childrenComment[j].userName+'//'+data.commentVOList[i].childrenComment[j].commentRec+'\')">回复</a>                    </div>\n' +
                '                </div>\n' +
                '\n' +
                '            </div>\n' +
@@ -464,11 +500,12 @@ function printOutCommentContent(data) {
         httpMidStr+=superCommentHttp;
     }
     httpPreStr=httpPreStr+httpMidStr+'</ol><nav class="text-center m-t-lg m-b-lg" role="navigation"></nav>';
-    $("#post-panel").append(httpPreStr);
+    $("#commentTextArea").append(httpPreStr);
 
 }
 
 function reply(commentId,commentRep,replyto) {
+    console.log("into reply");
     var comment = $("#comment");
     comment.focus();
     comment.val("@"+replyto.split("//")[0]+":");
@@ -480,6 +517,28 @@ function reply(commentId,commentRep,replyto) {
 }
 function timeHandle(timeStr) {
     var timeYMS = timeStr.split("T")[0];
-    var timeHMS = timeStr.split("T")[1].split(".000")[0];
+    var timeTailHandle = timeStr.split("T")[1].split(":");
+    var timeHMS = timeTailHandle[0]+":"+timeTailHandle[1]+":"+timeTailHandle[2].split(".")[0];
     return timeYMS+"--"+timeHMS;
+}
+
+
+function  errorTipsBlow(msg,obj) {
+    layer.tips(msg,  //所需提醒的信息
+        obj,{		//所需提醒的元素
+            tips: [3,'#DC143C'], //在元素的下面出现 1上面，2右边 3下面
+            tipsMore: false, //允许同时存在多个
+            time:2000 //tips自动关闭时间，毫秒
+        });
+    obj.focus();
+}
+
+function  errorTipsAbove(msg,obj) {
+    layer.tips(msg,  //所需提醒的信息
+        obj,{		//所需提醒的元素
+            tips: [1,'#DC143C'], //在元素的下面出现 1上面，2右边 3下面
+            tipsMore: false, //允许同时存在多个
+            time:2000 //tips自动关闭时间，毫秒
+        });
+    obj.focus();
 }
