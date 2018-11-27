@@ -19,7 +19,11 @@ public class Pic2base64 {
         InputStream in = null;
         byte[] data = null;
 
+        if(picfilepath.startsWith("no")){
+            return null;
+        }
         try {
+
             in = new FileInputStream(picfilepath);
             data  = new byte[in.available()];
 

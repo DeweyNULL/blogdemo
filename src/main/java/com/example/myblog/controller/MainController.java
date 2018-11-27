@@ -25,4 +25,9 @@ public class MainController {
         model.addAttribute("blogId",blogId);
         return "laydemo";
     }
+
+    @RequestMapping("/write")
+    public String jump2BlogWrite(){
+        return "editPage";
+    }
 }

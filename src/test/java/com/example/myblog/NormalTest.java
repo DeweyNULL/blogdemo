@@ -3,6 +3,7 @@ package com.example.myblog;
 import com.example.myblog.tools.Pic2base64;
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,5 +56,16 @@ public class NormalTest {
             System.out.println("Exception:"+e.getMessage());
 
         }
+    }
+
+    @Test
+    public void dateTest() throws ParseException {
+
+        Date date = new SimpleDateFormat("yyyyMMddHHmmss").parse("20181124165845");
+
+        String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+
+        System.out.println(now);
+
     }
 }

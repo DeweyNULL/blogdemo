@@ -31,6 +31,9 @@
 	<script src="/static/js/jquery.serializejson.js"></script>
 	<!--自己的js-->
 	<script type="text/javascript" src="/static/myfuncjs/editFunc.js" ></script>
+	<script type="text/javascript" src="/static/myfuncjs/pageFunc.js"></script>
+	<script type="text/javascript" src="/static/myfuncjs/common.js"></script>
+	<script type="text/javascript" src="/static/js/sha256.js"></script>
 </head>
 
 <body id="body">
@@ -50,11 +53,11 @@
 		<div class="collapse pos-rlt navbar-collapse box-shadow bg-info dker">
 			<!-- buttons -->
 			<div class="nav navbar-nav hidden-xs">
-				<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
+				<a href="javascript:void(0)" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
 					<i class="glyphicon glyphicon-th-list"></i>
 					<i class="fontello fontello-indent icon-fw text-active"></i>
 				</a>
-				<a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
+				<a href="javascript:void(0)" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user" id="writeSwitch">
 					<i class="glyphicon glyphicon-user"></i>
 				</a>
 			</div>
@@ -72,6 +75,7 @@
 				</div>
 			</form>
 			<a href="" style="display: none" id="searchUrl"></a>
+
 			<!-- / search form -->
 			<ul class="nav navbar-nav navbar-right" id="musicbar">
 				<li class="music-box hidden-xs hidden-sm">
@@ -112,7 +116,7 @@
 							<div class="form-group">
 								<label for="navbar-login-password">密码</label>
 								<input type="password" name="password" id="navbar-login-password" class="form-control" placeholder="密码"></div>
-							<button type="button" id="login-submit" name="submitLogin" class="btn btn-block btn-primary">
+							<button type="button" id="submitLogin" name="submitLogin" class="btn btn-block btn-primary">
 								<span class="text">登录</span>
 								<span class="text-active">登录中...</span>
 								<span class="banLogin_text">刷新页面后登录</span>
@@ -317,6 +321,7 @@
 </div>
 <!-- 一些数值 -->
 	<input type="hidden" id = "hasPageId" th:value="${blogId}">
+
 </body>
 
 <script>
