@@ -28,8 +28,9 @@ function tryLogin() {
             console.log(respData);
             if(respData.statusCode=="0"){
                 var writePath = localhostPaht +"/write";
-                console.log(writePath);
+                //console.log(writePath);
                 $("#writeSwitch").attr('href',writePath);
+                $("#easyLogin").removeClass("dropdown");
                 showLayerSucessMsg("登录成功");
             }else {
                 showLayerFailMsg("账号或密码错误!");

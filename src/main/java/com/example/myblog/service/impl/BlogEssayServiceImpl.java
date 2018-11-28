@@ -65,6 +65,7 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     @Transactional
     @Modifying  //修改或者保存文章
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
+
         blogEssayRepository.save(blogEssay);
     };
 

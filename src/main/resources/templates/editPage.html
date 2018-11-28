@@ -2,50 +2,50 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>wangEditor demo</title>
+    <title>Editor</title>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+    <script type="text/javascript" src="/static/myfuncjs/editPageEditFunc.js"></script>
+    <script src="/static/layui.all.js"></script>
 </head>
 <body>
 <div id="div1">
-    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+
 </div>
-<button type="button" onclick="textsubmit()" >提交</button>
+<button type="button" onclick="textsubmit()">模拟显示</button>
+
+<button type="button" id="logout">退出账户</button>
+<div id="essay">
+    <form id="essayform">
+        <label>作者名</label>
+        <input type="text" name="auther_name" id="auther_name" class="form-control" placeholder="作者名">
+        <label>标题</label>
+        <input type="text" name="essay_title" id="essay_title" class="form-control" placeholder="标题">
+        <label>文章分类</label>
+        <input type="text" name="essay_type" id="essay_type" class="form-control" placeholder="文章分类">
+        <label>文章属性（是否置顶写01）</label>
+        <input type="text" name="essay_properties" id="essay_properties" class="form-control" placeholder="0/1">
+
+    </form>
+    <div >
+        <button type="button" id="submit">提交</button>
+    </div>
+</div>
 <textarea id="text1" style="width:100%; height:200px;"></textarea>
-<textarea id="text2" style="width:100%; height:200px;"></textarea>
+
 <div id = "contentHtml"></div>
 <script type="text/javascript">
-    var E = window.wangEditor
-    var editor = new E('#div1')
-    var $text1 = $('#text1')
+    var E = window.wangEditor;
+    var editor = new E('#div1');
+    var $text1 = $('#text1');
     editor.customConfig.onchange = function (html) {
         // 监控变化，同步更新到 textarea
         $text1.val(html)
-    }
-    editor.create()
+    };
+    editor.create();
     // 初始化 textarea 的值
-    $text1.val(editor.txt.html())
+    $text1.val(editor.txt.html());
 </script>
 
-<script type="text/javascript">
-    function textsubmit() {
-        var content = editor.txt.html();
-        console.log(content);
-        $.ajax({
-            type:"post",
-            url:"/editSave",
-            data:content,
-            contentType: "application/json",
-            success:function (data) {
-                $("#contentHtml").html("");
-                $('#text2').val(data);
-                $("#contentHtml").append(data);
-            },
-            error:function () {
-                $('#text2').val("error!");
-            }
-        })
-    }
-</script>
 </body>
 </html>

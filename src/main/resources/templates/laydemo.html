@@ -30,8 +30,8 @@
 	<!--表单json化插件-->
 	<script src="/static/js/jquery.serializejson.js"></script>
 	<!--自己的js-->
-	<script type="text/javascript" src="/static/myfuncjs/editFunc.js" ></script>
-	<script type="text/javascript" src="/static/myfuncjs/pageFunc.js"></script>
+	<script type="text/javascript" src="/static/myfuncjs/laydemoEditFunc.js" ></script>
+	<script type="text/javascript" src="/static/myfuncjs/laydemoPageFunc.js"></script>
 	<script type="text/javascript" src="/static/myfuncjs/common.js"></script>
 	<script type="text/javascript" src="/static/js/sha256.js"></script>
 </head>
@@ -57,7 +57,7 @@
 					<i class="glyphicon glyphicon-th-list"></i>
 					<i class="fontello fontello-indent icon-fw text-active"></i>
 				</a>
-				<a href="javascript:void(0)" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user" id="writeSwitch">
+				<a th:href="${editAddr}" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user" id="writeSwitch">
 					<i class="glyphicon glyphicon-user"></i>
 				</a>
 			</div>
@@ -102,7 +102,7 @@
 				<!--/闲言碎语-->
 				<!--登录管理-->
 				<li class="dropdown" id="easyLogin">
-					<a onclick="return false" data-toggle="dropdown" class="dropdown-toggle clear">
+					<a onclick="return false" data-toggle="dropdown" class="dropdown-toggle clear" id="login">
 						<span class="text">登录</span>
 						<b class="caret"></b>
 						<!--下三角符号-->

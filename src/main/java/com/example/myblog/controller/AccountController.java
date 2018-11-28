@@ -42,7 +42,7 @@ public class AccountController {
             if(accountService.getAccountInfo(user)){
                 jsonResultSet.setStatusCode("0");
                 HttpSession session = request.getSession();
-                session.setAttribute("account",user.getUsername()); //设置user
+                session.setAttribute("ACCOUNT_IN_SESSION",user.getUsername()); //设置user
                 jsonResultSet.setResultData("on");
 
             }else {
@@ -51,5 +51,16 @@ public class AccountController {
             }
         }
         return jsonResultSet;
+    }
+
+    @RequestMapping("/logout")
+    @ResponseBody
+    public JsonResultSet tryLogout(HttpServletRequest request){
+
+        JsonResultSet jsonResultSet = new JsonResultSet();
+        HttpSession session = request.getSession();
+        session.removeAttribute("ACCOUNT_IN_SESSION");
+        jsonResultSet.setStatusCode("0");
+        return  jsonResultSet;
     }
 }
