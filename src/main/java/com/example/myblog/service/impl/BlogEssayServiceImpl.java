@@ -49,6 +49,7 @@ public class BlogEssayServiceImpl implements BlogEssayService {
                 blogEssays.get(i).setPic(Pic2base64.getPicBase64(picpath));
             }
         }
+
         return blogEssays;
     }
 
