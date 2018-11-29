@@ -14,10 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -44,8 +41,16 @@ public class BlogEssayController {
         保存文章的操作 这个先放着 后面再做
      */
     @RequestMapping(value = "/save" , method = RequestMethod.POST)
-    public ResponseEntity<JsonResultSet> saveEssay(){
+    public ResponseEntity<JsonResultSet> saveEssay(@RequestBody BlogEssay blogEssay){
         JsonResultSet jsonResultSet = new JsonResultSet();
+        try {
+            blogEssayServiceImpl.saveOrUpdateBlogStatus(blogEssay);
+            jsonResultSet.setStatusCode("0");
+            jsonResultSet.setResultData("提交成功");
+        }catch (Exception e){
+            jsonResultSet.setStatusCode("1");
+            jsonResultSet.setResultData(e.getMessage());
+        }
         return ResponseEntity.ok(jsonResultSet);
     }
 

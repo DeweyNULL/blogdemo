@@ -27,7 +27,13 @@ $(function () {
                 layer.close(index);
             });
 
+    });
+
+    $("#submit").click(function () {
+        blogSubmit();
     })
+
+
 });
 
 function textsubmit() {
@@ -46,4 +52,52 @@ function textsubmit() {
             $('#text2').val("error!");
         }
     })
+}
+
+function getPic() {
+    var reader = new FileReader();
+    var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+    var file = $("#image")[0].files[0];
+    var imgUrlBase64;
+    if (file) {
+        //将文件以Data URL形式读入页面
+        imgUrlBase64 = reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            //var ImgFileSize = reader.result.substring(reader.result.indexOf(",") + 1).length;//截取base64码部分（可选可不选，需要与后台沟通）
+            if (AllowImgFileSize != 0 && AllowImgFileSize < reader.result.length) {
+                alert( '上传失败，请上传不大于2M的图片！');
+                return;
+            }else{
+                //执行上传操作
+                console.log(reader.result);
+                return reader.result;
+            }
+        }
+    }
+}
+
+
+function blogSubmit() {
+    var pic =  $("#image").val();
+    var filename = pic.split("\\");
+    console.log(filename);
+
+    var data = {
+        "auther_name":$("#auther_name").val(),
+        "summary":$("#summary").val(),
+        "pic":filename[filename.length-1],
+        "essay_title":$("#essay_title").val(),
+        "essay_type":$("#essay_type").val(),
+        "essay_properties":$("#essay_properties").val(),
+        "essay_content":editor.txt.html()
+    };
+    $.ajax({
+        url:"/save",
+        data:data,
+        contentType: "application/json",
+        success:function (data) {
+
+        }
+    });
+    console.log(data);
 }
