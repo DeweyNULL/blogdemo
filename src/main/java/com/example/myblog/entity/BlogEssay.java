@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.AUTO;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -19,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity(name = "blog_essay")
 public class BlogEssay {
 
-    @Id @GeneratedValue(strategy = IDENTITY)
+    @Id
     private Long id;
 
     private String auther_name;

@@ -30,7 +30,7 @@ function getEssay(pageNum) {
         success:function (result) {
             if(result.statusCode=="0"){
 
-                //console.log(JSON.stringify(resultdata));
+                //console.log(JSON.stringify(result.resultData));
                 for(var i = 0 ; i<result.resultData.length;i++){
                     printOutEssay(
                         result.resultData[i].pic,
@@ -74,7 +74,8 @@ function getPageCount(getCount) {
 //首页图片picUrl 文章属性(是否置顶) 文章标题title 文章summary 作者author 时间time 评论数commentNum 文章编号：id
 function printOutEssay(picUrl,properties,title,summary,author , time , commentNum , id) {
 
-    if(properties==null) {
+    //是否制定的以后再说
+
         var httpstr =
             '<div class="panel">' +
             '<div class="index-post-img">' +
@@ -105,7 +106,7 @@ function printOutEssay(picUrl,properties,title,summary,author , time , commentNu
             '</div>';
 
         $("#EssayArea").append(httpstr);
-    }
+
 }
 
 function printOurPage(pageNumber) {

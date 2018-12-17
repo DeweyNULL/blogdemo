@@ -80,20 +80,41 @@ function getPic() {
 function blogSubmit() {
     var pic =  $("#image").val();
     var filename = pic.split("\\");
-    console.log(filename);
+    console.log(pic);
+
+
+    var formData = new FormData();
+    formData.append("file",$("#image")[0].files[0]);
+    console.log(formData);
+    $.ajax({
+        type: 'post',
+        url: "/picUpload",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success:function (data) {
+            alert(data);
+        },
+        error:function() {
+            alert("上传失败");
+        }
+    });
 
     var data = {
-        "auther_name":$("#auther_name").val(),
-        "summary":$("#summary").val(),
-        "pic":filename[filename.length-1],
-        "essay_title":$("#essay_title").val(),
-        "essay_type":$("#essay_type").val(),
-        "essay_properties":$("#essay_properties").val(),
-        "essay_content":editor.txt.html()
+        'auther_name':$("#auther_name").val(),
+        'summary':$("#summary").val(),
+        'pic':filename[filename.length-1],
+        'essay_title':$("#essay_title").val(),
+        'essay_type':$("#essay_type").val(),
+        'essay_properties':$("#essay_properties").val(),
+        'essay_content':editor.txt.html()
     };
+
     $.ajax({
         url:"/save",
-        data:data,
+        type:"POST",
+        data:JSON.stringify(data),
+        dataType : "json",
         contentType: "application/json",
         success:function (data) {
 

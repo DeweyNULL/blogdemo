@@ -14,4 +14,6 @@ import java.util.List;
 
 public interface BlogEssayRepository extends JpaRepository<BlogEssay , Long> {
     public List<BlogEssay> findFirst3ByOrderByViewsNumDesc();
+
+    public List<BlogEssay> findFirst1ByOrderByTimeDesc();
 }

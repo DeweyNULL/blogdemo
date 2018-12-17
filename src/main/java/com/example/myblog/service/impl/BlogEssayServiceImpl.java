@@ -4,6 +4,8 @@ import com.example.myblog.entity.BlogEssay;
 import com.example.myblog.repository.BlogEssayRepository;
 import com.example.myblog.service.BlogEssayService;
 import com.example.myblog.tools.Pic2base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +28,7 @@ import java.util.List;
 @Service
 public class BlogEssayServiceImpl implements BlogEssayService {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     BlogEssayRepository blogEssayRepository;
@@ -65,12 +69,25 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     @Transactional
     @Modifying  //修改或者保存文章
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
-
+        logger.info(blogEssay.toString());
+        if(blogEssay.getId() == null){
+            List<BlogEssay> blogEssays = blogEssayRepository.findFirst1ByOrderByTimeDesc();
+            if(blogEssays!=null) logger.info(Integer.valueOf(blogEssays.size()).toString());
+            logger.info(blogEssays.get(0).toString());
+            Long id = blogEssays.get(0).getId()+1;
+            blogEssay.setId(id);
+            blogEssay.setTime(new Date());
+            logger.info("存入数据库的："+blogEssay.toString());
+        }
         blogEssayRepository.save(blogEssay);
     };
 
     public List<BlogEssay> getHotBlogEssay(){
 
         return blogEssayRepository.findFirst3ByOrderByViewsNumDesc();
+    }
+
+    private boolean stringIsNull(String temp){
+        return (temp==null ||"".equals(temp));
     }
 }
