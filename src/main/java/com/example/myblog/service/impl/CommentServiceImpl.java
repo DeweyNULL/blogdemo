@@ -37,11 +37,6 @@ public class CommentServiceImpl implements CommentService {
     //保存评论
     public void commentSave(Comment comment) {
 
-        //过滤可能有跨站脚本攻击的文本
-        String cleanResult = Jsoup.clean(comment.getCommentContent(),Whitelist.none());
-        comment.setCommentContent(cleanResult);
-
-
         if(comment.getCommentId()==null){
             List<Integer> comments = commentRepository.countCommentIdByEssayId(comment.getEssayId());
             logger.info(comments.toString());

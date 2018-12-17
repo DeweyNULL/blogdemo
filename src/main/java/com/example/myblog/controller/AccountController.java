@@ -39,16 +39,25 @@ public class AccountController {
         logger.info("user.password:"+user.getPassword());
         JsonResultSet jsonResultSet = new JsonResultSet();
         if (user!=null && NullTool.isNotNull(user.getUsername())){
-            if(accountService.getAccountInfo(user)){
+            HttpSession session = request.getSession();
+            String username = (String) session.getAttribute("ACCOUNT_IN_SESSION");
+            if(!NullTool.isNull(username)){
+                jsonResultSet.setStatusCode("1");
+                jsonResultSet.setResultData("用户已经登录！");
+            }
+            else if(accountService.getAccountInfo(user)){
                 jsonResultSet.setStatusCode("0");
-                HttpSession session = request.getSession();
                 session.setAttribute("ACCOUNT_IN_SESSION",user.getUsername()); //设置user
                 jsonResultSet.setResultData("on");
 
             }else {
                 jsonResultSet.setStatusCode("1");
-                jsonResultSet.setResultData("off");
+                jsonResultSet.setResultData("账号或者密码错误");
             }
+        }
+        else{
+            jsonResultSet.setStatusCode("1");
+            jsonResultSet.setResultData("hehe");
         }
         return jsonResultSet;
     }

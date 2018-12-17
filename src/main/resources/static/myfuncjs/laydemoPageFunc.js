@@ -10,12 +10,37 @@ $(function(){
         tryLogin();
     })
 
+    $("#navbar-login-user").keyup(function(even){
+        if(even.keyCode=="13"){
+            $("#navbar-login-password").focus();
+        }
+    });
+
+    $("#navbar-login-password").keyup(function(even){
+        if(even.keyCode=="13"){
+            tryLogin();
+        }
+    });
 });
 
 function tryLogin() {
+
+    var username = $("#navbar-login-user").val();
+    var password = $("#navbar-login-password").val();
+
+    if(isNull(username)){
+        showLayerFailMsg("请输入用户名");
+        return;
+    }
+
+    if(isNull(password)){
+        showLayerFailMsg("请输入密码");
+        return;
+    }
+
     var data = {
-        "username": $("#navbar-login-user").val(),
-        "password": sha256_digest(sha256_digest( $("#navbar-login-password").val()))
+        "username": username,
+        "password": sha256_digest(sha256_digest(password))
     };
 
     $.ajax({
@@ -33,7 +58,9 @@ function tryLogin() {
                 $("#easyLogin").removeClass("dropdown");
                 showLayerSucessMsg("登录成功");
             }else {
-                showLayerFailMsg("账号或密码错误!");
+                $("#navbar-login-user").val("");
+                $("#navbar-login-password").val("");
+                showLayerFailMsg(respData.resultData);
             }
         }
     })

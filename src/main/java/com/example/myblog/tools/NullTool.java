@@ -17,9 +17,6 @@ public class NullTool {
     }
 
     public static boolean isNotNull(String temp){
-        if(temp!=null && !"".equals(temp)){
-            return true;
-        }
-        return false;
+        return (temp != null) && !("".equals(temp));
     }
 }

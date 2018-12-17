@@ -70,10 +70,15 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     @Modifying  //修改或者保存文章
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
         logger.info(blogEssay.toString());
+
+        if(stringIsNull(blogEssay.getEssay_title())){
+            logger.info("缺少标题 不准许入库");
+            return;
+        }
         if(blogEssay.getId() == null){
             List<BlogEssay> blogEssays = blogEssayRepository.findFirst1ByOrderByTimeDesc();
             if(blogEssays!=null) logger.info(Integer.valueOf(blogEssays.size()).toString());
-            logger.info(blogEssays.get(0).toString());
+
             Long id = blogEssays.get(0).getId()+1;
             blogEssay.setId(id);
             blogEssay.setTime(new Date());

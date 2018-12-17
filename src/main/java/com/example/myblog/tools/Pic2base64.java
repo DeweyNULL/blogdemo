@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Pic2base64 {
 
+    private static Logger logger = LoggerFactory.getLogger("Pic2base64");
 
     public static synchronized String getPicBase64(String picfilepath){
 
@@ -30,8 +31,7 @@ public class Pic2base64 {
             in.read(data);
             in.close();
         }catch (Exception e){
-            //e.printStackTrace();
-            e.printStackTrace();
+            logger.info("no such file ： "+picfilepath);
             return null;
         }
 
