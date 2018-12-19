@@ -80,7 +80,8 @@ function getPic() {
 function blogSubmit() {
     var pic =  $("#image").val();
     var filename = pic.split("\\");
-    console.log(pic);
+    var picflag = true;
+
 
 
     var formData = new FormData();
@@ -90,16 +91,25 @@ function blogSubmit() {
         type: 'post',
         url: "/picUpload",
         data: formData,
+        async:false,
         processData: false,
         contentType: false,
-        success:function (data) {
-            alert(data);
+        success:function (resp) {
+            if(resp.statusCode == "0"){
+                picflag = false;
+            }
+            else {
+                showLayerFailMsg(resp.resultData);
+            }
         },
         error:function() {
-            alert("上传失败");
+            showLayerFailMsg("图片上传失败");
         }
     });
 
+    if (picflag){
+        return;
+    }
     var data = {
         'auther_name':$("#auther_name").val(),
         'summary':$("#summary").val(),
@@ -116,8 +126,19 @@ function blogSubmit() {
         data:JSON.stringify(data),
         dataType : "json",
         contentType: "application/json",
-        success:function (data) {
-
+        success:function (resp) {
+            if(resp.statusCode == "0"){
+                showLayerMsg(resp.resultData);
+                $("#auther_name").val("");
+                $("#summary").val("");
+                $("#essay_title").val("");
+                $("#essay_type").val("");
+                $("#essay_properties").val("");
+                $("#image").val("");
+            }
+            else {
+                showLayerFailMsg(resp.resultData);
+            }
         }
     });
     console.log(data);

@@ -36,7 +36,7 @@ public class AccountController {
     @ResponseBody
     public JsonResultSet tryLogin(@RequestBody User user, HttpServletRequest request){
 
-        logger.info("user.password:"+user.getPassword());
+        logger.debug("user.password:"+user.getPassword());
         JsonResultSet jsonResultSet = new JsonResultSet();
         if (user!=null && NullTool.isNotNull(user.getUsername())){
             HttpSession session = request.getSession();

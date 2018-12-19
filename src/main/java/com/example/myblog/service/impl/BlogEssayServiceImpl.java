@@ -69,20 +69,20 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     @Transactional
     @Modifying  //修改或者保存文章
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
-        logger.info(blogEssay.toString());
+        logger.debug(blogEssay.toString());
 
         if(stringIsNull(blogEssay.getEssay_title())){
-            logger.info("缺少标题 不准许入库");
+            logger.debug("缺少标题 不准许入库");
             return;
         }
         if(blogEssay.getId() == null){
             List<BlogEssay> blogEssays = blogEssayRepository.findFirst1ByOrderByTimeDesc();
-            if(blogEssays!=null) logger.info(Integer.valueOf(blogEssays.size()).toString());
+            if(blogEssays!=null) logger.debug(Integer.valueOf(blogEssays.size()).toString());
 
             Long id = blogEssays.get(0).getId()+1;
             blogEssay.setId(id);
             blogEssay.setTime(new Date());
-            logger.info("存入数据库的："+blogEssay.toString());
+            logger.debug("存入数据库的："+blogEssay.toString());
         }
         blogEssayRepository.save(blogEssay);
     };

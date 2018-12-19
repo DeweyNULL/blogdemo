@@ -29,248 +29,152 @@
 </head>
 
 <body id="body">
-<div class="container app app-aside-fixed app-header-fixed">
-    <!--描述：header -->
-    <header id="header" class="app-header navbar" role="menu">
-        <div class="navbar-header bg-info dker">
-
-            <!-- brand -->
-            <a href="" class="navbar-brand text-lt">
-                <i class="glyphicon glyphicon-home"></i>
-                <span class="hidden-folded m-l-xs">Dewey's Blog</span>
-            </a>
-            <!-- / brand -->
-        </div>
-
-        <div class="collapse pos-rlt navbar-collapse box-shadow bg-info dker">
-            <!-- buttons -->
-            <div class="nav navbar-nav hidden-xs">
-                <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
-                    <i class="glyphicon glyphicon-th-list"></i>
-                    <i class="fontello fontello-indent icon-fw text-active"></i>
-                </a>
-                <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
-                    <i class="glyphicon glyphicon-user"></i>
-                </a>
-            </div>
-            <!-- / buttons -->
-
-            <!-- search form -->
-            <form id="searchform" class="navbar-form navbar-form-sm navbar-left shift" method="post" role="search">
-                <div class="form-group">
-                    <div class="input-group rounded bg-light">
-                        <input id="search_input" type="search" name="s" class="transparent rounded form-control input-sm no-border padder" required="" placeholder="输入关键词搜索…">
-                        <span id="search_submit" class="transparent input-group-btn">
-                  <button type="submit" class="transparent btn btn-sm"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
-                    </div>
-                </div>
-            </form>
-            <a href="" style="display: none" id="searchUrl"></a>
-            <!-- / search form -->
-            <ul class="nav navbar-nav navbar-right" id="musicbar">
-                <li class="music-box hidden-xs hidden-sm">
-                    <div id="skPlayer" >
-                        <script>
-                            var player = new skPlayer({"autoplay":false,"listshow":false,"mode":"listloop","music":{"type":"cloud","source":"157041905","media":"neteasy"}});
-                        </script>
-                    </div>
-                </li>
-                <li class="dropdown ">
-                    <a class="skPlayer-list-switch dropdown-toggle" href="javascript:musicSwitchOn()">
-                        <i class="glyphicon glyphicon-headphones"></i>
-                        <span class="visible-xs-inline"></span></a>
-                </li>
-                <!--闲言碎语-->
-                <li class="dropdown" >
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" >
-                        <i class="glyphicon glyphicon-bell"></i>
-
-                        <span class="badge badge-sm up bg-danger pull-right-xs"></span>
-                    </a>
-
-                </li>
-                <!--/闲言碎语-->
-                <!--登录管理-->
-                <li class="dropdown" id="easyLogin">
-                    <a onclick="return false" data-toggle="dropdown" class="dropdown-toggle clear">
-                        <span class="text">登录</span>
-                        <b class="caret"></b>
-                        <!--下三角符号-->
-                    </a>
-                    <!-- dropdown(已经登录) -->
-                    <div class="dropdown-menu w-lg wrapper bg-white animated shake" aria-labelledby="navbar-login-dropdown">
-                        <form id="Login_form" action="" method="post">
-                            <div class="form-group">
-                                <label for="navbar-login-user">用户名</label>
-                                <input type="text" name="name" id="navbar-login-user" class="form-control" placeholder="用户名或电子邮箱"></div>
-                            <div class="form-group">
-                                <label for="navbar-login-password">密码</label>
-                                <input type="password" name="password" id="navbar-login-password" class="form-control" placeholder="密码"></div>
-                        </form>
-                    </div>
-                </li>
-                <!--/登录管理-->
-            </ul>
-        </div>
-    </header>
-
-    <!--描述：aside 右侧边栏 -->
-    <aside id="aside" class="app-aside hidden-xs bg-light dker b-r">
-        <div class="aside-wrap">
-            <div class="navi-wrap">
-                <div class="clearfix hidden-xs text-center hide show" id="aside-user">
-                    <div class="dropdown wrapper">
-                        <div ui-nav="">
-									<span class="thumb-lg w-auto-folded avatar m-t-sm">
-                  					<img src="../static/img/-643b0d1dc704d923.jpg" class="img-full">
-                					</span>
-
-                        </div>
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
-									<span class="clear">
-										<span class="block m-t-sm">
-                    						<strong class="font-bold text-lt">Dewey's</strong>
-                    						<b class="caret"></b>
-                  						</span>
-										<span class="text-muted text-xs block">傻逼于大神的爸爸。</span>
-									</span>
-                        </a>
-
-                    </div>
-                    <div class="line dk hidden-folded"></div>
-                </div>
-
-                <nav ui-nav="" class="navi clearfix">
-                    <ul class="nav">
-                        <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                            <span>导航</span>
-                        </li>
-
-                        <li>
-                            <a href="" class="auto">
-                                <i class="glyphicon glyphicon-home text-md"></i>
-                                <span>首页</span>
+<main class="app-content-body animated ng-enter">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col center-part">
+            <div style="background:url(https://www.moerats.com/usr/picture/sgj.jpg) center center; background-size:cover">
+                <div class="wrapper-lg bg-white-opacity">
+                    <div class="row m-t">
+                        <div class="col-sm-7">
+                            <a class="thumb-lg pull-left m-r">
+                                <img src="https://www.moerats.com/usr/picture/rats.png" class="img-circle">
                             </a>
-                        </li>
-
-                        <li class="line dk"></li>
-
-                        <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                            <span>组成</span>
-                        </li>
-
-                        <li id="typelist" > <!--class="active"-->
-                            <a class="auto">
-										<span class="pull-right text-muted">
-								                    <i class="glyphicon glyphicon-menu-right text"></i>
-								                    <i class="glyphicon glyphicon-menu-down text-active"></i>
-								                  </span>
-                                <i class="glyphicon glyphicon-th"></i>
-                                <span>分类</span>
-                            </a>
-                            <ul class="nav nav-sub dk">
-                                <li class="nav-sub-header">
-                                    <a data-no-instant="">
-                                        <span>分类</span>
-                                    </a>
-                                </li>
-                                <!--循环输出分类-->
-                                <li>
-                                    <a href="https://www.moerats.com/category/zjjc/"><b class="badge pull-right">282</b><span>主机教程</span></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.moerats.com/category/jzzs/"><b class="badge pull-right">176</b><span>建站知识</span></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.moerats.com/category/wlzy/"><b class="badge pull-right">95</b><span>网络资源</span></a>
-                                </li>
-                                <li>
-                                    <a href="https://www.moerats.com/category/suibi/"><b class="badge pull-right">10</b><span>生活随笔</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </aside>
-
-    <!--描述：content 主内容-->
-    <div id="content" class="app-content">
-        <div id="loading" class="butterbar active hide">
-            <span class="bar"></span>
-        </div>
-
-        <main class="app-content-body animated ng-enter">
-            <div class="hbox hbox-auto-xs hbox-auto-sm">
-                <div class="col center-part" >
-                    <iframe src="blogEssay.html"></iframe>
-                </div>
-
-            </div>
-            <!-- 首页右侧栏目 -->
-            <aside class="asideBar col w-md bg-white-only b-l bg-auto no-border-xs" role="complementary">
-                <div id="sidebar">
-                    <section id="tabs-4" class="widget widget_tabs clear">
-                        <div class="nav-tabs-alt no-js-hide">
-                            <ul class="nav nav-tabs nav-justified" role="tablist">
-                                <li class="active" role="presentation">
-                                    <a href="#widget-tabs-4-hots" role="tab" aria-controls="widget-tabs-4-hots" aria-expanded="true" data-toggle="tab"> <i class="glyphicon glyphicon-fire text-md text-muted wrapper-sm" aria-hidden="true"></i> <span class="sr-only">热门文章</span> </a>
-                                </li>
-                                <li role="presentation" class="">
-                                    <a href="#widget-tabs-4-comments" role="tab" aria-controls="widget-tabs-4-comments" aria-expanded="false" data-toggle="tab"> <i class="glyphicon glyphicon-comment text-md text-muted wrapper-sm" aria-hidden="true"></i> <span class="sr-only">最新评论</span> </a>
-                                </li>
-                                <li role="presentation" class="">
-                                    <a href="#widget-tabs-4-random" role="tab" aria-controls="widget-tabs-4-random" aria-expanded="false" data-toggle="tab"> <i class="glyphicon glyphicon-transfer text-md text-muted wrapper-sm" aria-hidden="true"></i> <span class="sr-only">随机文章</span> </a>
-                                </li>
-                            </ul>
+                            <div class="clear m-b">
+                                <div class="m-b m-t-sm">
+                                    <span class="h3 text-black">Rat's</span>
+                                    <small class="m-l">何以解忧，唯有暴富。</small>
+                                </div>
+                                <p class="m-b">
+                                    <a target="_blank" title="twitter" href="#" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a><a target="_blank" title="facebook" href="#" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a><a target="_blank" title="googlepluse" href="#" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>                                    </p>
+                                <a target="blank" href="#" class="btn btn-sm btn-success btn-rounded">github</a>                                </div>
                         </div>
-
-                        <div class="tab-content">
-                            <!--热门文章-->
-                            <div id="widget-tabs-4-hots" class="tab-pane  fade in wrapper-md active" role="tabpanel">
-                                <h3 class="widget-title m-t-none text-md">热门文章</h3>
-                                <ul class="list-group no-bg no-borders pull-in m-b-none">
-                                    <li class="list-group-item">
-                                        <a href="https://www.moerats.com/archives/636/" class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="https://www.moerats.com/usr/themes/handsome/usr/img/sj2/2.jpg" class="img-circle"></a>
-                                        <div class="clear">
-                                            <h4 class="h5 l-h"> <a href="https://www.moerats.com/archives/636/" title="博客将不定期赠送DigitalOcean $50优惠码"> 博客将不定期赠送DigitalOcean $50优惠码 </a></h4>
-                                            <small class="text-muted post-head-icon">
-												                    <span class="meta-views"> <i class="glyphicon glyphicon-comment" aria-hidden="true"></i> <span class="sr-only">评论数：</span> <span class="meta-value">747</span>
-												                    </span>
-                                                <span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">45037</span>
-												                    </span>
-                                            </small>
-                                        </div>
-                                    </li>
-                                </ul>
+                        <div class="col-sm-5">
+                            <div class="pull-right pull-none-xs text-center">
+                                <a class="m-b-md inline m">
+                                    <span class="h3 block font-bold">7250</span>
+                                    <small>comments</small>
+                                </a>
+                                <a class="m-b-md inline m">
+                                    <span class="h3 block font-bold">607</span>
+                                    <small>articles</small>
+                                </a>
+                                <a class="m-b-md inline m">
+                                    <span class="h3 block font-bold">1</span>
+                                    <small>weibo</small>
+                                </a>
                             </div>
                         </div>
-                    </section>
-
-                    <!-- 博客信息-->
-                    <section id="categories-2" class="widget widget_categories wrapper-md clear">
-                        <h3 class="widget-title m-t-none text-md">博客信息</h3>
-                        <ul class="list-group">
-                            <li class="list-group-item"> <i class="glyphicon glyphicon-file text-muted"></i> <span class="badge
-								           pull-right">563</span>文章数目</li>
-                            <li class="list-group-item"> <i class="glyphicon glyphicon-comment text-muted"></i> <span class="badge
-								           pull-right">4563</span>评论数目</li>
-                            <li class="list-group-item"> <i class="glyphicon glyphicon-equalizer text-muted"></i> <span class="badge
-								           pull-right">1年163天</span>运行天数</li>
-                            <li class="list-group-item"> <i class="glyphicon glyphicon-refresh text-muted"></i> <span class="badge
-								           pull-right">14 小时前</span>最后更新</li>
-                        </ul>
-                    </section>
+                    </div>
                 </div>
-            </aside>
-        </main>
-    </div>
+            </div>
+            <div class="wrapper bg-white b-b">
+                <ul class="nav nav-pills nav-sm">
+                    <li class="active"><a>我的动态</a></li>
+                    <li class="active"><a>我的动态</a></li>
+                    <li class="active"><a>我的动态</a></li>
+                </ul>
 
-    <!-- 描述：footer -->
-    <footer id="footer" class="app-footer" role="footer"></footer>
-</div>
+            </div>
+            <div class="padder">
+
+                <div id="comments" class="timeMachine">
+                    <!--如果允许评论，会出现评论框和个人信息的填写-->
+                    <!--判断是否登录，只有登陆者才有权利发表说说-->
+                    <!--如果没有登录则什么操作按钮都不会显示-->
+                    <div class="streamline b-l b-info m-l-lg m-b padder-v">
+
+                        <h4 style="display: none" class="comments-title m-t-lg m-b">&nbsp;1 条评论</h4>
+                        <ol class="comment-list">
+                            <!--自定义评论代码结构-->
+                            <div id="comment-6133" class="comment-body comment-parent comment-odd comment-by-author">
+
+
+                                <a class="pull-left thumb-sm avatar m-l-n-md">
+                                    <img nogallery="" src="https://cdn.v2ex.com/gravatar/74fb0e4834eb666f5026da78ddb089b3?s=65&amp;r=G&amp;d=" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">        </a>
+
+                                <div class="m-l-lg m-b-lg">
+                                    <div class="m-b-xs">
+                                        <a href="http://www.moerats.com/" rel="external nofollow">Rat's</a>                <span class="format_time text-muted m-l-sm pull-right" datetime="2018-09-23T22:23:28+08:00">September 23rd, 2018 at 10:23 pm</span>
+                                    </div>
+                                    <div class="m-b">
+                                        <div class="m-b words_contents">
+                                            <p>心痛，博客很少更了！</p>                </div>
+                                        <div class="m-t-sm say_footer">
+                                            <a data-coid="6133" class="text-muted star_talk"><i class="glyphicon glyphicon-heart-empty"></i>&nbsp;<span class="star_count">47</span></a>
+                                            <span class="text-muted">
+                        <i class="glyphicon glyphicon-record  m-l-sm"></i>&nbsp;发自网页端</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 单条评论者信息及内容 -->
+                            </div><!--匹配`自定义评论的代码结构`下面的div标签-->
+                        </ol>        </div>
+                    <nav class="text-center m-b-lg" role="navigation">
+                    </nav>
+
+
+                </div>
+
+                <script>
+
+
+                    $('.star_talk').click(function () {
+                        var ele = $(this);
+                        $.get(LocalConst.BLOG_URL,{action:"star_talk", coid:$(this).data('coid')})
+                            .error(function(){
+                                $.message({
+                                    title:LocalConst.OPERATION_NOTICE,
+                                    message:"点赞失败，检查网络问题",
+                                    type:'warning'
+                                })
+                            }).success(function(data) {
+                            if (data === "1"){//成功点赞
+                                ele.children('i').attr("class","glyphicon glyphicon-heart");
+                                ele.children('.star_count').text(parseInt(ele.children('.star_count').text()) + 1);
+                                $.message({
+                                    title:LocalConst.OPERATION_NOTICE,
+                                    message:"点赞成功",
+                                    type:'success'
+                                });
+                            }else if (data === "2"){//重复点赞
+                                ele.children('i').css("color","red");
+                                $.message({
+                                    title:LocalConst.OPERATION_NOTICE,
+                                    message:"请勿重复点赞哦",
+                                    type:'info'
+                                });
+                            }else if (data === "-1"){//代码出错
+                                $.message({
+                                    title:LocalConst.OPERATION_NOTICE,
+                                    message:"点赞请求失败，请稍后重试",
+                                    type:'error'
+                                });
+                            }
+                        });
+                    });
+                </script>                </div><!--end of #pedder-->
+        </div>
+        <div class="col w-lg bg-light lter b-l bg-auto">
+            <div class="wrapper">
+                <div class="">
+                    <h4 class="m-t-xs m-b-xs">联系方式</h4>
+                    <ul class="list-group no-bg no-borders pull-in">
+                        <li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pmtjbaej201s01s0aw" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">email</a></div><small class="text-muted">你的邮箱地址</small></div></li><li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pnirhr2j201s01va9u" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">QQ</a></div><small class="text-muted">你的QQ号</small></div></li><li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pofbz5fj201s01swe9" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">微博</a></div><small class="text-muted">你微博账号</small></div></li><li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pouholzj201s01s0ja" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">网易云音乐</a></div><small class="text-muted">你的网易云账号</small></div></li>                        </ul>
+                </div>
+                <div class="panel b-a">
+                    <h4 class="font-thin padder">关于我</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p>来自中部的一个小城市，个性不张扬，讨厌随波逐流。</p>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 
 <script>

@@ -117,13 +117,13 @@ public class BlogEssayController {
 
     @GetMapping(value = "/getHotBlog")
     ResponseEntity<JsonResultSet> getHotestBlog(){
-        logger.info("into getHotestBlog");
+        logger.debug("into getHotestBlog");
         JsonResultSet jsonResultSet = new JsonResultSet();
         List<BlogEssay> blogEssays = new ArrayList<>();
 
         blogEssays = blogEssayServiceImpl.getHotBlogEssay();
         if (blogEssays!=null&&blogEssays.size()>0){
-            logger.info(Integer.valueOf(blogEssays.size()).toString());
+            logger.debug(Integer.valueOf(blogEssays.size()).toString());
             int size = blogEssays.size();
             for (int i = 0; i < size; i++) {
                 String picPath = filePathDir + blogEssays.get(i).getPic();

@@ -17,7 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, IdComment> {
 
     public List<Comment> findByEssayIdOrderByCommentIdDescCommentRecDesc(Long essayId);
 
-    public List<Comment> findFirst5ByOrderByTime();
+    public List<Comment> findFirst5ByOrderByTimeDesc();
 
     @Query("select " +
             "count (commentId)  " +

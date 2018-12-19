@@ -13,8 +13,8 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @description :
  */
 
-@Entity(name = "user_info")
-public class UserInfo {
+@Entity(name = "blog_info")
+public class BlogInfo {
 
     @Id
     private Long id;
@@ -22,11 +22,17 @@ public class UserInfo {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "user_nick_name")
-    private String userNickName;
-
     @Column(name = "user_mail")
     private String userMail;
+
+    @Column(name="blog_info")
+    private String blogInfo;
+
+    @Column(name = "user_avatar")
+    private String userAvatar;
+
+    @Column(name="user_signature")
+    private String userSignature;
 
     public Long getId() {
         return id;
@@ -44,14 +50,6 @@ public class UserInfo {
         this.username = username;
     }
 
-    public String getUserNickName() {
-        return userNickName;
-    }
-
-    public void setUserNickName(String userNickName) {
-        this.userNickName = userNickName;
-    }
-
     public String getUserMail() {
         return userMail;
     }
@@ -60,13 +58,39 @@ public class UserInfo {
         this.userMail = userMail;
     }
 
+    public String getBlogInfo() {
+        return blogInfo;
+    }
+
+    public void setBlogInfo(String blogInfo) {
+        this.blogInfo = blogInfo;
+    }
+
+    public String getUserSignature() {
+        return userSignature;
+    }
+
+    public void setUserSignature(String userSignature) {
+        this.userSignature = userSignature;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
     @Override
     public String toString() {
-        return "UserInfo{" +
+        return "BlogInfo{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", userNickName='" + userNickName + '\'' +
                 ", userMail='" + userMail + '\'' +
+                ", blogInfo='" + blogInfo + '\'' +
+                ", userAvatar='" + userAvatar + '\'' +
+                ", userSignature='" + userSignature + '\'' +
                 '}';
     }
 }

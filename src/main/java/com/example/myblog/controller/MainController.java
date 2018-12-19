@@ -30,18 +30,21 @@ public class MainController {
         String username = (String) session.getAttribute("ACCOUNT_IN_SESSION");
         if(!stringIsNull(username)){
             StringBuffer url = request.getRequestURL();
-            logger.info(url.toString());
+            logger.debug(url.toString());
             url.replace(url.length()-4,url.length(),"write");
-            logger.info(url.toString());
+            logger.debug(url.toString());
             model.addAttribute("editAddr",url.toString());
         }
         return "laydemo";
     }
 
     @RequestMapping("/home/blog/{id}")
-    public String jump2BlogPage(@PathVariable Long id,Model model){
-        String blogId = id.toString();
-        model.addAttribute("blogId",blogId);
+    public String jump2BlogPage(@PathVariable String id,Model model){
+        if(stringIsNull(id) || "null".equals(id)){
+            logger.debug("id is null");
+            return "laydemo";
+        }
+        model.addAttribute("blogId",id);
         return "laydemo";
     }
 

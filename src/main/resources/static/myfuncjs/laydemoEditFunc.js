@@ -1,10 +1,17 @@
 var basePath = "/";
 var pageAmout;
+var httphome = window.location.href.split("/");
+var localhttp = httphome[0]+"//"+httphome[1]+httphome[2];
 
+var userInfo;
 $(function () {
 
+    setUserInfo();
+
+    $("#content").append(main.mainblog);
+
     var blogId =$("#hasPageId").val();
-    if(isNull(blogId)|| blogId == "${blogId}"){
+    if(isNull(blogId)|| blogId == "${blogId}" || blogId == "null"){
         back2home();
     }
     else {
@@ -14,7 +21,53 @@ $(function () {
 
 
 
-})
+
+});
+
+//获取个人信息
+function setUserInfo() {
+    $.ajax({
+        url:basePath+"getBlogInfo",
+        async:false,
+        success:function (resp) {
+            if(resp.statusCode == "0"){
+                userInfo = resp.resultData;
+            }else {
+                userInfo = {
+                    "userAvatar":"/static/img/avatar.png",
+                    "userSignature":"获取签名失败了诶",
+                    "blogInfo":"获取博客签名失败了诶"
+                }
+            }
+        }
+    });
+    console.log([
+        "                   _ooOoo_",
+        "                  o8888888o",
+        "                  88\" . \"88",
+        "                  (| -_- |)",
+        "                  O\\  =  /O",
+        "               ____/`---'\\____",
+        "             .'  \\\\|     |//  `.",
+        "            /  \\\\|||  :  |||//  \\",
+        "           /  _||||| -:- |||||-  \\",
+        "           |   | \\\\\\  -  /// |   |",
+        "           | \\_|  ''\\---/''  |   |",
+        "           \\  .-\\__  `-`  ___/-. /",
+        "         ___`. .'  /--.--\\  `. . __",
+        "      .\"\" '<  `.___\\_<|>_/___.'  >'\"\".",
+        "     | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |",
+        "     \\  \\ `-.   \\_ __\\ /__ _/   .-` /  /",
+        "======`-.____`-.___\\_____/___.-`____.-'======",
+        "                   `=---='",
+        "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "         佛祖保佑       永无BUG"
+    ].join('\n'));
+
+    $("#userAvatar").attr("src",userInfo.userAvatar);
+    $("#userSignature").text(userInfo.userSignature);
+
+}
 //判断为空
 function isNull(data){
     if(data==undefined || data == null || data == ""){
@@ -22,6 +75,12 @@ function isNull(data){
     }
     return false;
 }
+
+//修改个人信息的界面
+function personalInfo() {
+    
+}
+
 
 //初始化文章区域
 function getEssay(pageNum) {
@@ -86,14 +145,14 @@ function printOutEssay(picUrl,properties,title,summary,author , time , commentNu
             '</a>' +
             '</div>' +
             '<div class="post-meta wrapper-lg">' +
-            '<h2 class="m-t-none index-post-title"><a href="">' +
+            '<h2 class="m-t-none index-post-title"><a href="javascript:void(0);" onclick="readEssay('+id+')">' +
             title +
             '</a></h2>' + //跳转到的文章页面
             '<p class="summary">'+
             summary+'</p>' +
             '<div class="line line-lg b-b b-light"></div>' +
             '<div class="text-muted post-item-foot-icon">' +
-            '<i class="glyphicon glyphicon-user text-muted"></i><span class="m-r-sm">&nbsp;<a href="">' +
+            '<i class="glyphicon glyphicon-user text-muted"></i><span class="m-r-sm">&nbsp;<a href="javascript:void(0);">' +
             author +
             '</a></span>' +
             '<i class="layui-icon layui-icon-log text-muted"></i><span class="m-r-sm">&nbsp;' +
@@ -156,10 +215,16 @@ function getPageEssay(pageNum) {
 }
 
 function back2home() {
+    var $comtent = $("#content");
+    $comtent.html("");
+    $comtent.append(main.mainblog);
+
+    $("#blogInfo").text(userInfo.blogInfo);
+
     var blogControl = $('#blogControl');
     var httpStr = '<header class="bg-light lter b-b wrapper-md">\n' +
         '<h1 class="m-n font-thin h3 text-black l-h"></h1>\n' +
-        '<small class="text-muted letterspacing indexWords">Hello world……</small>\n' +
+        '<small class="text-muted letterspacing indexWords">'+userInfo.blogInfo+'</small>\n' +
         '</header>\n' +
         '<div class="wrapper-md" id="post-panel">\n' +
         '<!--首页输出文章-->\n' +
@@ -175,15 +240,18 @@ function back2home() {
     getEssay(0);
     getPageCount();
     setRightColunm();
-    var stateObject = {id: "http://localhost:9099/home"};
-    var title = "标题 "+"http://localhost:9099/home";
-    var newUrl = "http://localhost:9099/home";
+
+
+    var stateObject = null;
+    var title = "首页";
+    var newUrl = localhttp+"/home";
     history.pushState(stateObject,title,newUrl);
 
 }
 //输出blog内容
 function readEssay(id) {
     //console.log("in blog");
+
     $.ajax({
         url:basePath+"getBlog/"+id,
         success:function (result) {
@@ -253,15 +321,18 @@ function printOurBlog(blog) {
     blogControl.append(httpString);
     printOutCommentAreaHttp(blog.id);
    // window.location.replace("http://localhost:9099/home/blog/"+blog.id);
-    var stateObject = {id: "http://localhost:9099/home/blog/"+blog.id};
-    var title = "标题 "+"http://localhost:9099/home/blog/"+blog.id;
-    var newUrl = "http://localhost:9099/home/blog/"+blog.id;
+    var stateObject = null;
+    var title = "第"+blog.id+"篇";
+    var newUrl = localhttp+"/home/blog/"+blog.id;
     history.pushState(stateObject,title,newUrl);
 }
 
 
 function setRightColunm() {
+
     $("#mostViewsBlog").html("");
+    $("#latestComment").html("");
+
     $.ajax({
         url:basePath+"getHotBlog",
         success:function (data) {
@@ -269,7 +340,7 @@ function setRightColunm() {
                 var httpOutPrint = "";
                 for (var i = 0 ; i < data.resultData.length;i++){
                     var httpstr = '<li class="list-group-item">\n' +
-                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="/static/img/-643b0d1dc704d923.jpg" class="img-circle"></a>\n' +
+                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="'+userInfo.userAvatar+'" class="img-circle"></a>\n' +
                         '<div class="clear">\n' +
                         '<h4 class="h5 l-h"> <a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')" title="'+data.resultData[i].essay_title+'"> '+data.resultData[i].essay_title+' </a></h4>\n' +
                         '<small class="text-muted post-head-icon">\n' +
@@ -287,8 +358,38 @@ function setRightColunm() {
         }
         
     });
-    
 
+    $.ajax({
+        url:basePath+"getLatestComment",
+        success:function (data) {
+
+            var httpOutPrint = "";
+            for (var i = 0 ; i < data.resultData.length;i++){
+                var comment = data.resultData[i].commentContent;
+                if(comment>30){
+                    comment = comment.slice(0,30)+"...";
+                }
+
+                var httpstr = '<li class="list-group-item">'+
+                    '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].essayId+')" class="pull-left thumb-sm avatar m-r">'+
+                    '<img nogallery="" src="'+data.resultData[i].commentPic+'"  class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;"></a>'+
+                    '<a href="javascript:void(0)" class="text-muted">'+
+                    '</a>'+
+                    '<div class="clear">'+
+                    '<div class="text-ellipsis">'+
+                    '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].essayId+')" >'+data.resultData[i].userName+'</a>'+
+                    '</div>'+
+                    '<small class="text-muted">'+
+                    '<span>'+comment+'</span>'+
+                    '</small>'+
+                    '</div>'+
+                    '</li>';
+                httpOutPrint+=httpstr;
+            }
+            $("#latestComment").append(httpOutPrint);
+        }
+
+    });
 
 }
 
@@ -311,7 +412,7 @@ function printOutCommentAreaHttp(Id){
         '                                                        <div class="comment-form-author form-group col-sm-6 col-md-4">\n' +
         '                                <label for="author">名称                                    <span class="required text-danger">*</span></label>\n' +
         '                                <div>\n' +
-        '                                                                        <img class="author-avatar" src="https://cdn.v2ex.com/gravatar/d41d8cd98f00b204e9800998ecf8427e?s=65&amp;r=G&amp;d=" nogallery="">\n' +
+        '                                                                        <img class="author-avatar" src="/static/img/comment.png" nogallery="">\n' +
         '                                <input id="author" maxlength="20" class="form-control" name="author" type="text" value="" maxlength="245" placeholder="姓名或昵称">\n' +
         '                                </div>\n' +
         '                            </div>\n' +
@@ -405,11 +506,13 @@ function commentSubmitEvent() {
         success:function(resp){
             $("#comment_form").find("input").each(function(){
                 $(this).val("");
+
             });
             $("#comment").val("");
             if(resp.statusCode=="0" && !isNull(resp.resultData)){
                 $("#commentTextArea").html("");
                 printOutCommentContent(resp.resultData);
+                setRightColunm();
             }
         },
         error:function () {
@@ -430,11 +533,11 @@ function printOutCommentContent(data) {
             '<div id="" class="comment-body">\n' +
             '\n' +
             '    <a class="pull-left thumb-sm">\n' +
-            '        <img nogallery="" src="" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">                </a>\n' +
+            '        <img nogallery="" src="'+data.commentVOList[i].superComment.commentPic+'" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">                </a>\n' +
             '    <div class="m-b m-l-xxl">\n' +
             '        <div class="comment-meta">\n' +
             '            <span class="comment-author vcard">\n' +
-            '              <b class="fn"><a href="https://www.lolikong.pw" target="_blank" rel="external nofollow">'+
+            '              <b class="fn"><a href="javascript:void(0)" target="_blank" rel="external nofollow">'+
             data.commentVOList[i].superComment.userName+
                 '</a></b>              </span>\n' +
             '            <div class="comment-metadata">\n' +
@@ -465,7 +568,7 @@ function printOutCommentContent(data) {
                '            <div id="" class="comment-body">\n' +
                '\n' +
                '                <a class="pull-left thumb-sm">\n' +
-               '                    <img nogallery="" src="" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">                </a>\n' +
+               '                    <img nogallery="" src="'+data.commentVOList[i].childrenComment[j].commentPic+'" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">                </a>\n' +
                '                <div class="m-b m-l-xxl">\n' +
                '                    <div class="comment-meta">\n' +
                '            <span class="comment-author vcard">\n' +
@@ -543,3 +646,4 @@ function  errorTipsAbove(msg,obj) {
         });
     obj.focus();
 }
+

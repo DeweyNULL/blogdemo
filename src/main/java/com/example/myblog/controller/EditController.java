@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,7 +30,7 @@ public class EditController {
     @ResponseBody
     public String editSave(@RequestBody String content){
 
-        logger.info(content);
+        logger.debug(content);
         return content;
     }
 
@@ -45,15 +46,22 @@ public class EditController {
                 if(!picpath.startsWith("no")){
                    path = Paths.get(picpath+file.getOriginalFilename());
                 }
-                if(path.isAbsolute()){
-                    logger.info("into isAbsolute");
+
+                if(path.toFile().exists()){
+                    logger.debug("文件已经存在！！");
+                    jsonResultSet.setStatusCode("1");
+                    jsonResultSet.setResultData("文件已经存在!");
+                    return jsonResultSet;
                 }
+
                 Files.write(path,bytes);
 
                 jsonResultSet.setStatusCode("0");
                 jsonResultSet.setResultData("上传成功!");
             }catch (Exception e){
                 e.printStackTrace();
+                jsonResultSet.setStatusCode("1");
+                jsonResultSet.setResultData("文件保存失败!");
             }
        }else {
            jsonResultSet.setStatusCode("1");

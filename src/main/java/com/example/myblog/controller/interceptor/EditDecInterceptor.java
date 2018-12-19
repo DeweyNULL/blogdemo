@@ -24,12 +24,12 @@ public class EditDecInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         // TODO Auto-generated method stub
-        //logger.info("into interceptor");
+        //logger.debug("into interceptor");
 
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("ACCOUNT_IN_SESSION");
         String url = request.getRequestURI();
-        //logger.info("username:"+username);
+        //logger.debug("username:"+username);
         if (stringIsNull(username) ) {
             response.sendRedirect("home");
             return false;

@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
             return false;
         }
         String password = SHA256Util.getSHA256StrJava(SHA256Util.getSHA256StrJava(realUser.getPassword()));
-        logger.info("dbuser.password:"+password);
+        logger.debug("dbuser.password:"+password);
         if(password.equals(user.getPassword())){
 
 

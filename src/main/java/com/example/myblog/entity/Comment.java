@@ -36,6 +36,12 @@ public class Comment implements Serializable {
     @Column(name="user_email")
     private String userEmail;
 
+    @Column(name="comment_pic")
+    private String commentPic;
+
+    @Column(name="user_id")
+    private String userId;
+
     @Column(name="user_web")
     private String userWeb;
 
@@ -106,6 +112,21 @@ public class Comment implements Serializable {
         this.time = time;
     }
 
+    public String getCommentPic() {
+        return commentPic;
+    }
+
+    public void setCommentPic(String commentPic) {
+        this.commentPic = commentPic;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {
@@ -116,6 +137,8 @@ public class Comment implements Serializable {
                 ", commentContent='" + commentContent + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
+                ", commentPic='" + commentPic + '\'' +
+                ", userId='" + userId + '\'' +
                 ", userWeb='" + userWeb + '\'' +
                 ", time=" + time +
                 '}';

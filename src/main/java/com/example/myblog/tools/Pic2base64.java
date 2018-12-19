@@ -31,7 +31,7 @@ public class Pic2base64 {
             in.read(data);
             in.close();
         }catch (Exception e){
-            logger.info("no such file ： "+picfilepath);
+            logger.debug("no such file ： "+picfilepath);
             return null;
         }
 
