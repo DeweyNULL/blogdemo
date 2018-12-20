@@ -29,6 +29,8 @@
 	<script src="/static/js/codydemo.js"></script>
 	<!--表单json化插件-->
 	<script src="/static/js/jquery.serializejson.js"></script>
+	<!--操作cookie的插件-->
+	<script src="/static/js/jquery.cookie.js"></script>
 	<!--自己的js-->
 	<script type="text/javascript" src="/static/myfuncjs/laydemoEditFunc.js" ></script>
 	<script type="text/javascript" src="/static/myfuncjs/laydemoPageFunc.js"></script>
@@ -57,7 +59,7 @@
 					<i class="glyphicon glyphicon-th-list"></i>
 					<i class="fontello fontello-indent icon-fw text-active"></i>
 				</a>
-				<a th:href="${editAddr}" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user" id="writeSwitch">
+				<a href="javascript:void(0)"  onclick="personalInfo()" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user" id="writeSwitch">
 					<i class="glyphicon glyphicon-user"></i>
 				</a>
 			</div>
@@ -92,7 +94,7 @@
 				</li>
 				<!--闲言碎语-->
 				<li class="dropdown" >
-					<a href="#" data-toggle="dropdown" class="dropdown-toggle" >
+					<a href="Javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle" >
 						<i class="glyphicon glyphicon-bell"></i>
 
 						<span class="badge badge-sm up bg-danger pull-right-xs"></span>
@@ -117,11 +119,7 @@
 								<label for="navbar-login-password">密码</label>
 								<input type="password" name="password" id="navbar-login-password" class="form-control" placeholder="密码"></div>
 							<button type="button" id="submitLogin" name="submitLogin" class="btn btn-block btn-primary">
-								<span class="text">登录</span>
-								<span class="text-active">登录中...</span>
-								<span class="banLogin_text">刷新页面后登录</span>
-								<i class="animate-spin  fontello fontello-spinner hide" id="spin-login"></i>
-								<i class="animate-spin fontello fontello-refresh hide" id="ban-login"></i>
+								<span class="text" id="loginbtntxt">登录</span>
 							</button>
 						</form>
 					</div>
@@ -143,7 +141,7 @@
                 					</span>
 
 						</div>
-						<a href="javascript:void(0)"  onclick="">
+						<a href="javascript:void(0)"  onclick="personalInfo()">
 									<span class="clear">
 										<span class="block m-t-sm">
                     						<strong class="font-bold text-lt">Dewey</strong>

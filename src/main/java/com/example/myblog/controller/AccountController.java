@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -34,7 +36,7 @@ public class AccountController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public JsonResultSet tryLogin(@RequestBody User user, HttpServletRequest request){
+    public JsonResultSet tryLogin(@RequestBody User user, HttpServletRequest request , HttpServletResponse response){
 
         logger.debug("user.password:"+user.getPassword());
         JsonResultSet jsonResultSet = new JsonResultSet();
@@ -48,6 +50,10 @@ public class AccountController {
             else if(accountService.getAccountInfo(user)){
                 jsonResultSet.setStatusCode("0");
                 session.setAttribute("ACCOUNT_IN_SESSION",user.getUsername()); //设置user
+                session.setMaxInactiveInterval(60*15);
+                Cookie cookie = new Cookie("isLogin","1");
+                cookie.setMaxAge(60*15);
+                response.addCookie(cookie);
                 jsonResultSet.setResultData("on");
 
             }else {
@@ -64,11 +70,14 @@ public class AccountController {
 
     @RequestMapping("/logout")
     @ResponseBody
-    public JsonResultSet tryLogout(HttpServletRequest request){
+    public JsonResultSet tryLogout(HttpServletRequest request,HttpServletResponse response){
 
         JsonResultSet jsonResultSet = new JsonResultSet();
         HttpSession session = request.getSession();
         session.removeAttribute("ACCOUNT_IN_SESSION");
+        Cookie cookie = new Cookie("isLogin","0");
+        cookie.setMaxAge(1);
+        response.addCookie(cookie);
         jsonResultSet.setStatusCode("0");
         return  jsonResultSet;
     }

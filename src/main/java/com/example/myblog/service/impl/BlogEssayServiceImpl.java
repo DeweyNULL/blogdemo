@@ -1,7 +1,9 @@
 package com.example.myblog.service.impl;
 
 import com.example.myblog.entity.BlogEssay;
+import com.example.myblog.entity.BlogRightList;
 import com.example.myblog.repository.BlogEssayRepository;
+import com.example.myblog.repository.BlogRightListRepository;
 import com.example.myblog.service.BlogEssayService;
 import com.example.myblog.tools.Pic2base64;
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class BlogEssayServiceImpl implements BlogEssayService {
 
     @Autowired
     BlogEssayRepository blogEssayRepository;
+
+    @Autowired
+    BlogRightListRepository blogRightListRepository;
 
     @Value("${picfile.path}")
     String filePathDir;
@@ -71,6 +76,7 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay){
         logger.debug(blogEssay.toString());
 
+
         if(stringIsNull(blogEssay.getEssay_title())){
             logger.debug("缺少标题 不准许入库");
             return;
@@ -84,7 +90,17 @@ public class BlogEssayServiceImpl implements BlogEssayService {
             blogEssay.setTime(new Date());
             logger.debug("存入数据库的："+blogEssay.toString());
         }
-        blogEssayRepository.save(blogEssay);
+        blogEssayRepository.saveAndFlush(blogEssay);
+
+        List<BlogRightList> blogRightLists = blogRightListRepository.findAll();
+        if(blogRightLists!=null && blogRightLists.size()>0) {
+            BlogRightList blogRightList = blogRightLists.get(0);
+            blogRightList.setLastTime(new Date());
+            int essayNum = blogRightList.getEssayNum() + 1;
+            blogRightList.setEssayNum(essayNum);
+
+            blogRightListRepository.saveAndFlush(blogRightList);
+        }
     };
 
     public List<BlogEssay> getHotBlogEssay(){

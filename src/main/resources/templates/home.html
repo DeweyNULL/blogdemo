@@ -32,21 +32,21 @@
 <main class="app-content-body animated ng-enter">
     <div class="hbox hbox-auto-xs hbox-auto-sm">
         <div class="col center-part">
-            <div style="background:url(https://www.moerats.com/usr/picture/sgj.jpg) center center; background-size:cover">
+            <div style="background:url(/static/img/蒸汽朋克飞艇1.jpg) center center; background-size:cover">
                 <div class="wrapper-lg bg-white-opacity">
                     <div class="row m-t">
                         <div class="col-sm-7">
                             <a class="thumb-lg pull-left m-r">
-                                <img src="https://www.moerats.com/usr/picture/rats.png" class="img-circle">
+                                <img class="img-circle" src="" id="userAvatarMainInfo">
                             </a>
                             <div class="clear m-b">
                                 <div class="m-b m-t-sm">
-                                    <span class="h3 text-black">Rat's</span>
-                                    <small class="m-l">何以解忧，唯有暴富。</small>
+                                    <span class="h3 text-black">Dewey</span>
+                                    <small class="m-l" id="userSignatureMainInfo"></small>
                                 </div>
                                 <p class="m-b">
-                                    <a target="_blank" title="twitter" href="#" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a><a target="_blank" title="facebook" href="#" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a><a target="_blank" title="googlepluse" href="#" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>                                    </p>
-                                <a target="blank" href="#" class="btn btn-sm btn-success btn-rounded">github</a>                                </div>
+                                    <a target="_blank" title="twitter" href="Javascript:void(0)" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a><a target="_blank" title="facebook" href="Javascript:void(0)" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a><a target="_blank" title="googlepluse" href="Javascript:void(0)" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>                                    </p>
+                                <a target="blank" href="Javascript:void(0)" class="btn btn-sm btn-success btn-rounded">github</a>                                </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="pull-right pull-none-xs text-center">
@@ -70,123 +70,30 @@
             <div class="wrapper bg-white b-b">
                 <ul class="nav nav-pills nav-sm">
                     <li class="active"><a>我的动态</a></li>
-                    <li class="active"><a>我的动态</a></li>
-                    <li class="active"><a>我的动态</a></li>
+
                 </ul>
 
             </div>
             <div class="padder">
 
-                <div id="comments" class="timeMachine">
-                    <!--如果允许评论，会出现评论框和个人信息的填写-->
-                    <!--判断是否登录，只有登陆者才有权利发表说说-->
-                    <!--如果没有登录则什么操作按钮都不会显示-->
-                    <div class="streamline b-l b-info m-l-lg m-b padder-v">
-
-                        <h4 style="display: none" class="comments-title m-t-lg m-b">&nbsp;1 条评论</h4>
-                        <ol class="comment-list">
-                            <!--自定义评论代码结构-->
-                            <div id="comment-6133" class="comment-body comment-parent comment-odd comment-by-author">
 
 
-                                <a class="pull-left thumb-sm avatar m-l-n-md">
-                                    <img nogallery="" src="https://cdn.v2ex.com/gravatar/74fb0e4834eb666f5026da78ddb089b3?s=65&amp;r=G&amp;d=" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">        </a>
-
-                                <div class="m-l-lg m-b-lg">
-                                    <div class="m-b-xs">
-                                        <a href="http://www.moerats.com/" rel="external nofollow">Rat's</a>                <span class="format_time text-muted m-l-sm pull-right" datetime="2018-09-23T22:23:28+08:00">September 23rd, 2018 at 10:23 pm</span>
-                                    </div>
-                                    <div class="m-b">
-                                        <div class="m-b words_contents">
-                                            <p>心痛，博客很少更了！</p>                </div>
-                                        <div class="m-t-sm say_footer">
-                                            <a data-coid="6133" class="text-muted star_talk"><i class="glyphicon glyphicon-heart-empty"></i>&nbsp;<span class="star_count">47</span></a>
-                                            <span class="text-muted">
-                        <i class="glyphicon glyphicon-record  m-l-sm"></i>&nbsp;发自网页端</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 单条评论者信息及内容 -->
-                            </div><!--匹配`自定义评论的代码结构`下面的div标签-->
-                        </ol>        </div>
-                    <nav class="text-center m-b-lg" role="navigation">
-                    </nav>
-
-
-                </div>
-
-                <script>
-
-
-                    $('.star_talk').click(function () {
-                        var ele = $(this);
-                        $.get(LocalConst.BLOG_URL,{action:"star_talk", coid:$(this).data('coid')})
-                            .error(function(){
-                                $.message({
-                                    title:LocalConst.OPERATION_NOTICE,
-                                    message:"点赞失败，检查网络问题",
-                                    type:'warning'
-                                })
-                            }).success(function(data) {
-                            if (data === "1"){//成功点赞
-                                ele.children('i').attr("class","glyphicon glyphicon-heart");
-                                ele.children('.star_count').text(parseInt(ele.children('.star_count').text()) + 1);
-                                $.message({
-                                    title:LocalConst.OPERATION_NOTICE,
-                                    message:"点赞成功",
-                                    type:'success'
-                                });
-                            }else if (data === "2"){//重复点赞
-                                ele.children('i').css("color","red");
-                                $.message({
-                                    title:LocalConst.OPERATION_NOTICE,
-                                    message:"请勿重复点赞哦",
-                                    type:'info'
-                                });
-                            }else if (data === "-1"){//代码出错
-                                $.message({
-                                    title:LocalConst.OPERATION_NOTICE,
-                                    message:"点赞请求失败，请稍后重试",
-                                    type:'error'
-                                });
-                            }
-                        });
-                    });
-                </script>                </div><!--end of #pedder-->
+                </div><!--end of #pedder-->
         </div>
         <div class="col w-lg bg-light lter b-l bg-auto">
             <div class="wrapper">
                 <div class="">
                     <h4 class="m-t-xs m-b-xs">联系方式</h4>
                     <ul class="list-group no-bg no-borders pull-in">
-                        <li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pmtjbaej201s01s0aw" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">email</a></div><small class="text-muted">你的邮箱地址</small></div></li><li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pnirhr2j201s01va9u" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">QQ</a></div><small class="text-muted">你的QQ号</small></div></li><li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pofbz5fj201s01swe9" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">微博</a></div><small class="text-muted">你微博账号</small></div></li><li class="list-group-item"><a target="_blank" href="#" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pouholzj201s01s0ja" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="#">网易云音乐</a></div><small class="text-muted">你的网易云账号</small></div></li>                        </ul>
+                        <li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pmtjbaej201s01s0aw" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">email</a></div><small class="text-muted">你的邮箱地址</small></div></li><li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pnirhr2j201s01va9u" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">QQ</a></div><small class="text-muted">你的QQ号</small></div></li><li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pofbz5fj201s01swe9" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">微博</a></div><small class="text-muted">你微博账号</small></div></li><li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pouholzj201s01s0ja" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">网易云音乐</a></div><small class="text-muted">你的网易云账号</small></div></li>                        </ul>
                 </div>
-                <div class="panel b-a">
-                    <h4 class="font-thin padder">关于我</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <p>来自中部的一个小城市，个性不张扬，讨厌随波逐流。</p>
 
-                        </li>
-                    </ul>
-                </div>
+
             </div>
         </div>
     </div>
 </main>
 </body>
 
-<script>
 
-    function musicSwitchOn() {
-        var ob = $("#skPlayer");
-        if(ob.hasClass("skPlayer-list-on")){
-            ob.removeClass("skPlayer-list-on");
-        }else{
-            ob.addClass("skPlayer-list-on");
-        }
-
-    }
-</script>
 </html>

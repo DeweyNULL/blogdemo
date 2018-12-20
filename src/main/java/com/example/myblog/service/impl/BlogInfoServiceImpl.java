@@ -33,6 +33,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
           blogInfo.setId(null);
           blogInfo.setUserMail("***");
           blogInfo.setUsername("***");
+          return  blogInfo;
       }
       return null;
     }

@@ -5,6 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-    <h1 th:text="${host}" >hello world!</h1>
+<div id="comments" class="timeMachine">
+    <!--如果允许评论，会出现评论框和个人信息的填写-->
+    <!--判断是否登录，只有登陆者才有权利发表说说-->
+    <!--如果没有登录则什么操作按钮都不会显示-->
+    <div class="streamline b-l b-info m-l-lg m-b padder-v">
+
+        <h4 style="display: none" class="comments-title m-t-lg m-b">&nbsp;1 条评论</h4>
+        <ol class="comment-list">
+            <!--自定义评论代码结构-->
+            <div id="comment-6133" class="comment-body comment-parent comment-odd comment-by-author">
+
+
+                <a class="pull-left thumb-sm avatar m-l-n-md">
+                    <img nogallery="" src="https://cdn.v2ex.com/gravatar/74fb0e4834eb666f5026da78ddb089b3?s=65&amp;r=G&amp;d=" class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;">        </a>
+
+                <div class="m-l-lg m-b-lg">
+                    <div class="m-b-xs">
+                        <a   rel="external nofollow">De'we'y</a>                <span class="format_time text-muted m-l-sm pull-right" datetime="2018-09-23T22:23:28+08:00">September 23rd, 2018 at 10:23 pm</span>
+                    </div>
+                    <div class="m-b">
+                        <div class="m-b words_contents">
+                            <p>心痛，博客很少更了！</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 单条评论者信息及内容 -->
+            </div><!--匹配`自定义评论的代码结构`下面的div标签-->
+        </ol>        </div>
+    <nav class="text-center m-b-lg" role="navigation">
+    </nav>
+
+
+</div>
 </body>
 </html>

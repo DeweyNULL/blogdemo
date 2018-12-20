@@ -16,7 +16,6 @@ $(function () {
                     async: false,
                     success : function(json) {
                         if(json.statusCode=="0"){
-
                             window.location.href = localhostPaht +"/home";
                         }
 
@@ -26,14 +25,15 @@ $(function () {
             },function(index){
                 layer.close(index);
             });
-
     });
 
     $("#submit").click(function () {
         blogSubmit();
     })
 
-
+    $("#back").click(function () {
+        window.location.href = localhostPaht +"/home";
+    })
 });
 
 function textsubmit() {

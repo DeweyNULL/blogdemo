@@ -1,8 +1,10 @@
 package com.example.myblog.service.impl;
 
+import com.example.myblog.entity.BlogRightList;
 import com.example.myblog.entity.Comment;
 import com.example.myblog.entity.respVO.CommentVO;
 import com.example.myblog.entity.respVO.RespCommentVO;
+import com.example.myblog.repository.BlogRightListRepository;
 import com.example.myblog.repository.CommentRepository;
 import com.example.myblog.service.CommentService;
 import com.example.myblog.tools.NullTool;
@@ -33,6 +35,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    BlogRightListRepository blogRightListRepository;
 
     @Value("${picfile.somebodyPic}")
     String somebodyPic;
@@ -55,6 +59,15 @@ public class CommentServiceImpl implements CommentService {
         comment.setTime(new Date());
 
         commentRepository.saveAndFlush(comment);
+
+        List<BlogRightList> blogRightLists = blogRightListRepository.findAll();
+        if(blogRightLists!=null && blogRightLists.size()>0) {
+            BlogRightList blogRightList = blogRightLists.get(0);
+            int commentNum = blogRightList.getCommentNum() + 1;
+            blogRightList.setCommentNum(commentNum);
+
+            blogRightListRepository.saveAndFlush(blogRightList);
+        }
     }
 
     @Override

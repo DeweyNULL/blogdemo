@@ -97,5 +97,66 @@ var main = {
         '\t\t\t\t</aside>\n' +
         '\t\t\t</div>\n' +
         '\t\t</main>',
-    "mainPerInfo":''
+    "mainPerInfo":'<main class="app-content-body animated ng-enter">\n' +
+        '    <div class="hbox hbox-auto-xs hbox-auto-sm">\n' +
+        '        <div class="col center-part">\n' +
+        '            <div style="background:url(/static/img/2B1.jpg) center center; background-size:cover">\n' +
+        '                <div class="wrapper-lg bg-white-opacity">\n' +
+        '                    <div class="row m-t">\n' +
+        '                        <div class="col-sm-7">\n' +
+        '                            <a class="thumb-lg pull-left m-r">\n' +
+        '                                <img class="img-circle" src="/static/img/2B1.jpg" id="userAvatarMainInfo">\n' +
+        '                            </a>\n' +
+        '                            <div class="clear m-b">\n' +
+        '                                <div class="m-b m-t-sm">\n' +
+        '                                    <span class="h3 text-black">Dewey</span>\n' +
+        '                                    <small class="m-l" id="userSignatureMainInfo"></small>\n' +
+        '                                </div>\n' +
+        '                                <p class="m-b">\n' +
+        '                                    <a target="_blank" title="twitter" href="Javascript:void(0)" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a><a target="_blank" title="facebook" href="Javascript:void(0)" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a><a target="_blank" title="googlepluse" href="Javascript:void(0)" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>                                    </p>\n' +
+        '                                <a target="blank" href="Javascript:void(0)" class="btn btn-sm btn-success btn-rounded">github</a>                                </div>\n' +
+        '                        </div>\n' +
+        '                        <div class="col-sm-5">\n' +
+        '                            <div class="pull-right pull-none-xs text-center">\n' +
+        '                                <a class="m-b-md inline m">\n' +
+        '                                    <span class="h3 block font-bold">7250</span>\n' +
+        '                                    <small>comments</small>\n' +
+        '                                </a>\n' +
+        '                                <a class="m-b-md inline m">\n' +
+        '                                    <span class="h3 block font-bold">607</span>\n' +
+        '                                    <small>articles</small>\n' +
+        '                                </a>\n' +
+        '                                <a class="m-b-md inline m">\n' +
+        '                                    <span class="h3 block font-bold">1</span>\n' +
+        '                                    <small>weibo</small>\n' +
+        '                                </a>\n' +
+        '                            </div>\n' +
+        '                        </div>\n' +
+        '                    </div>\n' +
+        '                </div>\n' +
+        '            </div>\n' +
+        '            <div class="wrapper bg-white b-b">\n' +
+        '                <ul class="nav nav-pills nav-sm" id="funcList">\n' +
+        '                </ul>\n' +
+        '\n' +
+        '            </div>\n' +
+        '            <div class="padder">\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '                </div><!--end of #pedder-->\n' +
+        '        </div>\n' +
+        '        <div class="col w-lg bg-light lter b-l bg-auto">\n' +
+        '            <div class="wrapper">\n' +
+        '                <div class="">\n' +
+        '                    <h4 class="m-t-xs m-b-xs">联系方式</h4>\n' +
+        '                    <ul class="list-group no-bg no-borders pull-in">\n' +
+        '                        <li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pmtjbaej201s01s0aw" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">email</a></div><small class="text-muted">你的邮箱地址</small></div></li><li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pnirhr2j201s01va9u" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">QQ</a></div><small class="text-muted">你的QQ号</small></div></li><li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pofbz5fj201s01swe9" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">微博</a></div><small class="text-muted">你微博账号</small></div></li><li class="list-group-item"><a target="_blank" href="Javascript:void(0)" class="pull-left thumb-sm avatar m-r"><img src="https://ww4.sinaimg.cn/large/a15b4afegy1fg2pouholzj201s01s0ja" class="img-circle"><i class="on b-white bottom"></i></a><div class="clear"><div><a target="_blank" href="Javascript:void(0)">网易云音乐</a></div><small class="text-muted">你的网易云账号</small></div></li>                        </ul>\n' +
+        '                </div>\n' +
+        '\n' +
+        '\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</main>'
 };

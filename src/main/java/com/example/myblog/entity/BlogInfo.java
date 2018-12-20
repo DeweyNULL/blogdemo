@@ -34,6 +34,9 @@ public class BlogInfo {
     @Column(name="user_signature")
     private String userSignature;
 
+    @Column(name="user_back")
+    private String userBack;
+
     public Long getId() {
         return id;
     }
@@ -82,6 +85,14 @@ public class BlogInfo {
         this.userAvatar = userAvatar;
     }
 
+    public String getUserBack() {
+        return userBack;
+    }
+
+    public void setUserBack(String userBack) {
+        this.userBack = userBack;
+    }
+
     @Override
     public String toString() {
         return "BlogInfo{" +
@@ -91,6 +102,7 @@ public class BlogInfo {
                 ", blogInfo='" + blogInfo + '\'' +
                 ", userAvatar='" + userAvatar + '\'' +
                 ", userSignature='" + userSignature + '\'' +
+                ", userBack='" + userBack + '\'' +
                 '}';
     }
 }

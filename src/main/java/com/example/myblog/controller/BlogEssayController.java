@@ -119,9 +119,9 @@ public class BlogEssayController {
     ResponseEntity<JsonResultSet> getHotestBlog(){
         logger.debug("into getHotestBlog");
         JsonResultSet jsonResultSet = new JsonResultSet();
-        List<BlogEssay> blogEssays = new ArrayList<>();
 
-        blogEssays = blogEssayServiceImpl.getHotBlogEssay();
+        List<BlogEssay> blogEssays = blogEssayServiceImpl.getHotBlogEssay();
+
         if (blogEssays!=null&&blogEssays.size()>0){
             logger.debug(Integer.valueOf(blogEssays.size()).toString());
             int size = blogEssays.size();

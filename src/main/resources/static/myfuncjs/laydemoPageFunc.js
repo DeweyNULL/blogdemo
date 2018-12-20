@@ -6,6 +6,15 @@ var pos=nowPath.indexOf(pathName);
 var localhostPaht=nowPath.substring(0,pos);
 
 $(function(){
+
+    if($.cookie('isLogin') == 1){
+        $("#navbar-login-user").attr("disabled","disabled");
+        $("#navbar-login-password").attr("disabled","disabled");
+        $("#submitLogin").attr("disabled","disabled");
+        $("#loginbtntxt").text("已登录");
+    }
+
+
     $("#submitLogin").click(function(){
         tryLogin();
     })
@@ -52,11 +61,13 @@ function tryLogin() {
         success:function (respData) {
             console.log(respData);
             if(respData.statusCode=="0"){
-                var writePath = localhostPaht +"/write";
-                //console.log(writePath);
-                $("#writeSwitch").attr('href',writePath);
-                $("#easyLogin").removeClass("dropdown");
+
                 showLayerSucessMsg("登录成功");
+                back2home();
+                $("#navbar-login-user").attr("disabled","disabled");
+                $("#navbar-login-password").attr("disabled","disabled");
+                $("#submitLogin").attr("disabled","disabled");
+                $("#loginbtntxt").text("已登录");
             }else {
                 $("#navbar-login-user").val("");
                 $("#navbar-login-password").val("");

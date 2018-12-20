@@ -36,7 +36,8 @@ function setUserInfo() {
                 userInfo = {
                     "userAvatar":"/static/img/avatar.png",
                     "userSignature":"获取签名失败了诶",
-                    "blogInfo":"获取博客签名失败了诶"
+                    "blogInfo":"获取博客签名失败了诶",
+                    "userBack":"/static/img/avatar.png"
                 }
             }
         }
@@ -78,10 +79,46 @@ function isNull(data){
 
 //修改个人信息的界面
 function personalInfo() {
-    
+    var $content = $("#content");
+    $content.html("");
+    $content.append(main.mainPerInfo);
+
+    $("#userAvatarMainInfo").attr("src",userInfo.userAvatar);
+    var $cookie = $.cookie('isLogin');
+    var $funcList = $("#funcList");
+
+
+    var http = '<li class="active"><a>动态</a></li>';
+    if($cookie =="1"){
+        http += '<li class="active"><a onclick="logout()">修改个人信息</a></li>'+
+        '<li class="active"><a href='+localhostPaht +"/write"+'>写博客</a></li>'+
+            '<li class="active"><a>写动态</a></li>'+
+        '<li class="active"><a onclick="logout()">退出登录</a></li>';
+
+    }
+    $funcList.append(http);
 }
 
 
+function logout() {
+    layer.confirm('是否退出当前账户？',{icon: 7, title:'提示'},
+        function(index) {
+        $.ajax({
+            type : "GET",
+            url:"/logout",
+            async: false,
+            success : function(json) {
+                if(json.statusCode=="0"){
+                    $.cookie('isLogin',"0");
+                    window.location.href = localhostPaht +"/home";
+                }
+            }
+        });
+        layer.close(index);
+        },function(index){
+        layer.close(index);
+    });
+}
 //初始化文章区域
 function getEssay(pageNum) {
     $.ajax({
@@ -362,14 +399,12 @@ function setRightColunm() {
     $.ajax({
         url:basePath+"getLatestComment",
         success:function (data) {
-
             var httpOutPrint = "";
             for (var i = 0 ; i < data.resultData.length;i++){
                 var comment = data.resultData[i].commentContent;
                 if(comment>30){
                     comment = comment.slice(0,30)+"...";
                 }
-
                 var httpstr = '<li class="list-group-item">'+
                     '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].essayId+')" class="pull-left thumb-sm avatar m-r">'+
                     '<img nogallery="" src="'+data.resultData[i].commentPic+'"  class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;"></a>'+
@@ -388,7 +423,6 @@ function setRightColunm() {
             }
             $("#latestComment").append(httpOutPrint);
         }
-
     });
 
 }
@@ -455,8 +489,6 @@ function printOutCommentAreaHttp(Id){
 }
 
 function commentSubmitEvent() {
-
-
 
     //將表單序列化成json
     var form = $("#comment_form").serializeJSON();
