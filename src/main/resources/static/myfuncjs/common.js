@@ -81,17 +81,6 @@ var main = {
         '\n' +
         '\t\t\t\t\t\t<!-- 博客信息-->\n' +
         '\t\t\t\t\t\t<section id="categories-2" class="widget widget_categories wrapper-md clear">\n' +
-        '\t\t\t\t\t\t\t<h3 class="widget-title m-t-none text-md">博客信息</h3>\n' +
-        '\t\t\t\t\t\t\t<ul class="list-group" id="blogInfo">\n' +
-        '\t\t\t\t\t\t\t\t<li class="list-group-item"> <i class="glyphicon glyphicon-file text-muted"></i> <span class="badge\n' +
-        '\t\t\t\t\t\t\t\t           pull-right">52</span>文章数目</li>\n' +
-        '\t\t\t\t\t\t\t\t<li class="list-group-item"> <i class="glyphicon glyphicon-comment text-muted"></i> <span class="badge\n' +
-        '\t\t\t\t\t\t\t\t           pull-right">0</span>评论数目</li>\n' +
-        '\t\t\t\t\t\t\t\t<li class="list-group-item"> <i class="glyphicon glyphicon-equalizer text-muted"></i> <span class="badge\n' +
-        '\t\t\t\t\t\t\t\t           pull-right">0天</span>运行天数</li>\n' +
-        '\t\t\t\t\t\t\t\t<li class="list-group-item"> <i class="glyphicon glyphicon-refresh text-muted"></i> <span class="badge\n' +
-        '\t\t\t\t\t\t\t\t           pull-right">0</span>最后更新</li>\n' +
-        '\t\t\t\t\t\t\t</ul>\n' +
         '\t\t\t\t\t\t</section>\n' +
         '\t\t\t\t\t</div>\n' +
         '\t\t\t\t</aside>\n' +
@@ -119,15 +108,15 @@ var main = {
         '                        <div class="col-sm-5">\n' +
         '                            <div class="pull-right pull-none-xs text-center">\n' +
         '                                <a class="m-b-md inline m">\n' +
-        '                                    <span class="h3 block font-bold">7250</span>\n' +
+        '                                    <span class="h3 block font-bold"> </span>\n' +
         '                                    <small>comments</small>\n' +
         '                                </a>\n' +
         '                                <a class="m-b-md inline m">\n' +
-        '                                    <span class="h3 block font-bold">607</span>\n' +
+        '                                    <span class="h3 block font-bold"> </span>\n' +
         '                                    <small>articles</small>\n' +
         '                                </a>\n' +
         '                                <a class="m-b-md inline m">\n' +
-        '                                    <span class="h3 block font-bold">1</span>\n' +
+        '                                    <span class="h3 block font-bold"> </span>\n' +
         '                                    <small>weibo</small>\n' +
         '                                </a>\n' +
         '                            </div>\n' +
@@ -140,7 +129,7 @@ var main = {
         '                </ul>\n' +
         '\n' +
         '            </div>\n' +
-        '            <div class="padder">\n' +
+        '            <div class="padder" id="funcArea">\n' +
         '\n' +
         '\n' +
         '\n' +
@@ -158,5 +147,34 @@ var main = {
         '            </div>\n' +
         '        </div>\n' +
         '    </div>\n' +
-        '</main>'
+        '</main>',
+    "weiboSubmit":'<div id="weibo" class="">\n' +
+        '                    <div id="respond-post" class="respond comment-respond">\n' +
+        '\n' +
+        '                        <h4 id="reply-title" class="comment-reply-title m-t-lg m-b">发表动态\n' +
+        '                        </h4>\n' +
+        '                        <form id="weibo_form" action="" class="comment-form" role="form">\n' +
+        '                            <div class="comment-form-comment form-group">\n' +
+        '                                <label for="weibotxt">动态                            <span class="required text-danger">*</span></label>\n' +
+        '                                <textarea id="weibotxt" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="……" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'weiboSubmit\').click();return false};"></textarea>\n' +
+        '                            </div>\n' +
+        '                            <!--提交按钮-->\n' +
+        '                            <div class="form-group">\n' +
+        '                                <button type="button" name="weiboSubmit" id="weiboSubmit" class=" btn btn-success padder-lg" onclick="commentSubmitEvent()">\n' +
+        '                                    <span class="text">提交</span>\n' +
+        '                                </button>\n' +
+        '                                <i class="animate-spin fontello fontello-spinner hide" id="spin"></i>\n' +
+        '                            </div>\n' +
+        '                        </form>\n' +
+        '                    </div>\n' +
+        '                </div>',
+    "weiboShow":'<div  class="timeMachine">\n' +
+        '                    <div class="streamline b-l b-info m-l-lg m-b padder-v">\n' +
+        '                        <ol class="comment-list" id="weibo" >\n' +
+        '                            \n' +
+        '                        </ol>\n' +
+        '                    </div>\n' +
+        '                    <nav class="text-center m-b-lg" role="navigation">\n' +
+        '                    </nav>\n' +
+        '                </div>'
 };

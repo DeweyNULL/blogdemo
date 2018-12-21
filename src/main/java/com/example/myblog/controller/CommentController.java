@@ -1,11 +1,11 @@
 package com.example.myblog.controller;
 
+import com.example.myblog.entity.BlogInfo;
 import com.example.myblog.entity.Comment;
 import com.example.myblog.entity.JsonResultSet;
-import com.example.myblog.entity.respVO.CommentVO;
+import com.example.myblog.service.BlogInfoService;
 import com.example.myblog.service.CommentService;
 import com.example.myblog.tools.NullTool;
-import com.sun.org.glassfish.external.statistics.impl.StatisticImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
+    @Autowired
+    BlogInfoService blogInfoService;
     @Value("${picfile.somebodyPic}")
     String somebodyPic;
 
@@ -45,13 +47,14 @@ public class CommentController {
             return ResponseEntity.ok(jsonResultSet);
         }
 
-
-
         if(NullTool.isNull(comment.getUserId()) && NullTool.isNull(comment.getCommentPic())){
             HttpSession session = request.getSession();
             String username = (String)session.getAttribute("ACCOUNT_IN_SESSION");
             if(NullTool.isNull(username)){
                 comment.setCommentPic(somebodyPic);
+            }else {
+                BlogInfo blogInfo = blogInfoService.getBlogInformationByUsername(username);
+                comment.setCommentPic(blogInfo.getUserAvatar());
             }
         }else {
             jsonResultSet.setStatusCode("1");

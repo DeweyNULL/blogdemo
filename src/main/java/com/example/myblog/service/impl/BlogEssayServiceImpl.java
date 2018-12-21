@@ -2,6 +2,7 @@ package com.example.myblog.service.impl;
 
 import com.example.myblog.entity.BlogEssay;
 import com.example.myblog.entity.BlogRightList;
+import com.example.myblog.entity.respVO.BlogEssayRespVO;
 import com.example.myblog.repository.BlogEssayRepository;
 import com.example.myblog.repository.BlogRightListRepository;
 import com.example.myblog.service.BlogEssayService;
@@ -67,8 +68,20 @@ public class BlogEssayServiceImpl implements BlogEssayService {
     }
 
     @Override  //根据文章ID获取文章
-    public BlogEssay getEssayById(Long id) {
-        return blogEssayRepository.findById(id).get();
+    public BlogEssayRespVO getEssayById(Long id) {
+        BlogEssayRespVO blogEssayRespVO = new BlogEssayRespVO();
+
+        blogEssayRespVO.setBlogEssay(blogEssayRepository.findById(id).get());
+
+        List<BlogEssay> blogEssays = blogEssayRepository.findnext(id);
+        if(blogEssays.size()>0){
+            blogEssayRespVO.setNext(blogEssays.get(0).getId().toString());
+        }
+        blogEssays = blogEssayRepository.findpre(id);
+        if(blogEssays.size()>0) {
+            blogEssayRespVO.setPrev(blogEssays.get(0).getId().toString());
+        }
+        return blogEssayRespVO;
     }
 
     @Transactional

@@ -1,6 +1,7 @@
 package com.example.myblog.service;
 
 import com.example.myblog.entity.BlogEssay;
+import com.example.myblog.entity.respVO.BlogEssayRespVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
@@ -18,7 +19,7 @@ public interface BlogEssayService {
 
     public long getPageNum();
 
-    public BlogEssay getEssayById(Long id);
+    public BlogEssayRespVO getEssayById(Long id);
 
     public void saveOrUpdateBlogStatus(BlogEssay blogEssay);
 

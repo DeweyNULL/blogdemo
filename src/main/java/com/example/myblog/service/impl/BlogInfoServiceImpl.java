@@ -69,4 +69,13 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         }
 
     }
+
+    @Override
+    public BlogInfo getBlogInformationByUsername(String username) {
+        List<BlogInfo> blogInfos = blogInfoRepository.findByUsername(username);
+        if(blogInfos.size()>0){
+            return blogInfos.get(0);
+        }
+        return null;
+    }
 }

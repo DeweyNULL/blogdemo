@@ -37,6 +37,9 @@ public class BlogInfo {
     @Column(name="user_back")
     private String userBack;
 
+    @Column(name="music_list")
+    private String musicList;
+
     public Long getId() {
         return id;
     }
@@ -93,16 +96,11 @@ public class BlogInfo {
         this.userBack = userBack;
     }
 
-    @Override
-    public String toString() {
-        return "BlogInfo{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", userMail='" + userMail + '\'' +
-                ", blogInfo='" + blogInfo + '\'' +
-                ", userAvatar='" + userAvatar + '\'' +
-                ", userSignature='" + userSignature + '\'' +
-                ", userBack='" + userBack + '\'' +
-                '}';
+    public String getMusicList() {
+        return musicList;
+    }
+
+    public void setMusicList(String musicList) {
+        this.musicList = musicList;
     }
 }

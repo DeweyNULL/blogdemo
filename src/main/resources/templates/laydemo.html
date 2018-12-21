@@ -71,7 +71,7 @@
 					<div class="input-group rounded bg-light">
 						<input id="search_input" type="search" name="s" class="transparent rounded form-control input-sm no-border padder" required="" placeholder="输入关键词搜索…">
 						<span id="search_submit" class="transparent input-group-btn">
-                  <button type="submit" class="transparent btn btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+                  <button type="button" class="transparent btn btn-sm" id="btnSearch"><i class="glyphicon glyphicon-search"></i></button>
               </span>
 					</div>
 				</div>
@@ -82,9 +82,7 @@
 			<ul class="nav navbar-nav navbar-right" id="musicbar">
 				<li class="music-box hidden-xs hidden-sm">
 					<div id="skPlayer" >
-						<script>
-                            var player = new skPlayer({"autoplay":false,"listshow":false,"mode":"listloop","music":{"type":"cloud","source":"157041905","media":"neteasy"}});
-						</script>
+
 					</div>
 				</li>
 				<li class="dropdown ">

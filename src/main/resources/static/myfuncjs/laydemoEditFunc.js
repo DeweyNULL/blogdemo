@@ -24,6 +24,7 @@ $(function () {
 
 });
 
+
 //获取个人信息
 function setUserInfo() {
     $.ajax({
@@ -32,6 +33,10 @@ function setUserInfo() {
         success:function (resp) {
             if(resp.statusCode == "0"){
                 userInfo = resp.resultData;
+                var musichttp ='<script>\n'+
+                    'var player = new skPlayer({"autoplay":false,"listshow":false,"mode":"listloop","music":{"type":"cloud","source":"'+resp.resultData.musicList+'","media":"neteasy"}});' +
+                    '</script>';
+                $("#skPlayer").append(musichttp);
             }else {
                 userInfo = {
                     "userAvatar":"/static/img/avatar.png",
@@ -88,18 +93,33 @@ function personalInfo() {
     var $funcList = $("#funcList");
 
 
-    var http = '<li class="active"><a>动态</a></li>';
+    var http = '<li class="active"><a onclick="weibo()">动态</a></li>';
     if($cookie =="1"){
         http += '<li class="active"><a onclick="logout()">修改个人信息</a></li>'+
         '<li class="active"><a href='+localhostPaht +"/write"+'>写博客</a></li>'+
-            '<li class="active"><a>写动态</a></li>'+
+            '<li class="active"><a onclick="writeWeibo()">写动态</a></li>'+
         '<li class="active"><a onclick="logout()">退出登录</a></li>';
 
     }
     $funcList.append(http);
 }
+//展示动态
+function weibo() {
+    var $funcArea = $("#funcArea");
+    $funcArea.html("");
+    $funcArea.append(main.weiboShow);
 
 
+}
+
+//写动态
+function writeWeibo() {
+    var $funcArea = $("#funcArea");
+    $funcArea.html("");
+    $funcArea.append(main.weiboSubmit);
+}
+
+//退出
 function logout() {
     layer.confirm('是否退出当前账户？',{icon: 7, title:'提示'},
         function(index) {
@@ -306,6 +326,10 @@ function readEssay(id) {
 //文章页面打印
 function printOurBlog(blog) {
     var blogControl = $('#blogControl');
+    var next = blog.next;
+    var prev = blog.prev;
+    blog = blog.blogEssay;
+
     if(blog.essay_type==null) blog.essay_type = "未分类";
     var httpString =
         ' <style>\n' +
@@ -346,12 +370,22 @@ function printOurBlog(blog) {
         ' </article>\n' +
         '        </div>'+
         '<nav class="m-t-lg m-b-lg">\n' +
-        '        <ul class="pager">\n' +
-        '        <li class="next"> <a href="javascript:void(0)" title="" data-toggle="tooltip" data-original-title="上一篇"> 下一篇 </a></li>   <li class="previous"> <a href="javascript:void(0)" title="" data-toggle="tooltip" data-original-title="下一篇"> 上一篇 </a></li>\n' +
-        '        </ul>\n' +
-        '       </nav>'+
-        '</div>' ;
+        '        <ul class="pager">\n' ;
+        if(isNull(next)){
 
+            httpString+= '<li class="next"> <a onclick="pageTips('+1+')" title="" data-toggle="tooltip" data-original-title="下一篇"> 下一篇 </a></li> ';
+        }else {
+            httpString+= '<li class="next"> <a onclick="readEssay('+next+')" title="" data-toggle="tooltip" data-original-title="下一篇"> 下一篇 </a></li> ';
+        }
+        if(isNull(prev)){
+            var msg = "没有上一页了！";
+            httpString+='<li class="previous"> <a onclick="pageTips('+2+')" title="" data-toggle="tooltip" data-original-title="上一篇"> 上一篇 </a></li>\n';
+        }else {
+            httpString+='<li class="previous"> <a onclick="readEssay('+prev+')" title="" data-toggle="tooltip" data-original-title="上一篇"> 上一篇 </a></li>\n';
+        }
+        httpString+='        </ul>\n' +
+        '       </nav>'+
+        '</div>';
 
 
     blogControl.html("");
@@ -364,26 +398,36 @@ function printOurBlog(blog) {
     history.pushState(stateObject,title,newUrl);
 }
 
+//上一下一页提示
+function pageTips(num) {
+    if(num == 1){
+        showLayerFailMsg("没有下一页了！");
+    }
+    if (num == 2) {
+        showLayerFailMsg("没有上一页了！");
+    }
+}
 
+//设置blog右侧
 function setRightColunm() {
 
     $("#mostViewsBlog").html("");
     $("#latestComment").html("");
-
+    $("#categories-2").html("");
     $.ajax({
-        url:basePath+"getHotBlog",
+        url:basePath+"getRightListInfo",
         success:function (data) {
             if (data.statusCode=='0'){
                 var httpOutPrint = "";
-                for (var i = 0 ; i < data.resultData.length;i++){
+                for (var i = 0 ; i < data.resultData.blogEssays.length;i++){
                     var httpstr = '<li class="list-group-item">\n' +
-                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="'+userInfo.userAvatar+'" class="img-circle"></a>\n' +
+                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData.blogEssays[i].id+')"class="pull-left thumb-sm m-r"><img style="height: 40px!important;width: 40px!important;" src="'+userInfo.userAvatar+'" class="img-circle"></a>\n' +
                         '<div class="clear">\n' +
-                        '<h4 class="h5 l-h"> <a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].id+')" title="'+data.resultData[i].essay_title+'"> '+data.resultData[i].essay_title+' </a></h4>\n' +
+                        '<h4 class="h5 l-h"> <a href="javascript:void(0)" onclick="readEssay('+data.resultData.blogEssays[i].id+')" title="'+data.resultData.blogEssays[i].essay_title+'"> '+data.resultData.blogEssays[i].essay_title+' </a></h4>\n' +
                         '<small class="text-muted post-head-icon">\n' +
-                        '                    <span class="meta-views"> <i class="glyphicon glyphicon-comment" aria-hidden="true"></i> <span class="sr-only">评论数：</span> <span class="meta-value">'+data.resultData[i].comment_num+'</span>\n' +
+                        '                    <span class="meta-views"> <i class="glyphicon glyphicon-comment" aria-hidden="true"></i> <span class="sr-only">评论数：</span> <span class="meta-value">'+data.resultData.blogEssays[i].comment_num+'</span>\n' +
                         '                    </span>\n' +
-                        ' <span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">'+data.resultData[i].viewsNum+'</span>\n' +
+                        ' <span class="meta-date m-l-sm"> <i class="glyphicon glyphicon-eye-open" aria-hidden="true"></i> <span class="sr-only">浏览次数:</span> <span class="meta-value">'+data.resultData.blogEssays[i].viewsNum+'</span>\n' +
                         '                    </span>\n' +
                         '</small>\n' +
                         '</div>\n' +
@@ -391,40 +435,48 @@ function setRightColunm() {
                     httpOutPrint+=httpstr;
                 }
                 $("#mostViewsBlog").append(httpOutPrint);
-            }
-        }
-        
-    });
 
-    $.ajax({
-        url:basePath+"getLatestComment",
-        success:function (data) {
-            var httpOutPrint = "";
-            for (var i = 0 ; i < data.resultData.length;i++){
-                var comment = data.resultData[i].commentContent;
-                if(comment>30){
-                    comment = comment.slice(0,30)+"...";
+                httpOutPrint = "";
+                for (var i = 0 ; i < data.resultData.comments.length;i++){
+                    var comment = data.resultData.comments[i].commentContent;
+                    if(comment>30){
+                        comment = comment.slice(0,30)+"...";
+                    }
+                    var httpstr = '<li class="list-group-item">'+
+                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData.comments[i].essayId+')" class="pull-left thumb-sm avatar m-r">'+
+                        '<img nogallery="" src="'+data.resultData.comments[i].commentPic+'"  class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;"></a>'+
+                        '<a href="javascript:void(0)" class="text-muted">'+
+                        '</a>'+
+                        '<div class="clear">'+
+                        '<div class="text-ellipsis">'+
+                        '<a href="javascript:void(0)" onclick="readEssay('+data.resultData.comments[i].essayId+')" >'+data.resultData.comments[i].userName+'</a>'+
+                        '</div>'+
+                        '<small class="text-muted">'+
+                        '<span>'+comment+'</span>'+
+                        '</small>'+
+                        '</div>'+
+                        '</li>';
+                    httpOutPrint+=httpstr;
                 }
-                var httpstr = '<li class="list-group-item">'+
-                    '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].essayId+')" class="pull-left thumb-sm avatar m-r">'+
-                    '<img nogallery="" src="'+data.resultData[i].commentPic+'"  class="avatar-40 photo img-circle" style="height:40px!important; width: 40px!important;"></a>'+
-                    '<a href="javascript:void(0)" class="text-muted">'+
-                    '</a>'+
-                    '<div class="clear">'+
-                    '<div class="text-ellipsis">'+
-                    '<a href="javascript:void(0)" onclick="readEssay('+data.resultData[i].essayId+')" >'+data.resultData[i].userName+'</a>'+
-                    '</div>'+
-                    '<small class="text-muted">'+
-                    '<span>'+comment+'</span>'+
-                    '</small>'+
-                    '</div>'+
-                    '</li>';
-                httpOutPrint+=httpstr;
-            }
-            $("#latestComment").append(httpOutPrint);
-        }
-    });
+                $("#latestComment").append(httpOutPrint);
+                var blogRightList = data.resultData.blogRightList;
+                httpOutPrint = '<h3 class="widget-title m-t-none text-md">博客信息</h3>' +
+                    '<ul class="list-group" id="blogInfo">' +
+                    '<li class="list-group-item"> <i class="glyphicon glyphicon-file text-muted"></i> <span class="badge ' +
+                    'pull-right">'+blogRightList.essayNum+'</span>文章数目</li>' +
+                    '<li class="list-group-item"> <i class="glyphicon glyphicon-comment text-muted"></i> <span class="badge ' +
+                    'pull-right">'+blogRightList.commentNum+'</span>评论数目</li>' +
+                    '<li class="list-group-item"> <i class="glyphicon glyphicon-equalizer text-muted"></i> <span class="badge ' +
+                    'pull-right">'+data.resultData.days+'天</span>运行天数</li>' +
+                    '<li class="list-group-item"> <i class="glyphicon glyphicon-refresh text-muted"></i> <span class="badge ' +
+                    'pull-right">'+blogRightList.lastTime.split("T")[0]+'</span>最后更新</li>' +
+                    '</ul>';
+                $("#categories-2").append(httpOutPrint);
 
+            }
+        }
+
+    });
 }
 
 // 评论区：
@@ -439,7 +491,7 @@ function printOutCommentAreaHttp(Id){
         '                    <div class="comment-form-comment form-group">\n' +
         //'                        <textarea id="repContent" class="textarea form-control OwO-textarea" name="text" rows="5" ></textarea>\n' +
         '                        <label for="comment">评论                            <span class="required text-danger">*</span></label>\n' +
-        '                        <textarea id="comment" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="说点什么吧……" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'commentSubmit\').click();return false};"></textarea>\n' +
+        '                        <textarea id="comment" class="textarea form-control OwO-textarea" name="text" rows="5" placeholder="想说什么呢……" maxlength="250" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById(\'commentSubmit\').click();return false};"></textarea>\n' +
         '                    </div>\n' +
         '                    <!--判断是否登录-->\n' +
         '                                                                <div id="author_info" class="row row-sm">\n' +

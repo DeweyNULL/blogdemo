@@ -2,6 +2,7 @@ package com.example.myblog.controller;
 
 import com.example.myblog.entity.BlogEssay;
 import com.example.myblog.entity.JsonResultSet;
+import com.example.myblog.entity.respVO.BlogEssayRespVO;
 import com.example.myblog.service.BlogEssayService;
 import com.example.myblog.tools.Pic2base64;
 import com.example.myblog.webentity.responseEntity.PageCount;
@@ -100,18 +101,30 @@ public class BlogEssayController {
     public ResponseEntity<JsonResultSet> getBlog(@PathVariable(value = "id")Long id){
        // System.out.println("in to method :"+id);
         JsonResultSet jsonResultSet = new JsonResultSet();
-        BlogEssay blogEssay = blogEssayServiceImpl.getEssayById(id);
-        if(blogEssay!=null){
-            //System.out.println(blogEssay.getViews_num());
-            blogEssay.setViewsNum(blogEssay.getViewsNum()+1);
-            blogEssayServiceImpl.saveOrUpdateBlogStatus(blogEssay);
-            String picPath =filePathDir + blogEssay.getPic();
-            blogEssay.setPic(Pic2base64.getPicBase64(picPath));
-            jsonResultSet.setStatusCode("0");
-            jsonResultSet.setResultData(blogEssay);
-        }else {
+        try {
+            BlogEssayRespVO blogEssayRespVO = blogEssayServiceImpl.getEssayById(id);
+            BlogEssay blogEssay = blogEssayRespVO.getBlogEssay();
+            if(blogEssay!=null){
+                //System.out.println(blogEssay.getViews_num());
+                blogEssay.setViewsNum(blogEssay.getViewsNum()+1);
+                blogEssayServiceImpl.saveOrUpdateBlogStatus(blogEssay);
+                String picPath =filePathDir + blogEssay.getPic();
+                blogEssay.setPic(Pic2base64.getPicBase64(picPath));
+
+                blogEssayRespVO.setBlogEssay(blogEssay);
+
+                jsonResultSet.setStatusCode("0");
+                jsonResultSet.setResultData(blogEssayRespVO);
+            }else {
+                jsonResultSet.setStatusCode("1");
+                jsonResultSet.setResultData("找不到这篇文章");
+            }
+        }catch (Exception e){
             jsonResultSet.setStatusCode("1");
+            jsonResultSet.setResultData("服务错误");
+            e.printStackTrace();
         }
+
         return ResponseEntity.ok(jsonResultSet);
     }
 

@@ -13,4 +13,6 @@ public interface BlogInfoService {
     public void saveOrUpdateInformationByUserName(BlogInfo blogInfo);
 
     public void saveOrUpdateBlogInformation(BlogInfo blogInfo);
+
+    public BlogInfo getBlogInformationByUsername(String username);
 }
